@@ -11,22 +11,42 @@ import {
   serverTimestamp 
 } from 'firebase/firestore';
 
-import firebaseConfig from '../firebase-applet-config.json';
+import firebaseConfigFile from '../firebase-applet-config.json';
 
-// Initialize Firebase
-export const app = initializeApp({
-  apiKey: firebaseConfig.apiKey,
-  authDomain: firebaseConfig.authDomain,
-  projectId: firebaseConfig.projectId,
-  storageBucket: firebaseConfig.storageBucket,
-  messagingSenderId: firebaseConfig.messagingSenderId,
-  appId: firebaseConfig.appId
-});
+const firebaseConfig = {
+  projectId: firebaseConfigFile.projectId || "gen-lang-client-0840024627",
+  appId: firebaseConfigFile.appId || "1:63555815050:web:a44c0aaa90eefe53bc4f73",
+  apiKey: firebaseConfigFile.apiKey || "AIzaSyAEczPQ7sn2f_G4QxV4On9ot8N4sS7aNws",
+  authDomain: firebaseConfigFile.authDomain || "gen-lang-client-0840024627.firebaseapp.com",
+  firestoreDatabaseId: firebaseConfigFile.firestoreDatabaseId || "ai-studio-lentera5m-a556f3cb-5d3a-4b6a-af7a-e128703b4975",
+  storageBucket: firebaseConfigFile.storageBucket || "gen-lang-client-0840024627.firebasestorage.app",
+  messagingSenderId: firebaseConfigFile.messagingSenderId || "63555815050"
+};
 
-// Initialize Firestore with configured databaseId
-export const db = firebaseConfig.firestoreDatabaseId 
-  ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
-  : getFirestore(app);
+// Initialize Firebase safely
+let app = null;
+let db = null;
+
+try {
+  if (firebaseConfig && firebaseConfig.apiKey) {
+    app = initializeApp({
+      apiKey: firebaseConfig.apiKey,
+      authDomain: firebaseConfig.authDomain,
+      projectId: firebaseConfig.projectId,
+      storageBucket: firebaseConfig.storageBucket,
+      messagingSenderId: firebaseConfig.messagingSenderId,
+      appId: firebaseConfig.appId
+    });
+
+    db = firebaseConfig.firestoreDatabaseId 
+      ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+      : getFirestore(app);
+  }
+} catch (e) {
+  console.warn('Firebase initialization notice:', e);
+}
+
+export { app, db };
 
 // Save reading journal to Cloud Firestore
 export async function saveJournalToCloud(journalData) {
@@ -77,8 +97,10 @@ export function subscribeToJournals(callback) {
 }
 
 // Expose to window for global access
-window.firebaseApp = app;
-window.firebaseDb = db;
-window.saveJournalToCloud = saveJournalToCloud;
-window.fetchJournalsFromCloud = fetchJournalsFromCloud;
-window.subscribeToJournals = subscribeToJournals;
+if (typeof window !== 'undefined') {
+  window.firebaseApp = app;
+  window.firebaseDb = db;
+  window.saveJournalToCloud = saveJournalToCloud;
+  window.fetchJournalsFromCloud = fetchJournalsFromCloud;
+  window.subscribeToJournals = subscribeToJournals;
+}

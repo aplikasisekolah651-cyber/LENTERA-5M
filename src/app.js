@@ -271,34 +271,134 @@ const DEFAULT_BOOKS = [
   }
 ];
 
+const AVATAR_AISYAH_M5 = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23fce7f3"/><circle cx="40" cy="30" r="16" fill="%23db2777"/><path d="M22 68c0-12 8-20 18-20s18 8 18 20" fill="%23be185d"/><circle cx="40" cy="30" r="12" fill="%23fbcfe8"/><ellipse cx="40" cy="32" rx="10" ry="11" fill="%23fed7aa"/><circle cx="36" cy="31" r="1.5" fill="%23334155"/><circle cx="44" cy="31" r="1.5" fill="%23334155"/><path d="M37 36 Q40 38 43 36" stroke="%23e11d48" stroke-width="1.2" fill="none"/></svg>';
+const AVATAR_RAKA_M5 = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23dbeafe"/><circle cx="40" cy="32" r="15" fill="%23fed7aa"/><rect x="26" y="18" width="28" height="14" rx="4" fill="%231e293b"/><circle cx="34" cy="32" r="5" fill="none" stroke="%230284c7" stroke-width="1.5"/><circle cx="46" cy="32" r="5" fill="none" stroke="%230284c7" stroke-width="1.5"/><line x1="39" y1="32" x2="41" y2="32" stroke="%230284c7" stroke-width="1.5"/><path d="M20 70c0-14 9-22 20-22s20 8 20 22" fill="%230284c7"/></svg>';
+const AVATAR_SALSA_M5 = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect width="80" height="80" fill="%23ede9fe"/><circle cx="40" cy="32" r="15" fill="%23fed7aa"/><path d="M24 24 Q40 14 56 24 Q56 42 54 48 Q40 50 26 48 Z" fill="%23475569"/><ellipse cx="40" cy="34" rx="11" ry="12" fill="%23fed7aa"/><circle cx="36" cy="33" r="1.5" fill="%23334155"/><circle cx="44" cy="33" r="1.5" fill="%23334155"/><path d="M37 38 Q40 40 43 38" stroke="%23e11d48" stroke-width="1.2" fill="none"/><path d="M22 70c0-13 8-22 18-22s18 9 18 22" fill="%237c3aed"/></svg>';
+
 const DEFAULT_WORKS = [
+  {
+    id: 'w-laskar-pelangi',
+    title: 'Resensi Buku – Laskar Pelangi',
+    category: 'Resensi Buku',
+    authorName: 'Aisyah Putri',
+    authorClass: 'Kelas VIII C',
+    authorAvatar: AVATAR_AISYAH_M5,
+    date: '12 September 2026',
+    quote: 'Bermimpilah, karena Tuhan akan memeluk mimpi-mimpi itu. Keterbatasan ekonomi tak boleh memadamkan api ilmu...',
+    content: `Resensi Novel "Laskar Pelangi" karya Andrea Hirata:
+Sebuah kisah kepahlawanan pendidikan yang sangat mengharukan dari desa Gantong, Belitung Timur. Lewat keteladanan Ibu Muslimah dan Pak Harfan, serta keuletan 10 anak laskar pelangi (Ikal, Lintang, Mahar, dkk), novel ini mengajarkan kita untuk selalu bersyukur dan tidak pernah menyerah meraih cita-cita setinggi langit.
+
+Pelajaran berharga yang saya petik: ilmu pengetahuan dan integritas adalah lentera sejati dalam menembus pekatnya keterbatasan hidup. Sangat relevan untuk seluruh sahabat literasi di SMPN 2 Kasihan!`,
+    likes: 120,
+    commentsCount: 34,
+    comments: [
+      { id: 'c-lp-1', author: 'Salsa Anindita', role: 'siswa', text: 'Keren banget resensinya Aisyah! Kisah Lintang selalu bikin terharu.', date: '12 September 2026' },
+      { id: 'c-lp-2', author: 'Ratna Kusumawati, S.Pd.', role: 'guru', text: 'Ulasan yang sangat bernas dan menggugah semangat belajar!', date: '12 September 2026' }
+    ],
+    coverType: 'laskar-pelangi',
+    isFeatured: true
+  },
+  {
+    id: 'w-jaga-bumi',
+    title: 'Poster Digital – Jaga Bumi',
+    category: 'Poster Digital',
+    authorName: 'Raka Pratama',
+    authorClass: 'Kelas VIII A',
+    authorAvatar: AVATAR_RAKA_M5,
+    date: '5 September 2026',
+    quote: 'Satu pohon yang kita tanam hari ini adalah nafas kehidupan bagi generasi yang akan datang...',
+    content: `Poster digital ini dirancang sebagai kampanye adiwiyata dan peduli lingkungan di SMPN 2 Kasihan. Bumi adalah satu-satunya rumah kita. Dengan mengurangi penggunaan plastik sekali pakai, memilah sampah organik di sekolah, dan merawat tanaman peneduh di taman baca, kita sedang merajut masa depan bumi yang hijau dan lestari.
+
+Melalui perpaduan ilustrasi bola bumi ramah lingkungan dan tunas hijau yang merekah, poster ini mengajak kawan-kawan sebaya untuk membiasakan aksi nyata ramah lingkungan setiap hari.`,
+    likes: 95,
+    commentsCount: 18,
+    comments: [
+      { id: 'c-bumi-1', author: 'Aisyah Putri', role: 'siswa', text: 'Desain posternya sangat rapi dan estetik! Pesan ekologinya sangat kuat dan sampai ke pembaca.', date: '5 September 2026' },
+      { id: 'c-bumi-2', author: 'Bagus Kurniawan', role: 'siswa', text: 'Kombinasi warnanya segar banget Raka! Layak dipajang di mading digital sekolah.', date: '5 September 2026' }
+    ],
+    coverType: 'jaga-bumi',
+    isFeatured: true
+  },
+  {
+    id: 'w-langit-sama',
+    title: 'Puisi – Langit Masih Sama',
+    category: 'Puisi',
+    authorName: 'Salsa Anindita',
+    authorClass: 'Kelas VIII B',
+    authorAvatar: AVATAR_SALSA_M5,
+    date: '28 Agustus 2026',
+    quote: 'Meski jarak membentang luas di antara kita, tataplah langit yang sama tempat doa bermuara...',
+    content: `Di bawah temaram langit Kasihan senja ini,
+Kulihat semburat lembayung menyapa sunyi.
+Bintang-bintang merangkai cerita purba,
+Tentang langkah kaki yang menolak menyerah pada duka.
+
+Meski jarak membentang luas di antara kita,
+Tataplah langit yang sama tempat doa bermuara.
+Di sana harapan kita disatukan semesta,
+Menjadi lentera benderang dalam langkah menggapai cita.`,
+    likes: 150,
+    commentsCount: 27,
+    comments: [
+      { id: 'c-langit-1', author: 'Drs. Supriyanto, M.Pd.', role: 'kepsek', text: 'Bait puisi yang sarat makna dan pengharapan. Bahasa puitisnya sangat menyentuh jiwa.', date: '28 Agustus 2026' },
+      { id: 'c-langit-2', author: 'Aisyah Putri', role: 'siswa', text: 'Suka sekali dengan bait kedua! Diksi yang Salsa gunakan selalu indah dan damai dibaca.', date: '28 Agustus 2026' }
+    ],
+    coverType: 'langit-sama',
+    isFeatured: true
+  },
+  {
+    id: 'w-laut-bercerita',
+    title: 'Resensi Buku – Laut Bercerita',
+    category: 'Resensi Buku',
+    authorName: 'Aisyah Putri',
+    authorClass: 'Kelas VIII C',
+    authorAvatar: AVATAR_AISYAH_M5,
+    date: '20 Agustus 2026',
+    quote: 'Buku ini mengajarkan bahwa setiap suara memiliki arti, dan perjuangan melawan ketidakadilan tak pernah sia-sia...',
+    content: `Buku "Laut Bercerita" karya Leila S. Chudori adalah sebuah mahakarya sastra Indonesia yang memotret persahabatan, keluarga, dan kehilangan dengan begitu dalam. Lewat sudut pandang Biru Laut dan Asmara Jati, kita diajak merasakan getirnya perjuangan aktivis mahasiswa serta kepedihan keluarga korban penghilangan paksa yang terus mencari keadilan di tepi laut.
+
+Diksi yang dipilih penulis sangat puitis namun menggetarkan hati. Ulasan ini saya tulis untuk mengajak seluruh teman-teman di SMPN 2 Kasihan memahami pentingnya empati, hak asasi manusia, dan cinta tanah air. Buku ini wajib dibaca oleh generasi muda yang mencintai literasi sejarah dan kemanusiaan.`,
+    likes: 110,
+    commentsCount: 25,
+    comments: [
+      { id: 'c-laut-1', author: 'Salsa Anindita', role: 'siswa', text: 'Keren banget ulasannya Aisyah! Sangat menginspirasi dan bikin aku penasaran mau baca bukunya di perpustakaan.', date: '20 Agustus 2026' },
+      { id: 'c-laut-2', author: 'Ratna Kusumawati, S.Pd.', role: 'guru', text: 'Analisis resensi yang sangat tajam dan matang untuk siswa kelas VIII. Terus kembangkan daya kritis literasimu!', date: '20 Agustus 2026' }
+    ],
+    coverType: 'laut-bercerita',
+    isFeatured: true
+  },
   {
     id: 1,
     title: 'Gemerlap Malam di Pelataran Kasongan',
     category: 'Cerpen',
     authorName: 'Bagus Kurniawan',
-    authorClass: '8B',
+    authorClass: 'Kelas VIII B',
     authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100',
     date: '8 Sep 2024',
+    quote: 'Bila hatimu tergesa, dinding kendi akan retak sebelum sempat disentuh api pembakaran...',
     content: `Aroma tanah liat basah selalu menyapa hidungku setiap kali melintasi gerbang Kasihan. Di sudut bengkel kriya milik kakek, roda putar kayu itu masih berdengung lembut. 
 
 "Membuat gerabah itu seperti menata hidup, Gus," ucap Kakek sambil menepuk lembut gumpalan lempung. "Bila hatimu tergesa, dinding kendi akan retak sebelum sempat disentuh api pembakaran."
 
 Malam itu, di bawah temaram lampu jalanan Bibis, aku menyadari bahwa setiap goresan canting dan lekukan tanah liat menyimpan doa para leluhur yang tak pernah padam oleh laju zaman.`,
     likes: 18,
+    commentsCount: 2,
     comments: [
       { id: 'c1', author: 'Ratna Kusumawati, S.Pd.', role: 'guru', text: 'Pilihan diksi yang sangat memikat! Metafora tanah liat dengan kehidupan sangat mengena untuk siswa kelas 8.', date: '8 Sep' },
       { id: 'c2', author: 'Anisa Rahma', role: 'siswa', text: 'Keren banget cerpennya Bagus! Bikin aku makin bangga tinggal di Kasihan.', date: '8 Sep' }
-    ]
+    ],
+    coverType: 'default',
+    isFeatured: false
   },
   {
     id: 2,
     title: 'Batik Kasihan dalam Bait Puisi',
     category: 'Puisi',
     authorName: 'Anisa Rahma',
-    authorClass: '8A',
+    authorClass: 'Kelas VIII A',
     authorAvatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100',
     date: '7 Sep 2024',
+    quote: 'Jadilah lentera di tengah temaram dunia, membawa nama harum bumi Bantul tercinta...',
     content: `Di antara canting tembaga dan malam mendidih,
 Terlukis asa anak negeri Kasihan yang tiada pernah padam.
 Mata air Sendang mengalirkan restu,
@@ -309,25 +409,12 @@ Tetapi denyut nadi leluhur yang berbisik lirih:
 Jadilah lentera di tengah temaram dunia,
 Membawa nama harum bumi Bantul tercinta.`,
     likes: 24,
+    commentsCount: 1,
     comments: [
       { id: 'c3', author: 'Drs. Supriyanto, M.Pd.', role: 'kepsek', text: 'Luar biasa puitis dan penuh spirit kearifan lokal. Pertahankan bakat menulismu, Anisa!', date: '7 Sep' }
-    ]
-  },
-  {
-    id: 3,
-    title: 'Meneladani Keteguhan Ikal dalam Laskar Pelangi',
-    category: 'Resensi',
-    authorName: 'Dimas Aditya Pratama',
-    authorClass: '8B',
-    authorAvatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100',
-    date: '6 Sep 2024',
-    content: `Membaca novel Laskar Pelangi membuka mata saya bahwa keterbatasan gedung sekolah bukan halangan untuk berprestasi. Tokoh Bu Muslimah dan Pak Harfan mengajarkan kita arti ketulusan mendidik tanpa pamrih. 
-
-Buku ini sangat cocok dibaca oleh seluruh kawan-kawan di SMPN 2 Kasihan agar kita selalu bersyukur memiliki fasilitas perpustakaan dan teknologi digital yang lengkap hari ini.`,
-    likes: 12,
-    comments: [
-      { id: 'c4', author: 'Bagus Kurniawan', role: 'siswa', text: 'Ulasan yang hebat dan objektif Dim! Bikin pengin baca ulang bukunya.', date: '6 Sep' }
-    ]
+    ],
+    coverType: 'default',
+    isFeatured: false
   }
 ];
 
@@ -370,26 +457,79 @@ const DEFAULT_JOURNALS = [
   }
 ];
 
+const THUMB_AISYAH = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="skinA" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23fed7aa"/><stop offset="100%" stop-color="%23fdba74"/></linearGradient><linearGradient id="bookA" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%230284c7"/><stop offset="100%" stop-color="%230369a1"/></linearGradient></defs><rect width="300" height="200" fill="%23f1f5f9"/><rect x="0" y="0" width="300" height="55" fill="%23e2e8f0"/><rect x="0" y="38" width="300" height="6" fill="%23cbd5e1"/><rect x="0" y="85" width="300" height="6" fill="%23cbd5e1"/><rect x="15" y="12" width="14" height="26" fill="%23f43f5e" rx="2"/><rect x="32" y="16" width="12" height="22" fill="%233b82f6" rx="2"/><rect x="47" y="10" width="18" height="28" fill="%2310b981" rx="2"/><rect x="68" y="14" width="15" height="24" fill="%23f59e0b" rx="2"/><rect x="220" y="12" width="16" height="26" fill="%238b5cf6" rx="2"/><rect x="239" y="17" width="14" height="21" fill="%2306b6d4" rx="2"/><rect x="256" y="10" width="20" height="28" fill="%23ec4899" rx="2"/><rect x="20" y="55" width="16" height="30" fill="%23eab308" rx="2"/><rect x="40" y="60" width="14" height="25" fill="%236366f1" rx="2"/><rect x="235" y="58" width="18" height="27" fill="%2314b8a6" rx="2"/><rect x="256" y="52" width="15" height="33" fill="%23f97316" rx="2"/><path d="M70 200 Q150 145 230 200 Z" fill="%230f172a"/><path d="M85 155 Q150 130 215 155 Q225 200 75 200 Z" fill="%23ffffff"/><ellipse cx="150" cy="100" rx="48" ry="56" fill="%23ffffff" stroke="%23e2e8f0" stroke-width="2"/><ellipse cx="150" cy="106" rx="28" ry="32" fill="url(%23skinA)"/><ellipse cx="140" cy="104" rx="3.5" ry="4.5" fill="%231e293b"/><ellipse cx="160" cy="104" rx="3.5" ry="4.5" fill="%231e293b"/><circle cx="141" cy="102" r="1.5" fill="%23ffffff"/><circle cx="161" cy="102" r="1.5" fill="%23ffffff"/><path d="M144 120 Q150 125 156 120" fill="none" stroke="%23b45309" stroke-width="2" stroke-linecap="round"/><circle cx="134" cy="112" r="4" fill="%23f43f5e" opacity="0.3"/><circle cx="166" cy="112" r="4" fill="%23f43f5e" opacity="0.3"/><path d="M124 96 Q150 72 176 96 Q170 134 150 142 Q130 134 124 96 Z" fill="none" stroke="%23e2e8f0" stroke-width="1.5"/><path d="M98 160 L146 148 L146 195 L98 185 Z" fill="url(%23bookA)" stroke="%230284c7" stroke-width="2"/><path d="M154 148 L202 160 L202 185 L154 195 Z" fill="url(%23bookA)" stroke="%230284c7" stroke-width="2"/><line x1="150" y1="148" x2="150" y2="195" stroke="%23ffffff" stroke-width="2"/><ellipse cx="106" cy="172" rx="7" ry="5" fill="%23fed7aa"/><ellipse cx="194" cy="172" rx="7" ry="5" fill="%23fed7aa"/><text x="122" y="170" font-family="sans-serif" font-size="7" fill="%23bae6fd" font-weight="bold" text-anchor="middle">LASKAR</text><text x="178" y="170" font-family="sans-serif" font-size="7" fill="%23bae6fd" font-weight="bold" text-anchor="middle">PELANGI</text><circle cx="150" cy="95" r="22" fill="%23000000" opacity="0.55"/><circle cx="150" cy="95" r="22" fill="none" stroke="%23ffffff" stroke-width="2" opacity="0.9"/><path d="M143 83 L163 95 L143 107 Z" fill="%23ffffff"/></svg>`;
+
+const THUMB_RAKA = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="skinR" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23ffedd5"/><stop offset="100%" stop-color="%23fed7aa"/></linearGradient><linearGradient id="suitR" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231e3a8a"/><stop offset="100%" stop-color="%23172554"/></linearGradient></defs><rect width="300" height="200" fill="%23f1f5f9"/><rect x="0" y="32" width="300" height="6" fill="%23cbd5e1"/><rect x="0" y="80" width="300" height="6" fill="%23cbd5e1"/><rect x="15" y="8" width="16" height="24" fill="%230284c7" rx="2"/><rect x="34" y="12" width="13" height="20" fill="%23ea580c" rx="2"/><rect x="50" y="6" width="18" height="26" fill="%2316a34a" rx="2"/><rect x="71" y="10" width="15" height="22" fill="%239333ea" rx="2"/><rect x="215" y="8" width="18" height="24" fill="%23d97706" rx="2"/><rect x="236" y="13" width="14" height="19" fill="%232563eb" rx="2"/><rect x="253" y="6" width="22" height="26" fill="%23dc2626" rx="2"/><rect x="18" y="46" width="17" height="34" fill="%23475569" rx="2"/><rect x="38" y="52" width="15" height="28" fill="%230d9488" rx="2"/><rect x="238" y="48" width="16" height="32" fill="%230891b2" rx="2"/><rect x="257" y="44" width="19" height="36" fill="%23be185d" rx="2"/><path d="M70 200 Q150 145 230 200 Z" fill="url(%23suitR)"/><path d="M135 155 L150 185 L165 155 Z" fill="%23ffffff"/><path d="M147 165 L153 165 L151 198 L149 198 Z" fill="%2300695c"/><rect x="142" y="122" width="16" height="22" fill="url(%23skinR)" rx="4"/><ellipse cx="150" cy="98" rx="28" ry="32" fill="url(%23skinR)"/><ellipse cx="120" cy="100" rx="5" ry="8" fill="url(%23skinR)"/><ellipse cx="180" cy="100" rx="5" ry="8" fill="url(%23skinR)"/><path d="M120 95 Q150 58 180 95 Q185 85 180 75 Q165 58 150 60 Q130 58 120 75 Q115 85 120 95 Z" fill="%230f172a"/><ellipse cx="139" cy="98" rx="3.5" ry="4.5" fill="%230f172a"/><ellipse cx="161" cy="98" rx="3.5" ry="4.5" fill="%230f172a"/><circle cx="140" cy="96" r="1.5" fill="%23ffffff"/><circle cx="162" cy="96" r="1.5" fill="%23ffffff"/><path d="M133 90 Q139 87 145 90" fill="none" stroke="%230f172a" stroke-width="2" stroke-linecap="round"/><path d="M155 90 Q161 87 167 90" fill="none" stroke="%230f172a" stroke-width="2" stroke-linecap="round"/><path d="M143 113 Q150 120 157 113" fill="none" stroke="%23c2410c" stroke-width="2" stroke-linecap="round"/><rect x="156" y="142" width="9" height="26" rx="3" fill="%23334155" transform="rotate(-15 160 148)"/><ellipse cx="167" cy="136" rx="7" ry="9" fill="%2394a3b8" stroke="%23475569" stroke-width="1.5"/><ellipse cx="152" cy="155" rx="7" ry="6" fill="%23fed7aa"/><circle cx="150" cy="95" r="22" fill="%23000000" opacity="0.55"/><circle cx="150" cy="95" r="22" fill="none" stroke="%23ffffff" stroke-width="2" opacity="0.9"/><path d="M143 83 L163 95 L143 107 Z" fill="%23ffffff"/></svg>`;
+
 const DEFAULT_BOOKTALKS = [
+  {
+    id: 'bt-aisyah',
+    studentName: 'Aisyah Putri',
+    studentClass: 'VIII C',
+    title: 'Review Laskar Pelangi',
+    type: 'video',
+    format: 'Video Book Talk',
+    likes: 120,
+    isLiked: false,
+    duration: '02:45',
+    thumb: THUMB_AISYAH,
+    url: 'https://youtube.com/watch?v=demo-laskar-aisyah',
+    notes: 'Mengulas perjuangan 10 laskar pelangi di Belitong dan sosok Bu Muslimah yang berdedikasi tinggi mengajar di sekolah sederhana.',
+    date: '11 Sep 2026',
+    comments: [
+      { name: 'Raka Pratama', text: 'Penyampaiannya runtut dan artikulasinya sangat jelas!', time: '1 jam lalu' },
+      { name: 'Ibu Ratna S.Pd', text: 'Bagus sekali Aisyah, resensinya sangat menggugah.', time: '3 jam lalu' }
+    ]
+  },
+  {
+    id: 'bt-raka',
+    studentName: 'Raka Pratama',
+    studentClass: 'VIII A',
+    title: 'Puisi untuk Bumi',
+    type: 'video',
+    format: 'Membaca Puisi',
+    likes: 95,
+    isLiked: false,
+    duration: '02:10',
+    thumb: THUMB_RAKA,
+    url: 'https://youtube.com/watch?v=demo-puisi-bumi-raka',
+    notes: 'Deklamasi puisi bertema kelestarian lingkungan hidup dan cinta bumi pertiwi di hadapan kelas VIII A.',
+    date: '10 Sep 2026',
+    comments: [
+      { name: 'Aisyah Putri', text: 'Intonasi dan ekspresinya keren banget Raka!', time: '2 jam lalu' }
+    ]
+  },
   {
     id: 'bt-1',
     studentName: 'Anisa Rahma',
-    studentClass: '8A',
+    studentClass: 'VIII A',
     title: 'Mengapa Kamu Wajib Baca Babad Tanah Jawi!',
-    format: 'Video YouTube',
+    type: 'audio',
+    format: 'Podcast Audio',
+    likes: 88,
+    isLiked: false,
+    duration: '03:00',
+    thumb: THUMB_AISYAH,
     url: 'https://youtube.com/watch?v=demo-babad-jawi',
     notes: 'Mengupas sisi menarik tokoh Panembahan Senopati dan keterkaitannya dengan situs di Bantul.',
-    date: '7 Sep 2024'
+    date: '7 Sep 2026',
+    comments: []
   },
   {
     id: 'bt-2',
     studentName: 'Bagus Kurniawan',
-    studentClass: '8B',
+    studentClass: 'VIII B',
     title: 'Review 3 Menit: Keajaiban Laskar Pelangi',
-    format: 'Google Drive',
+    type: 'video',
+    format: 'Video Book Talk',
+    likes: 74,
+    isLiked: false,
+    duration: '02:50',
+    thumb: THUMB_RAKA,
     url: 'https://drive.google.com/file/d/demo-laskar/view',
     notes: 'Fokus pada karakter Lintang si jenius dari pulau terpencil yang gigih mengayuh sepeda puluhan kilometer.',
-    date: '5 Sep 2024'
+    date: '5 Sep 2026',
+    comments: []
   }
 ];
 
@@ -505,8 +645,27 @@ window.appState = {
     return saved;
   })(),
   journals: getStorage(STORAGE_KEYS.JOURNALS, DEFAULT_JOURNALS),
-  works: getStorage(STORAGE_KEYS.WORKS, DEFAULT_WORKS),
-  booktalks: getStorage(STORAGE_KEYS.BOOKTALKS, DEFAULT_BOOKTALKS),
+  works: (function() {
+    let saved = getStorage(STORAGE_KEYS.WORKS, null);
+    if (!saved || !Array.isArray(saved) || !saved.find(w => w.id === 'w-laut-bercerita' || w.title === 'Laut Bercerita')) {
+      saved = DEFAULT_WORKS;
+      setStorage(STORAGE_KEYS.WORKS, saved);
+    }
+    return saved;
+  })(),
+  m5Tab: 'galeri',
+  m5Category: 'semua',
+  m5SearchQuery: '',
+  m5LikedWorkIds: getStorage('lentera_m5_likes', ['w-laut-bercerita', 'w-langit-sama', 'w-jaga-bumi']),
+  m5BookmarkedIds: getStorage('lentera_m5_bookmarks', ['w-laut-bercerita']),
+  booktalks: (function() {
+    let saved = getStorage(STORAGE_KEYS.BOOKTALKS, null);
+    if (!saved || !Array.isArray(saved) || !saved.find(b => b.id === 'bt-aisyah')) {
+      saved = DEFAULT_BOOKTALKS;
+      setStorage(STORAGE_KEYS.BOOKTALKS, saved);
+    }
+    return saved;
+  })(),
   activeBook: getStorage(STORAGE_KEYS.ACTIVE_BOOK, DEFAULT_BOOKS[0]),
   quizQuestions: getStorage(STORAGE_KEYS.QUIZ_QUESTIONS, QUIZ_QUESTIONS),
   settings: getStorage(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS),
@@ -815,9 +974,13 @@ window.switchPhoneTab = function(tabName) {
 // 4. SPA ROUTER & NAVIGATION CONTROLLER
 // ==========================================
 
-const ALL_VIEWS = ['login', 'beranda', 'm1', 'm2', 'm3', 'm4', 'm5', 'guru', 'sekolah', 'jogja', 'galeri', 'admin'];
+const ALL_VIEWS = ['login', 'beranda', 'm1', 'm2', 'm3', 'm4', 'm5', 'guru', 'sekolah', 'jogja', 'galeri', 'admin', 'portofolio'];
 
-window.navigateTo = function(targetView) {
+export function navigateTo(targetView) {
+  if (targetView === 'profil') {
+    targetView = 'portofolio';
+  }
+
   // Guard: If not logged in and target is not login, force login
   if (!window.appState.currentUser && targetView !== 'login') {
     targetView = 'login';
@@ -854,13 +1017,31 @@ window.navigateTo = function(targetView) {
       // Fullscreen edge-to-edge layout for login on any device
       mainContent.className = 'w-full min-h-screen p-0 m-0';
     }
+  } else if (targetView === 'm1' || targetView === 'm4' || targetView === 'm5' || targetView === 'portofolio') {
+    // Full screen responsive layout for M1 Membaca, M4 Menceritakan, M5 Mengapresiasi & Portofolio on smartphone and laptop
+    if (window.innerWidth < 768) {
+      if (mainHeader) mainHeader.classList.add('hidden');
+      if (mobileNav) mobileNav.classList.add('hidden');
+    } else {
+      if (mainHeader) mainHeader.classList.remove('hidden');
+      if (mobileNav) mobileNav.classList.add('hidden');
+    }
+    if (mainContent) {
+      mainContent.className = 'w-full min-h-screen p-0 m-0';
+    }
+    updateHeaderGamification();
+    updateRoleNavPermissions();
   } else {
     const isSiswaBeranda = window.appState.currentUser?.role === 'siswa' && targetView === 'beranda';
     if (mainHeader) mainHeader.classList.remove('hidden');
     if (mainContent) {
       if (isMView) {
-        // Halaman M1-M5: Jarak tipis antara menu dengan isi halaman (~10px), persis seperti foto referensi
-        mainContent.className = 'flex-1 w-full pt-2.5 px-3 sm:px-5 lg:px-8 xl:px-10 pb-24 md:pb-8';
+        // Halaman M2-M5: Tampilan responsif layar penuh laptop dan smartphone
+        if (targetView === 'm2' || targetView === 'm3') {
+          mainContent.className = 'flex-1 w-full p-0 sm:p-2 lg:p-6 xl:p-8 pb-24 md:pb-8';
+        } else {
+          mainContent.className = 'flex-1 w-full pt-2.5 px-3 sm:px-5 lg:px-8 xl:px-10 pb-24 md:pb-8';
+        }
       } else {
         mainContent.className = 'flex-1 w-full p-3 sm:p-5 lg:p-8 xl:p-10 pb-24 md:pb-8';
       }
@@ -899,7 +1080,8 @@ window.navigateTo = function(targetView) {
 
   // Trigger view-specific renderers
   onViewActivated(targetView);
-};
+}
+window.navigateTo = navigateTo;
 
 function updateRoleNavPermissions() {
   const user = window.appState.currentUser;
@@ -959,9 +1141,8 @@ function onViewActivated(view) {
       if (typeof window.renderM1Recommendations === 'function') {
         window.renderM1Recommendations();
       }
-      if (typeof window.openBookPdfReader === 'function') {
-        const activeId = window.appState.activeBook?.id || 'BK-SOP';
-        window.openBookPdfReader(activeId);
+      if (typeof window.syncM1LaptopActiveBook === 'function') {
+        window.syncM1LaptopActiveBook();
       }
       renderBooks('semua');
       renderJournalHistory();
@@ -976,10 +1157,21 @@ function onViewActivated(view) {
       renderQuizQuestion();
       break;
     case 'm4':
+      if (typeof window.renderM4View === 'function') {
+        window.renderM4View();
+      }
       renderBooktalkList();
       break;
     case 'm5':
+      if (typeof window.renderM5View === 'function') {
+        window.renderM5View();
+      }
       renderApresiasiFeed();
+      break;
+    case 'portofolio':
+      if (typeof window.renderPortofolioView === 'function') {
+        window.renderPortofolioView();
+      }
       break;
     case 'galeri':
       renderGaleriKarya();
@@ -1011,8 +1203,10 @@ window.toggleMobileMoreMenu = function() {
 // 5. AUTHENTICATION & LOGIN LOGIC
 // ==========================================
 
-window.setLoginRole = function(role) {
-  window.appState.loginRoleSelected = role;
+export function setLoginRole(role) {
+  if (window.appState) {
+    window.appState.loginRoleSelected = role;
+  }
   
   const tabSiswa = document.getElementById('tab-login-siswa');
   const tabGuru = document.getElementById('tab-login-guru');
@@ -1044,10 +1238,11 @@ window.setLoginRole = function(role) {
     if (labelUsername) labelUsername.textContent = 'NIP / Akun Kepala Sekolah';
     if (inputUsername) inputUsername.placeholder = 'Contoh: kepsek';
   }
-};
+}
+window.setLoginRole = setLoginRole;
 
-window.openPhoneLoginForm = function(role) {
-  window.setLoginRole(role);
+export function openPhoneLoginForm(role) {
+  setLoginRole(role);
   const welcomeScreen = document.getElementById('phone-screen-welcome');
   const formScreen = document.getElementById('phone-screen-form');
   const badge = document.getElementById('phone-form-role-badge');
@@ -1088,26 +1283,29 @@ window.openPhoneLoginForm = function(role) {
   if (inputUsername) {
     setTimeout(() => inputUsername.focus(), 150);
   }
-};
+}
+window.openPhoneLoginForm = openPhoneLoginForm;
 
-window.closePhoneLoginForm = function() {
+export function closePhoneLoginForm() {
   const welcomeScreen = document.getElementById('phone-screen-welcome');
   const formScreen = document.getElementById('phone-screen-form');
   if (welcomeScreen) welcomeScreen.classList.remove('hidden');
   if (formScreen) formScreen.classList.add('hidden');
   const errorBox = document.getElementById('login-error-msg');
   if (errorBox) errorBox.classList.add('hidden');
-};
+}
+window.closePhoneLoginForm = closePhoneLoginForm;
 
-window.togglePasswordVisibility = function(inputId) {
+export function togglePasswordVisibility(inputId) {
   const input = document.getElementById(inputId);
   if (input) {
     input.type = input.type === 'password' ? 'text' : 'password';
   }
-};
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
 
-window.fillQuickLogin = function(username, password, role) {
-  window.setLoginRole(role);
+export function fillQuickLogin(username, password, role) {
+  setLoginRole(role);
   const uInput = document.getElementById('login-username');
   const pInput = document.getElementById('login-password');
   if (uInput) uInput.value = username;
@@ -1118,9 +1316,10 @@ window.fillQuickLogin = function(username, password, role) {
   if (form) {
     form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
   }
-};
+}
+window.fillQuickLogin = fillQuickLogin;
 
-window.handleLoginSubmit = function(e) {
+export function handleLoginSubmit(e) {
   if (e) e.preventDefault();
   const username = document.getElementById('login-username')?.value.trim();
   const password = document.getElementById('login-password')?.value.trim();
@@ -1159,7 +1358,8 @@ window.handleLoginSubmit = function(e) {
     if (errorBox) errorBox.classList.remove('hidden');
     if (errorText) errorText.textContent = 'Username atau kata sandi tidak cocok. Silakan coba akun demo!';
   }
-};
+}
+window.handleLoginSubmit = handleLoginSubmit;
 
 window.handleLogout = function() {
   window.appState.currentUser = null;
@@ -1255,6 +1455,10 @@ window.selectActiveBook = function(bookId) {
   if (timerBook) timerBook.textContent = b.title;
   if (journalBookSelect) journalBookSelect.value = b.title;
 
+  if (typeof window.syncM1LaptopActiveBook === 'function') {
+    window.syncM1LaptopActiveBook();
+  }
+
   if (window.appState.currentView !== 'm1') {
     navigateTo('m1');
   }
@@ -1264,6 +1468,17 @@ window.selectActiveBook = function(bookId) {
   }
 
   showToast('Membuka PDF Buku', `Membuka "${b.title}" di penampil dokumen PDF aplikasi.`, 'info');
+};
+
+window.syncM1LaptopActiveBook = function() {
+  const b = window.appState.activeBook || window.appState.books[0];
+  if (!b) return;
+  const laptopCover = document.getElementById('m1-laptop-active-cover');
+  const laptopTitle = document.getElementById('m1-laptop-active-title');
+  const laptopAuthor = document.getElementById('m1-laptop-active-author');
+  if (laptopCover && b.cover) laptopCover.src = b.cover;
+  if (laptopTitle) laptopTitle.textContent = b.title;
+  if (laptopAuthor) laptopAuthor.textContent = `${b.author} • ${b.categoryLabel || b.category}`;
 };
 
 // ==========================================
@@ -2122,6 +2337,14 @@ window.updateM1UserStats = function() {
   if (booksCountEl) booksCountEl.textContent = completedBooks;
   if (modalBooksCount) modalBooksCount.textContent = completedBooks;
   if (modalProgress) modalProgress.textContent = `${readPages}/${targetTotal}`;
+
+  // Sync Laptop Dashboard Bento Widgets
+  const laptopProgNum = document.getElementById('m1-laptop-progress-num');
+  const laptopProgBar = document.getElementById('m1-laptop-progress-bar');
+  const laptopRank = document.getElementById('m1-laptop-rank');
+  if (laptopProgNum) laptopProgNum.innerHTML = `${readPages} <span class="text-sm font-semibold text-slate-400">/ ${targetTotal} Hal</span>`;
+  if (laptopProgBar) laptopProgBar.style.width = `${pct}%`;
+  if (laptopRank) laptopRank.textContent = (readPages >= targetTotal) ? 'Juara Literasi' : (readPages >= 20 ? 'Pembaca Aktif' : 'Pembaca Pemula');
 };
 
 window.renderM1Recommendations = function() {
@@ -2191,7 +2414,14 @@ window.showAllBooksCatalog = function() {
 
 window.closeFullCatalog = function() {
   const catalog = document.getElementById('section-full-catalog');
-  if (catalog) catalog.classList.add('hidden');
+  if (catalog) {
+    if (window.innerWidth < 1024) {
+      catalog.classList.add('hidden');
+    } else {
+      const topSection = document.getElementById('view-m1');
+      if (topSection) topSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 };
 
 window.toggleM1FilterOptions = function() {
@@ -3072,24 +3302,399 @@ window.nextQuizQuestion = function() {
 };
 
 // ==========================================
-// 9. M3: MENULIS CONTROLLER (+ AI REVIEWER)
+// ==========================================
+// 9. M3: MENULIS CONTROLLER (+ AI REVIEWER & 8 KARYA TEMPLATES)
 // ==========================================
 
+window.M3_TEMPLATES = {
+  resensi: {
+    id: 'resensi',
+    name: 'Resensi Buku',
+    icon: 'fa-book-open',
+    color: 'bg-purple-100 text-purple-700',
+    title: 'Template Resensi Buku',
+    steps: [
+      'Identitas buku (Judul, Penulis, Penerbit, Tebal)',
+      'Sinopsis (Ringkasan alur cerita atau isi buku)',
+      'Kelebihan dan kekurangan (Sudut pandang kritis)',
+      'Pesan/amanat (Nilai moral dan hikmah yang dipetik)',
+      'Rekomendasi (Sasaran pembaca yang cocok)'
+    ],
+    sampleTitle: 'Resensi Novel Laskar Pelangi: Menyalakan Lentera Pendidikan',
+    sampleContent: `1. Identitas Buku:
+- Judul: Laskar Pelangi
+- Penulis: Andrea Hirata
+- Penerbit: Bentang Pustaka
+- Tebal: 529 Halaman
+
+2. Sinopsis:
+Kisah perjuangan sepuluh anak di Belitung Timur yang bersekolah di SD Muhammadiyah Gantong dengan keterbatasan fasilitas dan ancaman penutupan sekolah.
+
+3. Kelebihan dan Kekurangan:
+- Kelebihan: Gaya bahasa kaya majas dan metafora, humor cerdas, serta sarat pesan moral persahabatan dan kegigihan.
+- Kekurangan: Terdapat beberapa istilah ilmiah dan pertambangan timah yang memerlukan glosarium bagi pembaca pemula.
+
+4. Pesan/Amanat:
+Pendidikan adalah hak dasar yang mampu mengubah nasib, dan keterbatasan ekonomi bukanlah penghalang bagi mimpi besar.
+
+5. Rekomendasi:
+Sangat direkomendasikan bagi pelajar, pendidik, dan pembaca umum yang mencari inspirasi ketulusan belajar.`
+  },
+  puisi: {
+    id: 'puisi',
+    name: 'Puisi',
+    icon: 'fa-pencil',
+    color: 'bg-pink-100 text-pink-700',
+    title: 'Template Puisi Bebas / Berima',
+    steps: [
+      'Tema & Gagasan Utama (Rasa atau peristiwa sentral)',
+      'Diksi & Rima (Pilihan kata konotatif dan estetis)',
+      'Citraan & Imaji (Penglihatan, pendengaran, rasa)',
+      'Majas / Gaya Bahasa (Personifikasi, metafora)',
+      'Amanat Puisi (Pesan mendalam tersirat)'
+    ],
+    sampleTitle: 'Gumam Lentera di Balik Kabut Kasihan',
+    sampleContent: `Di bilik kayu reyot beralas tanah,
+Sepuluh pasang mata menatap fajar merekah.
+Buku-buku lusuh memeluk mimpi yang megah,
+Tak surut langkah walau jalanan berlepot debu dan gelisah.
+
+Oh guru bersahaja penuntun lentera,
+Engkau menyalakan api ilmu di pekatnya malam gulita,
+Mengukir asa suci di sanubari kami selamanya.`
+  },
+  cerpen: {
+    id: 'cerpen',
+    name: 'Cerpen',
+    icon: 'fa-image',
+    color: 'bg-orange-100 text-orange-700',
+    title: 'Template Cerita Pendek (Cerpen)',
+    steps: [
+      'Orientasi (Pengenalan tokoh, watak & latar tempat)',
+      'Rangkaian Peristiwa (Awal mula munculnya tantangan)',
+      'Komplikasi / Konflik (Puncak ketegangan tokoh utama)',
+      'Resolusi (Penyelesaian masalah & titik balik)',
+      'Koda / Amanat (Nilai kehidupan dari akhir cerita)'
+    ],
+    sampleTitle: 'Sepeda Ontel Menembus Kabut Kasihan',
+    sampleContent: `Kring... kring... Suara bel sepeda ontel tua itu memecah kesunyian pagi di sepanjang jalanan Kasihan. Bayu mengayuh sepedanya dengan penuh semangat, menembus kabut tipis yang menyelimuti sawah-sawah Bantul. Hari ini adalah babak final Lomba Cerdas Cermat Literasi antarkabupaten yang telah ia persiapkan selama tiga bulan penuh bersama Bu Guru Muslimah.`
+  },
+  poster: {
+    id: 'poster',
+    name: 'Poster Digital',
+    icon: 'fa-tablet-screen-button',
+    color: 'bg-emerald-100 text-emerald-700',
+    title: 'Template Poster Literasi Digital',
+    steps: [
+      'Tema & Gagasan Inti Poster',
+      'Slogan Ajakan yang Memikat & Berima',
+      'Konsep Ilustrasi / Visual Estetik',
+      'Sasaran Khalayak / Pembaca',
+      'Ajakan Bertindak (Call to Action)'
+    ],
+    sampleTitle: 'Poster: 15 Menit Membaca untuk Menembus Cakrawala',
+    sampleContent: `Tema: Membangun Budaya Literasi Harian Siswa
+Slogan: "Satu Buku Sehari, Buka Cakrawala Tanpa Henti!"
+Konsep Visual: Gambar siluet pelajar membaca di bawah pohon rindang bernaung cahaya lentera emas berhias motif batik Kasihan.
+Sasaran: Siswa-siswi SMP dan generasi muda se-Kabupaten Bantul.
+Ajakan Bertindak: Luangkan 15 menit setiap pagi sebelum pelajaran untuk membaca buku kesukaanmu!`
+  },
+  komik: {
+    id: 'komik',
+    name: 'Komik',
+    icon: 'fa-comment-dots',
+    color: 'bg-sky-100 text-sky-700',
+    title: 'Template Komik & Cerita Bergambar',
+    steps: [
+      'Premis Cerita & Karakter Tokoh',
+      'Panel 1: Pengenalan Tokoh di Ruang Baca',
+      'Panel 2: Munculnya Konflik atau Keusilan Lucu',
+      'Panel 3: Reaksi Cepat / Momen Penyadaran',
+      'Panel 4: Titik Temu & Pesan Moral Bersama'
+    ],
+    sampleTitle: 'Komik Strip: Misteri Buku Catatan Kasongan',
+    sampleContent: `Judul: Detektif Buku Cilik
+Karakter: Diko (rajin membaca) dan Raka (anak ceria tapi pelupa).
+
+Panel 1:
+- Visual: Diko dan Raka membaca di perpustakaan sekolah yang tenang.
+- Balon Diko: "Lho, halaman penting tentang sejarah Bantul ini kok hilang?"
+
+Panel 2:
+- Visual: Raka menatap langit-langit sambil menelan ludah.
+- Balon Raka: "Hehe... kemarin aku jadikan pembatas buku catatan matematika..."
+
+Panel 3:
+- Visual: Diko menepuk jidat, lalu tersenyum sambil menyodorkan buku lain.
+- Balon Diko: "Lain kali pakai pembatas resmi perpustakaan, yuk kita cari solusinya bersama!"`
+  },
+  artikel: {
+    id: 'artikel',
+    name: 'Artikel',
+    icon: 'fa-newspaper',
+    color: 'bg-amber-100 text-amber-700',
+    title: 'Template Artikel Populer / Opini',
+    steps: [
+      'Judul Menarik & Relevan dengan Isu Siswa',
+      'Tesis / Pengantar Isu di Paragraf Pembuka',
+      'Rangkaian Argumen Disertai Fakta & Data',
+      'Analisis Solusi Kritis dari Perspektif Siswa',
+      'Penegasan Ulang & Simpulan Reflektif'
+    ],
+    sampleTitle: 'Menumbuhkan Ekosistem Literasi Kritis di Era Digital',
+    sampleContent: `Di era luapan informasi digital, kemampuan membaca kritis menjadi tameng utama bagi pelajar agar tidak mudah terperdaya hoaks. Melalui gerakan Lentera 5M, siswa dilatih tidak sekadar mengeja kata, melainkan menimbang fakta versus opini, menggali ide pokok, serta menyuarakan gagasan orisinal melalui tulisan yang bertanggung jawab.`
+  },
+  infografis: {
+    id: 'infografis',
+    name: 'Infografis',
+    icon: 'fa-seedling',
+    color: 'bg-cyan-100 text-cyan-700',
+    title: 'Template Rencana Infografis Literasi',
+    steps: [
+      'Topik Utama & Judul Ringkas',
+      'Data Kunci / Angka Statistik Penting',
+      'Alur Visual (Poin 1, Poin 2, Poin 3)',
+      'Ikon / Ilustrasi Pendukung Setiap Poin',
+      'Sumber Data / Referensi Tepercaya'
+    ],
+    sampleTitle: 'Infografis: 5 Manfaat Membaca Rutin bagi Siswa',
+    sampleContent: `1. Topik: Kesehatan Otak dan Kecakapan Literasi Siswa
+2. Data Kunci: Membaca 15 menit per hari menambah lebih dari 1.000 kosakata baru setiap bulan.
+3. Alur Visual:
+   - Poin 1: Meningkatkan daya konsentrasi belajar hingga 40%.
+   - Poin 2: Mengasah empati sosial lewat sudut pandang karakter buku.
+   - Poin 3: Mengurangi kecemasan dan stres belajar hingga 68%.`
+  },
+  lainnya: {
+    id: 'lainnya',
+    name: 'Lainnya',
+    icon: 'fa-ellipsis',
+    color: 'bg-slate-100 text-slate-700',
+    title: 'Template Karya Bebas / Catatan Refleksi',
+    steps: [
+      'Bentuk Karya Bebas yang Dipilih',
+      'Latar Belakang Gagasan / Inspirasi',
+      'Uraian Pokok Pikiran / Naskah',
+      'Refleksi Personal Penulis',
+      'Rencana Tindak Lanjut Karya'
+    ],
+    sampleTitle: 'Catatan Refleksi Pengalaman Menjelajah Literasi',
+    sampleContent: `Melalui kegiatan membaca mandiri selama satu semester ini, saya menemukan bahwa setiap buku membuka jendela berpikir yang baru. Tulisan ini merupakan rangkuman dari perenungan dan pengalaman berharga yang saya dapatkan dalam program Lentera 5M.`
+  }
+};
+
+window._activeM3Karya = 'resensi';
+
+window.selectM3Karya = function(karyaId) {
+  const normalized = (karyaId || 'resensi').toLowerCase();
+  const tpl = window.M3_TEMPLATES[normalized] || window.M3_TEMPLATES.resensi;
+  window._activeM3Karya = normalized;
+
+  // Update card buttons styling
+  const keys = ['resensi', 'puisi', 'cerpen', 'poster', 'komik', 'artikel', 'infografis', 'lainnya'];
+  keys.forEach(k => {
+    const btn = document.getElementById(`m3-btn-${k}`);
+    if (btn) {
+      if (k === normalized) {
+        btn.classList.add('border-purple-500', 'active', 'ring-2', 'ring-purple-400/50');
+        btn.classList.remove('border-transparent');
+      } else {
+        btn.classList.remove('border-purple-500', 'active', 'ring-2', 'ring-purple-400/50');
+        btn.classList.add('border-transparent');
+      }
+    }
+  });
+
+  // Update template card title
+  const titleEl = document.getElementById('m3-template-card-title');
+  if (titleEl) titleEl.textContent = tpl.title;
+
+  // Update template steps list
+  const stepsContainer = document.getElementById('m3-template-steps-list');
+  if (stepsContainer && tpl.steps) {
+    stepsContainer.innerHTML = tpl.steps.map((step, idx) => `
+      <div onclick="focusM3Step(${idx})" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-white/70 transition cursor-pointer group">
+        <span class="w-6 h-6 rounded-full bg-[#476788] text-white text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">${idx + 1}</span>
+        <span class="group-hover:text-blue-700 transition">${step}</span>
+      </div>
+    `).join('');
+  }
+
+  // Update studio title & dropdown
+  const studioTitle = document.getElementById('m3-studio-title');
+  if (studioTitle) studioTitle.textContent = `Lembar Kerja Menulis: ${tpl.name}`;
+  
+  const studioBadge = document.getElementById('m3-studio-badge-icon');
+  if (studioBadge) studioBadge.className = `w-10 h-10 rounded-2xl flex items-center justify-center text-lg ${tpl.color}`;
+
+  const activeIcon = document.getElementById('m3-active-icon');
+  if (activeIcon) activeIcon.className = `fa-solid ${tpl.icon}`;
+
+  const catSelect = document.getElementById('tulis-kategori');
+  if (catSelect && catSelect.value !== normalized) {
+    catSelect.value = normalized;
+  }
+
+  // Update mobile modal header
+  const modalTitle = document.getElementById('m3-modal-title');
+  if (modalTitle) modalTitle.textContent = `Lembar Menulis: ${tpl.name}`;
+
+  const modalSteps = document.getElementById('m3-modal-template-steps');
+  if (modalSteps && tpl.steps) {
+    modalSteps.textContent = tpl.steps.map((s, i) => `${i + 1}. ${s.split('(')[0].trim()}`).join(' • ');
+  }
+};
+
+window.focusM3Step = function(stepIndex) {
+  const tpl = window.M3_TEMPLATES[window._activeM3Karya] || window.M3_TEMPLATES.resensi;
+  const stepText = tpl.steps[stepIndex] || `Langkah ${stepIndex + 1}`;
+  
+  // If screen is mobile, open modal
+  if (window.innerWidth < 1024) {
+    window.openM3MobileEditor();
+  }
+
+  const textarea = document.getElementById('tulis-isi');
+  if (textarea) {
+    textarea.focus();
+    if (!textarea.value.includes(stepText.split('(')[0].trim())) {
+      showToast('Fokus Langkah ' + (stepIndex + 1), `Lengkapi bagian "${stepText}" pada naskahmu.`, 'info');
+    }
+  }
+};
+
+window.insertM3SampleTemplate = function() {
+  const tpl = window.M3_TEMPLATES[window._activeM3Karya] || window.M3_TEMPLATES.resensi;
+  
+  const judulInput = document.getElementById('tulis-judul');
+  const isiInput = document.getElementById('tulis-isi');
+  const mobJudul = document.getElementById('m3-mobile-judul');
+  const mobIsi = document.getElementById('m3-mobile-isi');
+
+  if (judulInput) judulInput.value = tpl.sampleTitle;
+  if (isiInput) isiInput.value = tpl.sampleContent;
+  if (mobJudul) mobJudul.value = tpl.sampleTitle;
+  if (mobIsi) mobIsi.value = tpl.sampleContent;
+
+  window.handleTextChange();
+  showToast('Contoh Format Dimuat', `Format naskah "${tpl.name}" berhasil disisipkan ke lembar kerja.`, 'success');
+};
+
+window.clearM3Editor = function() {
+  const judulInput = document.getElementById('tulis-judul');
+  const isiInput = document.getElementById('tulis-isi');
+  const mobJudul = document.getElementById('m3-mobile-judul');
+  const mobIsi = document.getElementById('m3-mobile-isi');
+
+  if (judulInput) judulInput.value = '';
+  if (isiInput) isiInput.value = '';
+  if (mobJudul) mobJudul.value = '';
+  if (mobIsi) mobIsi.value = '';
+
+  window.handleTextChange();
+  showToast('Lembar Bersih', 'Lembar kerja naskah telah dikosongkan.', 'info');
+};
+
+window.syncM3Judul = function(val) {
+  const dt = document.getElementById('tulis-judul');
+  if (dt && dt.value !== val) dt.value = val;
+};
+
+window.syncM3Isi = function(val) {
+  const dt = document.getElementById('tulis-isi');
+  if (dt && dt.value !== val) dt.value = val;
+  window.handleTextChange();
+};
+
 window.handleTextChange = function() {
-  const text = document.getElementById('tulis-isi')?.value || '';
+  const text = document.getElementById('tulis-isi')?.value || document.getElementById('m3-mobile-isi')?.value || '';
   const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const charCount = text.length;
+
   const badge = document.getElementById('word-count-badge');
   if (badge) {
     badge.textContent = `${wordCount} Kata`;
     badge.className = wordCount >= 50 ? 'text-xs font-mono font-bold text-emerald-600' : 'text-xs font-mono font-bold text-slate-500';
   }
+
+  const charBadge = document.getElementById('char-count-badge');
+  if (charBadge) charBadge.textContent = `${charCount} Karakter`;
+
+  const mobBadge = document.getElementById('m3-modal-word-badge');
+  if (mobBadge) {
+    mobBadge.textContent = `${wordCount} Kata`;
+    mobBadge.className = wordCount >= 50 ? 'text-xs font-mono font-bold text-emerald-600' : 'text-xs font-mono font-bold text-slate-500';
+  }
 };
 
-window.runAICheck = function() {
-  const judul = document.getElementById('tulis-judul')?.value.trim() || 'Tanpa Judul';
-  const kategori = document.getElementById('tulis-kategori')?.value || 'Cerpen';
-  const text = document.getElementById('tulis-isi')?.value.trim();
-  const feedbackContainer = document.getElementById('ai-feedback-container');
+window.saveM3Draft = function() {
+  const judul = document.getElementById('tulis-judul')?.value.trim() || document.getElementById('m3-mobile-judul')?.value.trim();
+  const isi = document.getElementById('tulis-isi')?.value.trim() || document.getElementById('m3-mobile-isi')?.value.trim();
+  
+  if (!isi && !judul) {
+    showToast('Draf Kosong', 'Tuliskan judul atau sepenggal kalimat sebelum menyimpan draf.', 'error');
+    return;
+  }
+
+  window.addPoints(10, 'Menyimpan Draf Karya M3');
+  showToast('Draf Tersimpan!', `Draf tulisan "${judul || 'Karya Siswa'}" berhasil disimpan (+10 Poin).`, 'success');
+};
+
+window.openM3HelpModal = function() {
+  const modal = document.getElementById('modal-m3-help');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM3HelpModal = function() {
+  const modal = document.getElementById('modal-m3-help');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openM3MobileEditor = function() {
+  const modal = document.getElementById('modal-m3-mobile-editor');
+  if (!modal) return;
+  
+  // Sync values
+  const dtJudul = document.getElementById('tulis-judul')?.value || '';
+  const dtIsi = document.getElementById('tulis-isi')?.value || '';
+  const mobJudul = document.getElementById('m3-mobile-judul');
+  const mobIsi = document.getElementById('m3-mobile-isi');
+  
+  if (mobJudul) mobJudul.value = dtJudul;
+  if (mobIsi) mobIsi.value = dtIsi;
+  
+  window.handleTextChange();
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM3MobileEditor = function() {
+  const modal = document.getElementById('modal-m3-mobile-editor');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.runAICheckMobile = function() {
+  window.runAICheck(true);
+};
+
+window.publishKaryaMobile = function() {
+  window.publishKarya();
+  window.closeM3MobileEditor();
+};
+
+window.runAICheck = function(isMobile = false) {
+  const judul = document.getElementById('tulis-judul')?.value.trim() || document.getElementById('m3-mobile-judul')?.value.trim() || 'Tanpa Judul';
+  const kategori = window._activeM3Karya || 'resensi';
+  const text = document.getElementById('tulis-isi')?.value.trim() || document.getElementById('m3-mobile-isi')?.value.trim();
+  const feedbackContainer = isMobile ? document.getElementById('m3-mobile-ai-container') : document.getElementById('ai-feedback-container');
 
   if (!text || text.split(/\s+/).length < 20) {
     showToast('Teks Terlalu Singkat', 'Tuliskan minimal 20-50 kata naskah agar AI dapat memberikan telaah komprehensif.', 'error');
@@ -3106,20 +3711,18 @@ window.runAICheck = function() {
     `;
   }
 
-  // Linguistic rule & quality evaluation engine
   setTimeout(() => {
-    generateAIFeedback(judul, kategori, text);
-  }, 1200);
+    generateAIFeedback(judul, kategori, text, isMobile);
+  }, 1000);
 };
 
-function generateAIFeedback(judul, kategori, text) {
-  const feedbackContainer = document.getElementById('ai-feedback-container');
+function generateAIFeedback(judul, kategori, text, isMobile = false) {
+  const feedbackContainer = isMobile ? document.getElementById('m3-mobile-ai-container') : document.getElementById('ai-feedback-container');
   if (!feedbackContainer) return;
 
   const words = text.split(/\s+/);
   const wordCount = words.length;
 
-  // Analysis criteria
   const hasDialogue = text.includes('"') || text.includes('“');
   const hasLocalColor = /jogja|kasihan|bantul|batik|sendang|kriya|gerabah|mataram/i.test(text);
   const punctuationIssues = (text.match(/[,.][a-zA-Z]/g) || []).length;
@@ -3179,9 +3782,10 @@ window.publishKarya = function() {
   const user = window.appState.currentUser;
   if (!user) return;
 
-  const judul = document.getElementById('tulis-judul')?.value.trim();
-  const kategori = document.getElementById('tulis-kategori')?.value;
-  const isi = document.getElementById('tulis-isi')?.value.trim();
+  const judul = document.getElementById('tulis-judul')?.value.trim() || document.getElementById('m3-mobile-judul')?.value.trim();
+  const kategoriKey = window._activeM3Karya || 'resensi';
+  const kategoriName = (window.M3_TEMPLATES[kategoriKey]?.name) || 'Resensi Buku';
+  const isi = document.getElementById('tulis-isi')?.value.trim() || document.getElementById('m3-mobile-isi')?.value.trim();
 
   if (!judul || !isi || isi.length < 20) {
     showToast('Naskah Belum Siap', 'Lengkapi judul dan isi karya minimal 20 karakter sebelum dipublikasikan.', 'error');
@@ -3191,7 +3795,7 @@ window.publishKarya = function() {
   const newWork = {
     id: Date.now(),
     title: judul,
-    category: kategori,
+    category: kategoriName,
     authorName: user.name,
     authorClass: user.kelas || '8B',
     authorAvatar: user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100',
@@ -3213,9 +3817,7 @@ window.publishKarya = function() {
   showToast('Karya Terbit!', `"${judul}" kini tampil di Galeri Portofolio Digital (+50 Poin).`, 'success');
 
   // Clear form
-  document.getElementById('tulis-judul').value = '';
-  document.getElementById('tulis-isi').value = '';
-  handleTextChange();
+  window.clearM3Editor();
 
   // Navigate to gallery
   navigateTo('galeri');
@@ -3261,11 +3863,900 @@ window.handleBookTalkSubmit = function(e) {
   renderBooktalkList();
 };
 
+window.m4ShowAllWorks = false;
+window.m4AudioState = {
+  isRecording: false,
+  isPaused: false,
+  seconds: 0,
+  timerInterval: null,
+  mediaRecorder: null,
+  audioChunks: [],
+  audioUrl: null,
+  simulatedBarsInterval: null
+};
+
+window.m4ChallengeState = {
+  remainingSeconds: 180, // 3 Menit
+  totalSeconds: 180,
+  interval: null,
+  isRunning: false
+};
+
+window.renderM4View = function() {
+  window.renderM4StudentWorks(window.m4ShowAllWorks);
+  window.populateM4BookSelects();
+};
+
+window.populateM4BookSelects = function() {
+  const books = window.appState.books || [];
+  const selects = ['m4-record-book-select', 'm4-video-book-select', 'm4-photo-book-select'];
+  selects.forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const currentVal = sel.value;
+    sel.innerHTML = '<option value="">-- Pilih Buku yang Dibahas --</option>' + books.map(b => `
+      <option value="${b.title}">${b.title} (${b.author})</option>
+    `).join('');
+    if (currentVal) sel.value = currentVal;
+  });
+};
+
+window.renderM4StudentWorks = function(showAll = false) {
+  const container = document.getElementById('m4-student-works-grid');
+  if (!container) return;
+
+  const allItems = window.appState.booktalks || [];
+  const itemsToRender = showAll ? allItems : allItems.slice(0, 4);
+
+  if (itemsToRender.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full py-8 text-center bg-white rounded-2xl border border-dashed border-slate-200 p-6">
+        <i class="fa-solid fa-microphone-slash text-3xl text-slate-300 mb-2"></i>
+        <p class="text-xs text-slate-500 font-medium">Belum ada karya teman yang diunggah. Jadilah yang pertama merekam!</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = itemsToRender.map(item => {
+    const thumbImg = item.thumb || THUMB_AISYAH;
+    const isLiked = item.isLiked || false;
+    const likeCount = item.likes || 0;
+    const duration = item.duration || '02:30';
+
+    return `
+      <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-md transition flex flex-col justify-between group cursor-pointer" onclick="openM4MediaPlayer('${item.id}')">
+        <!-- Thumbnail with Duration badge and Play icon -->
+        <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden">
+          <img src="${thumbImg}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+          <span class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1 shadow-xs">
+            <i class="fa-solid fa-play text-[8px]"></i> ${duration}
+          </span>
+          <span class="absolute top-2 right-2 bg-black/50 backdrop-blur-xs text-white text-[9px] font-semibold px-2 py-0.5 rounded-full capitalize">
+            ${item.format || 'Video'}
+          </span>
+        </div>
+
+        <!-- Meta info -->
+        <div class="p-3 flex-1 flex flex-col justify-between">
+          <div>
+            <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm line-clamp-1 leading-tight group-hover:text-sky-700 transition" title="${item.title}">
+              ${item.title}
+            </h4>
+            <div class="text-[11px] text-slate-500 mt-1 leading-tight">
+              <span class="font-medium text-slate-700 block truncate">${item.studentName}</span>
+              <span class="text-[10px] text-slate-400 font-semibold">${item.studentClass || 'VIII'}</span>
+            </div>
+          </div>
+
+          <!-- Likes footer -->
+          <div class="flex items-center justify-between mt-2.5 pt-1.5 border-t border-slate-100">
+            <span class="text-[10px] text-slate-400 font-medium">${item.date || 'Terbaru'}</span>
+            <button type="button" onclick="toggleM4Like(event, '${item.id}')" class="flex items-center gap-1.5 text-xs font-bold ${isLiked ? 'text-rose-600' : 'text-slate-500 hover:text-rose-600'} transition py-0.5 px-1.5 rounded-lg hover:bg-rose-50" title="Sukai karya ini">
+              <i class="fa-solid fa-heart ${isLiked ? 'text-rose-500 animate-pulse' : 'text-rose-400'}"></i>
+              <span id="like-count-${item.id}">${likeCount}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.toggleM4AllWorksView = function() {
+  window.m4ShowAllWorks = !window.m4ShowAllWorks;
+  const btn = document.getElementById('m4-toggle-view-btn');
+  if (btn) {
+    btn.innerHTML = window.m4ShowAllWorks
+      ? `<span>Tampilkan Ringkas</span> <i class="fa-solid fa-chevron-up text-[10px]"></i>`
+      : `<span>Lihat Semua</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>`;
+  }
+  window.renderM4StudentWorks(window.m4ShowAllWorks);
+};
+
+window.toggleM4Like = function(e, id) {
+  if (e && e.stopPropagation) e.stopPropagation();
+  const list = window.appState.booktalks || [];
+  const item = list.find(b => b.id === id);
+  if (!item) return;
+
+  item.isLiked = !item.isLiked;
+  item.likes = (item.likes || 0) + (item.isLiked ? 1 : -1);
+  if (item.likes < 0) item.likes = 0;
+
+  setStorage(STORAGE_KEYS.BOOKTALKS, list);
+
+  const countSpan = document.getElementById(`like-count-${id}`);
+  if (countSpan) {
+    countSpan.textContent = item.likes;
+  }
+
+  // Also update player like button if opened
+  const playerLikeCount = document.getElementById('m4-player-like-count');
+  const playerLikeBtn = document.getElementById('m4-player-like-btn');
+  if (playerLikeCount && playerLikeBtn) {
+    playerLikeCount.textContent = item.likes;
+    playerLikeBtn.className = item.isLiked 
+      ? 'flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-50 text-rose-600 font-bold text-xs border border-rose-200' 
+      : 'flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-rose-50 hover:text-rose-600 font-bold text-xs border border-slate-200 transition';
+  }
+
+  if (item.isLiked) {
+    showToast('Apresiasi Diberikan ❤️', `Kamu menyukai karya "${item.title}" oleh ${item.studentName}!`, 'info');
+  }
+  window.renderM4StudentWorks(window.m4ShowAllWorks);
+};
+
+// ==========================================
+// 10.B M4: AUDIO RECORDING STUDIO
+// ==========================================
+
+window.openM4VoiceRecordModal = function(mode = 'normal') {
+  const modal = document.getElementById('modal-m4-voice-record');
+  if (!modal) return;
+
+  window.populateM4BookSelects();
+  window.resetM4AudioRecording();
+
+  if (mode === 'challenge') {
+    const noteField = document.getElementById('m4-record-notes');
+    if (noteField && !noteField.value) {
+      noteField.value = 'Tantangan Book Talk 3 Menit: Cerita buku favoritku dengan penguasaan alur dan tokoh.';
+    }
+  }
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM4VoiceRecordModal = function() {
+  window.resetM4AudioRecording();
+  const modal = document.getElementById('modal-m4-voice-record');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.resetM4AudioRecording = function() {
+  const state = window.m4AudioState;
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  if (state.simulatedBarsInterval) clearInterval(state.simulatedBarsInterval);
+  if (state.mediaRecorder && state.mediaRecorder.state !== 'inactive') {
+    try { state.mediaRecorder.stop(); } catch (err) {}
+  }
+
+  state.isRecording = false;
+  state.isPaused = false;
+  state.seconds = 0;
+  state.audioChunks = [];
+  state.audioUrl = null;
+
+  const timerDisplay = document.getElementById('m4-record-timer');
+  if (timerDisplay) timerDisplay.textContent = '00:00';
+
+  const previewAudio = document.getElementById('m4-record-preview-audio');
+  if (previewAudio) {
+    previewAudio.src = '';
+    previewAudio.classList.add('hidden');
+  }
+
+  const btnStart = document.getElementById('btn-m4-record-start');
+  const btnStop = document.getElementById('btn-m4-record-stop');
+  const statusBadge = document.getElementById('m4-record-status-badge');
+
+  if (btnStart) {
+    btnStart.classList.remove('hidden');
+    btnStart.innerHTML = '<i class="fa-solid fa-circle text-rose-500 text-xs animate-ping mr-1"></i> Mulai Merekam';
+  }
+  if (btnStop) btnStop.classList.add('hidden');
+  if (statusBadge) {
+    statusBadge.textContent = 'Mikrofon Siap';
+    statusBadge.className = 'px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold flex items-center gap-1.5';
+  }
+
+  // Reset visualizer bars
+  const bars = document.querySelectorAll('.m4-sound-bar');
+  bars.forEach(bar => {
+    bar.style.height = '6px';
+    bar.classList.remove('bg-rose-500');
+    bar.classList.add('bg-slate-300');
+  });
+};
+
+window.startM4AudioRecording = async function() {
+  const state = window.m4AudioState;
+  state.isRecording = true;
+  state.isPaused = false;
+  state.seconds = 0;
+  state.audioChunks = [];
+
+  const statusBadge = document.getElementById('m4-record-status-badge');
+  if (statusBadge) {
+    statusBadge.textContent = 'Merekam Suara... (Maks 3 Menit)';
+    statusBadge.className = 'px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold flex items-center gap-1.5 animate-pulse';
+  }
+
+  const btnStart = document.getElementById('btn-m4-record-start');
+  const btnStop = document.getElementById('btn-m4-record-stop');
+  if (btnStart) btnStart.classList.add('hidden');
+  if (btnStop) btnStop.classList.remove('hidden');
+
+  // Try real MediaRecorder if browser supports and allows it
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      state.mediaRecorder = new MediaRecorder(stream);
+      state.mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) state.audioChunks.push(e.data);
+      };
+      state.mediaRecorder.onstop = () => {
+        const blob = new Blob(state.audioChunks, { type: 'audio/webm' });
+        state.audioUrl = URL.createObjectURL(blob);
+        const previewAudio = document.getElementById('m4-record-preview-audio');
+        if (previewAudio) {
+          previewAudio.src = state.audioUrl;
+          previewAudio.classList.remove('hidden');
+        }
+        // Stop all tracks
+        stream.getTracks().forEach(t => t.stop());
+      };
+      state.mediaRecorder.start();
+    } catch (err) {
+      console.warn('Real microphone not available, running high-fidelity simulation visualizer:', err);
+    }
+  }
+
+  // Timer counter
+  const timerDisplay = document.getElementById('m4-record-timer');
+  state.timerInterval = setInterval(() => {
+    state.seconds++;
+    const mins = String(Math.floor(state.seconds / 60)).padStart(2, '0');
+    const secs = String(state.seconds % 60).padStart(2, '0');
+    if (timerDisplay) timerDisplay.textContent = `${mins}:${secs}`;
+
+    // Auto-stop at 3 minutes (180s)
+    if (state.seconds >= 180) {
+      window.stopM4AudioRecording();
+      showToast('Waktu 3 Menit Habis!', 'Rekaman Book Talk telah mencapai batas maksimal 3 menit.', 'info');
+    }
+  }, 1000);
+
+  // Animated visualizer bars
+  const bars = document.querySelectorAll('.m4-sound-bar');
+  state.simulatedBarsInterval = setInterval(() => {
+    bars.forEach(bar => {
+      const h = Math.floor(Math.random() * 38) + 6;
+      bar.style.height = `${h}px`;
+      bar.classList.remove('bg-slate-300');
+      bar.classList.add('bg-rose-500');
+    });
+  }, 120);
+};
+
+window.stopM4AudioRecording = function() {
+  const state = window.m4AudioState;
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  if (state.simulatedBarsInterval) clearInterval(state.simulatedBarsInterval);
+
+  if (state.mediaRecorder && state.mediaRecorder.state !== 'inactive') {
+    try { state.mediaRecorder.stop(); } catch (err) {}
+  } else {
+    // If simulated
+    const previewAudio = document.getElementById('m4-record-preview-audio');
+    if (previewAudio) {
+      // Use fallback audio sound demo
+      previewAudio.classList.remove('hidden');
+    }
+  }
+
+  state.isRecording = false;
+
+  const statusBadge = document.getElementById('m4-record-status-badge');
+  if (statusBadge) {
+    statusBadge.textContent = 'Rekaman Selesai • Dengarkan Preview';
+    statusBadge.className = 'px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center gap-1.5';
+  }
+
+  const btnStart = document.getElementById('btn-m4-record-start');
+  const btnStop = document.getElementById('btn-m4-record-stop');
+  if (btnStart) {
+    btnStart.classList.remove('hidden');
+    btnStart.innerHTML = '<i class="fa-solid fa-rotate-left mr-1"></i> Rekam Ulang';
+  }
+  if (btnStop) btnStop.classList.add('hidden');
+
+  const bars = document.querySelectorAll('.m4-sound-bar');
+  bars.forEach(bar => {
+    bar.style.height = '8px';
+    bar.classList.remove('bg-rose-500');
+    bar.classList.add('bg-emerald-500');
+  });
+};
+
+window.submitM4VoiceRecording = function(e) {
+  if (e) e.preventDefault();
+  const user = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', kelas: 'VIII B' };
+  const title = document.getElementById('m4-record-title')?.value.trim();
+  const book = document.getElementById('m4-record-book-select')?.value.trim();
+  const format = document.getElementById('m4-record-category')?.value || 'Rekaman Suara Book Talk';
+  const notes = document.getElementById('m4-record-notes')?.value.trim();
+
+  if (!title) {
+    showToast('Judul Diperlukan', 'Silakan isi judul Book Talk atau ulasan lisanmu.', 'error');
+    return;
+  }
+
+  const durationSec = window.m4AudioState.seconds || 150;
+  const mins = String(Math.floor(durationSec / 60)).padStart(2, '0');
+  const secs = String(durationSec % 60).padStart(2, '0');
+  const durationStr = `${mins}:${secs}`;
+
+  const newBT = {
+    id: `bt-${Date.now()}`,
+    studentName: user.name,
+    studentClass: user.kelas || 'VIII B',
+    title: title,
+    bookDiscussed: book || 'Buku Pilihan',
+    format: format,
+    type: 'audio',
+    likes: 1,
+    isLiked: false,
+    duration: durationStr,
+    thumb: THUMB_AISYAH,
+    url: window.m4AudioState.audioUrl || 'demo-audio.mp3',
+    notes: notes || `Resensi lisan buku "${book || title}" durasi ${durationStr}.`,
+    date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+    comments: []
+  };
+
+  window.appState.booktalks.unshift(newBT);
+  setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+
+  window.addPoints(75, `Book Talk Rekam Suara: ${title}`);
+  showToast('Karya M4 Berhasil Disimpan!', `Rekaman suara "${title}" berhasil diunggah (+75 Poin).`, 'success');
+
+  window.closeM4VoiceRecordModal();
+  window.renderM4StudentWorks(window.m4ShowAllWorks);
+};
+
+// ==========================================
+// 10.C M4: UPLOAD VIDEO
+// ==========================================
+
+window.openM4VideoUploadModal = function() {
+  const modal = document.getElementById('modal-m4-upload-video');
+  if (!modal) return;
+  window.populateM4BookSelects();
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM4VideoUploadModal = function() {
+  const modal = document.getElementById('modal-m4-upload-video');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.submitM4VideoUpload = function(e) {
+  if (e) e.preventDefault();
+  const user = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', kelas: 'VIII B' };
+  const title = document.getElementById('m4-video-title')?.value.trim();
+  const url = document.getElementById('m4-video-url')?.value.trim();
+  const book = document.getElementById('m4-video-book-select')?.value.trim();
+  const format = document.getElementById('m4-video-category')?.value || 'Video Presentasi';
+  const notes = document.getElementById('m4-video-notes')?.value.trim();
+
+  if (!title || !url) {
+    showToast('Lengkapi Data', 'Silakan isi judul video dan tautan YouTube / Google Drive.', 'error');
+    return;
+  }
+
+  const newBT = {
+    id: `bt-${Date.now()}`,
+    studentName: user.name,
+    studentClass: user.kelas || 'VIII B',
+    title: title,
+    bookDiscussed: book || 'Buku Pilihan',
+    format: format,
+    type: 'video',
+    likes: 1,
+    isLiked: false,
+    duration: '02:40',
+    thumb: THUMB_RAKA,
+    url: url,
+    notes: notes || `Video presentasi resensi buku "${book || title}".`,
+    date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+    comments: []
+  };
+
+  window.appState.booktalks.unshift(newBT);
+  setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+
+  window.addPoints(75, `Upload Video M4: ${title}`);
+  showToast('Video Berhasil Diunggah!', `Video Book Talk "${title}" berhasil dibagikan (+75 Poin).`, 'success');
+
+  window.closeM4VideoUploadModal();
+  window.renderM4StudentWorks(window.m4ShowAllWorks);
+};
+
+// ==========================================
+// 10.D M4: UNGGAH FOTO DOKUMENTASI
+// ==========================================
+
+window.openM4PhotoUploadModal = function() {
+  const modal = document.getElementById('modal-m4-unggah-foto');
+  if (!modal) return;
+  window.populateM4BookSelects();
+  const preview = document.getElementById('m4-photo-preview');
+  if (preview) preview.classList.add('hidden');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM4PhotoUploadModal = function() {
+  const modal = document.getElementById('modal-m4-unggah-foto');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.handleM4PhotoSelect = function(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const preview = document.getElementById('m4-photo-preview');
+    const previewImg = document.getElementById('m4-photo-preview-img');
+    if (preview && previewImg) {
+      previewImg.src = e.target.result;
+      preview.classList.remove('hidden');
+    }
+  };
+  reader.readAsDataURL(file);
+};
+
+window.submitM4PhotoUpload = function(e) {
+  if (e) e.preventDefault();
+  const user = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', kelas: 'VIII B' };
+  const title = document.getElementById('m4-photo-title')?.value.trim();
+  const tag = document.getElementById('m4-photo-tag')?.value || 'Dokumentasi 15 Menit Membaca';
+  const notes = document.getElementById('m4-photo-caption')?.value.trim();
+  const previewImg = document.getElementById('m4-photo-preview-img');
+
+  if (!title) {
+    showToast('Judul Diperlukan', 'Silakan masukkan judul kegiatan dokumentasi.', 'error');
+    return;
+  }
+
+  const newBT = {
+    id: `bt-${Date.now()}`,
+    studentName: user.name,
+    studentClass: user.kelas || 'VIII B',
+    title: title,
+    format: tag,
+    type: 'photo',
+    likes: 1,
+    isLiked: false,
+    duration: 'Foto',
+    thumb: (previewImg && previewImg.src) ? previewImg.src : THUMB_AISYAH,
+    url: '#',
+    notes: notes || `Dokumentasi literasi: ${title}`,
+    date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+    comments: []
+  };
+
+  window.appState.booktalks.unshift(newBT);
+  setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+
+  window.addPoints(50, `Unggah Foto Dokumentasi: ${title}`);
+  showToast('Foto Berhasil Disimpan!', `Dokumentasi kegiatan literasi berhasil diunggah (+50 Poin).`, 'success');
+
+  window.closeM4PhotoUploadModal();
+  window.renderM4StudentWorks(window.m4ShowAllWorks);
+};
+
+// ==========================================
+// 10.E M4: BOOK TALK CHALLENGE (3 MENIT)
+// ==========================================
+
+window.openM4ChallengeModal = function() {
+  const modal = document.getElementById('modal-m4-challenge');
+  if (!modal) return;
+  window.resetM4ChallengeTimer();
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM4ChallengeModal = function() {
+  window.resetM4ChallengeTimer();
+  const modal = document.getElementById('modal-m4-challenge');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.startM4ChallengeTimer = function() {
+  const state = window.m4ChallengeState;
+  if (state.isRunning) return;
+
+  state.isRunning = true;
+  const startBtn = document.getElementById('btn-m4-challenge-timer-toggle');
+  if (startBtn) {
+    startBtn.innerHTML = '<i class="fa-solid fa-pause mr-1"></i> Jeda Timer';
+    startBtn.className = 'px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-black text-xs rounded-xl shadow-xs transition';
+    startBtn.onclick = window.pauseM4ChallengeTimer;
+  }
+
+  state.interval = setInterval(() => {
+    if (state.remainingSeconds > 0) {
+      state.remainingSeconds--;
+      window.updateM4ChallengeTimerDisplay();
+    } else {
+      window.pauseM4ChallengeTimer();
+      showToast('Waktu Tantangan Selesai!', 'Hebat! Waktu 3 menit Book Talk Challenge telah selesai.', 'success');
+    }
+  }, 1000);
+};
+
+window.pauseM4ChallengeTimer = function() {
+  const state = window.m4ChallengeState;
+  state.isRunning = false;
+  if (state.interval) clearInterval(state.interval);
+
+  const startBtn = document.getElementById('btn-m4-challenge-timer-toggle');
+  if (startBtn) {
+    startBtn.innerHTML = '<i class="fa-solid fa-play mr-1"></i> Lanjutkan';
+    startBtn.className = 'px-4 py-2 bg-[#0c3966] hover:bg-[#082949] text-white font-black text-xs rounded-xl shadow-xs transition';
+    startBtn.onclick = window.startM4ChallengeTimer;
+  }
+};
+
+window.resetM4ChallengeTimer = function() {
+  const state = window.m4ChallengeState;
+  state.isRunning = false;
+  if (state.interval) clearInterval(state.interval);
+  state.remainingSeconds = state.totalSeconds;
+  window.updateM4ChallengeTimerDisplay();
+
+  const startBtn = document.getElementById('btn-m4-challenge-timer-toggle');
+  if (startBtn) {
+    startBtn.innerHTML = '<i class="fa-solid fa-play mr-1"></i> Mulai Timer 3 Menit';
+    startBtn.className = 'px-4 py-2 bg-[#0c3966] hover:bg-[#082949] text-white font-black text-xs rounded-xl shadow-xs transition';
+    startBtn.onclick = window.startM4ChallengeTimer;
+  }
+};
+
+window.updateM4ChallengeTimerDisplay = function() {
+  const state = window.m4ChallengeState;
+  const mins = String(Math.floor(state.remainingSeconds / 60)).padStart(2, '0');
+  const secs = String(state.remainingSeconds % 60).padStart(2, '0');
+
+  const display = document.getElementById('m4-challenge-timer-num');
+  if (display) display.textContent = `${mins}:${secs}`;
+
+  const bar = document.getElementById('m4-challenge-progress-bar');
+  if (bar) {
+    const pct = ((state.totalSeconds - state.remainingSeconds) / state.totalSeconds) * 100;
+    bar.style.width = `${pct}%`;
+  }
+};
+
+// ==========================================
+// 10.F M4: MEDIA PLAYER MODAL
+// ==========================================
+
+window.activeM4PlayerItem = null;
+
+window.openM4MediaPlayer = function(id) {
+  const list = window.appState.booktalks || [];
+  const item = list.find(b => b.id === id);
+  if (!item) return;
+
+  window.activeM4PlayerItem = item;
+  const modal = document.getElementById('modal-m4-media-player');
+  if (!modal) return;
+
+  // Title & Metadata
+  const titleEl = document.getElementById('m4-player-title');
+  if (titleEl) titleEl.textContent = item.title || 'Book Talk Siswa';
+
+  const creatorEl = document.getElementById('m4-player-creator');
+  if (creatorEl) creatorEl.textContent = `${item.studentName || 'Siswa'} (${item.studentClass || 'VIII'})`;
+
+  const bookEl = document.getElementById('m4-player-book');
+  if (bookEl) bookEl.textContent = item.bookTitle || item.book || 'Buku Bacaan';
+
+  const studentEl = document.getElementById('m4-player-student');
+  if (studentEl) studentEl.textContent = `${item.studentName || 'Siswa'} (${item.studentClass || 'VIII'})`;
+
+  const formatEl = document.getElementById('m4-player-format');
+  if (formatEl) formatEl.textContent = item.format || 'Video Book Talk';
+
+  const durationEl = document.getElementById('m4-player-duration');
+  if (durationEl) durationEl.textContent = item.duration || '02:30';
+
+  const dateEl = document.getElementById('m4-player-date');
+  if (dateEl) dateEl.textContent = item.date || 'Baru Saja';
+
+  const notesEl = document.getElementById('m4-player-notes');
+  if (notesEl) notesEl.textContent = item.notes || 'Ulasan lisan karya siswa SMP Negeri 2 Kasihan.';
+
+  const thumbEl = document.getElementById('m4-player-thumb');
+  if (thumbEl) thumbEl.src = item.thumb || THUMB_AISYAH;
+
+  // Render media screen inside m4-player-container
+  const playerBox = document.getElementById('m4-player-container');
+  if (playerBox) {
+    const isAudio = item.format && item.format.toLowerCase().includes('audio');
+    const isPhoto = item.format && item.format.toLowerCase().includes('foto');
+    if (isAudio) {
+      playerBox.innerHTML = `
+        <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center text-white space-y-4">
+          <div class="w-16 h-16 rounded-full bg-rose-500/20 border-2 border-rose-500/40 flex items-center justify-center text-rose-400 text-2xl animate-pulse">
+            <i class="fa-solid fa-microphone"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-white">${item.title}</h4>
+            <p class="text-xs text-rose-300 mt-0.5">Rekaman Suara Book Talk &bull; Durasi ${item.duration || '02:15'}</p>
+          </div>
+          <audio controls class="w-full max-w-sm rounded-xl" autoplay>
+            <source src="${item.url || '#'}" type="audio/mpeg">
+            Browser tidak mendukung pemutar audio.
+          </audio>
+        </div>
+      `;
+    } else if (isPhoto) {
+      playerBox.innerHTML = `
+        <div class="w-full h-full flex flex-col items-center justify-center bg-black/40 p-2">
+          <img src="${item.thumb || THUMB_AISYAH}" alt="${item.title}" class="max-h-[340px] w-auto object-contain rounded-xl shadow-lg" />
+        </div>
+      `;
+    } else {
+      playerBox.innerHTML = `
+        <div class="relative w-full h-full flex items-center justify-center bg-black/60 group">
+          <img src="${item.thumb || THUMB_AISYAH}" alt="${item.title}" class="w-full h-[280px] sm:h-[320px] object-cover opacity-70" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 flex flex-col justify-between p-4 sm:p-5">
+            <div class="flex items-center justify-between text-white text-xs">
+              <span class="bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-xs font-semibold flex items-center gap-1.5">
+                <i class="fa-solid fa-video text-sky-400"></i> ${item.format || 'Video HD'}
+              </span>
+              <span class="bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-xs font-mono font-bold">
+                ${item.duration || '02:45'}
+              </span>
+            </div>
+            <div class="flex items-center justify-center">
+              <button type="button" onclick="showToast('Memutar Video', 'Memutar video Book Talk: ${item.title}', 'info')" class="w-16 h-16 rounded-full bg-white/90 hover:bg-white text-slate-900 flex items-center justify-center text-xl shadow-2xl pl-1 group-hover:scale-110 active:scale-95 transition">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <p class="text-white text-xs font-medium line-clamp-2 drop-shadow-md">
+              ${item.notes || 'Ulasan menarik seputar karakter dan alur cerita buku.'}
+            </p>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Like stats & button state
+  const likesDisplay = document.getElementById('m4-player-likes');
+  if (likesDisplay) {
+    likesDisplay.textContent = `${item.likes || 0} Suka`;
+  }
+  const likeCount = document.getElementById('m4-player-like-count');
+  if (likeCount) likeCount.textContent = item.likes || 0;
+
+  const likeBtn = document.getElementById('m4-player-like-btn');
+  if (likeBtn) {
+    if (item.isLiked) {
+      likeBtn.classList.remove('bg-rose-50', 'text-rose-600');
+      likeBtn.classList.add('bg-rose-600', 'text-white');
+    } else {
+      likeBtn.classList.remove('bg-rose-600', 'text-white');
+      likeBtn.classList.add('bg-rose-50', 'text-rose-600');
+    }
+  }
+
+  // Comments count & list
+  const commentCountEl = document.getElementById('m4-player-comment-count');
+  const comments = item.comments || [];
+  if (commentCountEl) {
+    commentCountEl.textContent = `${comments.length} Komentar`;
+  }
+
+  window.renderM4PlayerComments(item);
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+};
+
+window.closeM4MediaPlayer = function() {
+  const modal = document.getElementById('modal-m4-media-player');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+  window.activeM4PlayerItem = null;
+};
+
+window.renderM4PlayerComments = function(item) {
+  const container = document.getElementById('m4-comments-container') || document.getElementById('m4-player-comments-list');
+  if (!container) return;
+
+  const comments = item.comments || [];
+  if (comments.length === 0) {
+    container.innerHTML = `
+      <p class="text-[11px] text-slate-400 italic py-3 text-center">Belum ada komentar. Berikan apresiasi atau pertanyaan pertamamu untuk teman!</p>
+    `;
+    return;
+  }
+
+  container.innerHTML = comments.map(c => `
+    <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 text-xs">
+      <div class="flex items-center justify-between mb-0.5">
+        <span class="font-bold text-slate-800">${c.name}</span>
+        <span class="text-[10px] text-slate-400">${c.time || 'Baru saja'}</span>
+      </div>
+      <p class="text-slate-600 text-[11px] leading-snug">${c.text}</p>
+    </div>
+  `).join('');
+};
+
+window.addM4Comment = function(e) {
+  if (e) e.preventDefault();
+  const input = document.getElementById('m4-comment-input') || document.getElementById('m4-player-comment-input');
+  if (!input || !input.value.trim() || !window.activeM4PlayerItem) return;
+
+  const user = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan' };
+  const newComment = {
+    name: user.name,
+    text: input.value.trim(),
+    time: 'Baru saja'
+  };
+
+  if (!window.activeM4PlayerItem.comments) {
+    window.activeM4PlayerItem.comments = [];
+  }
+  window.activeM4PlayerItem.comments.push(newComment);
+  setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+
+  input.value = '';
+  window.renderM4PlayerComments(window.activeM4PlayerItem);
+
+  const commentCountEl = document.getElementById('m4-player-comment-count');
+  if (commentCountEl) {
+    commentCountEl.textContent = `${window.activeM4PlayerItem.comments.length} Komentar`;
+  }
+
+  if (typeof window.renderM4StudentWorks === 'function') {
+    window.renderM4StudentWorks();
+  }
+
+  showToast('Apresiasi Terkirim!', 'Komentarmu telah ditambahkan pada karya ini.', 'success');
+};
+
+window.addM4PlayerComment = window.addM4Comment;
+
+window.toggleM4PlayerLike = function() {
+  if (!window.activeM4PlayerItem) return;
+  const item = window.activeM4PlayerItem;
+  item.isLiked = !item.isLiked;
+  item.likes = (item.likes || 0) + (item.isLiked ? 1 : -1);
+  if (item.likes < 0) item.likes = 0;
+
+  setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+
+  const likesDisplay = document.getElementById('m4-player-likes');
+  if (likesDisplay) likesDisplay.textContent = `${item.likes} Suka`;
+
+  const likeCount = document.getElementById('m4-player-like-count');
+  if (likeCount) likeCount.textContent = item.likes;
+
+  const likeBtn = document.getElementById('m4-player-like-btn');
+  if (likeBtn) {
+    if (item.isLiked) {
+      likeBtn.classList.remove('bg-rose-50', 'text-rose-600');
+      likeBtn.classList.add('bg-rose-600', 'text-white');
+    } else {
+      likeBtn.classList.remove('bg-rose-600', 'text-white');
+      likeBtn.classList.add('bg-rose-50', 'text-rose-600');
+    }
+  }
+
+  if (typeof window.renderM4StudentWorks === 'function') {
+    window.renderM4StudentWorks();
+  }
+
+  showToast(item.isLiked ? 'Menyukai Karya' : 'Batal Menyukai', item.isLiked ? 'Apresiasimu telah dicatat!' : 'Batal menyukai karya.', 'info');
+};
+
+window.shareM4Work = function() {
+  if (!window.activeM4PlayerItem) return;
+  const title = window.activeM4PlayerItem.title || 'Book Talk SMPN 2 Kasihan';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(window.location.href);
+    showToast('Tautan Disalin!', `Tautan karya "${title}" berhasil disalin ke clipboard.`, 'success');
+  } else {
+    showToast('Bagikan Karya', `Bagikan karya "${title}" kepada teman-teman kelasmu!`, 'info');
+  }
+};
+
+// Photo Upload UI Handlers
+window.handleM4PhotoSelected = function(e) {
+  const file = e.target.files && e.target.files[0];
+  if (file) {
+    const filenameEl = document.getElementById('m4-photo-filename');
+    const previewBox = document.getElementById('m4-photo-preview-box');
+    if (filenameEl) filenameEl.textContent = file.name;
+    if (previewBox) previewBox.classList.remove('hidden');
+  }
+};
+
+window.clearM4PhotoSelected = function() {
+  const input = document.getElementById('m4-photo-file');
+  if (input) input.value = '';
+  const previewBox = document.getElementById('m4-photo-preview-box');
+  if (previewBox) previewBox.classList.add('hidden');
+};
+
+// Challenge modal direct action
+window.startChallengeFromModal = function() {
+  window.closeM4ChallengeModal();
+  window.openM4VoiceRecordModal('challenge');
+};
+
+// ==========================================
+// 10.G M4: PANDUAN MODAL
+// ==========================================
+
+window.openM4HelpGuideModal = function() {
+  const modal = document.getElementById('modal-m4-help');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeM4HelpGuideModal = function() {
+  const modal = document.getElementById('modal-m4-help');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+// Backward-compatible booktalk list renderer
 window.renderBooktalkList = function() {
   const container = document.getElementById('booktalk-recent-list');
   if (!container) return;
 
-  const list = window.appState.booktalks;
+  const list = window.appState.booktalks || [];
   container.innerHTML = list.map(bt => `
     <div class="p-3 bg-purple-50/60 rounded-xl border border-purple-100 flex items-start gap-3 text-xs">
       <div class="w-8 h-8 rounded-lg bg-purple-200 text-purple-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -3287,112 +4778,1108 @@ window.renderBooktalkList = function() {
 // 11. M5: MENGAPRESIASI CONTROLLER
 // ==========================================
 
-window.renderApresiasiFeed = function() {
-  const container = document.getElementById('apresiasi-feed-list');
+function getM5CoverSvg(w) {
+  if (w.coverType === 'laut-bercerita' || w.id === 'w-laut-bercerita' || w.title === 'Laut Bercerita') {
+    return `
+      <svg viewBox="0 0 200 240" class="w-full h-full object-cover select-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad-laut-${w.id || '1'}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#fda4af"/>
+            <stop offset="45%" stop-color="#fed7aa"/>
+            <stop offset="78%" stop-color="#38bdf8"/>
+            <stop offset="100%" stop-color="#0369a1"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="240" fill="url(#grad-laut-${w.id || '1'})"/>
+        <circle cx="100" cy="85" r="30" fill="#ffffff" opacity="0.65"/>
+        <circle cx="100" cy="85" r="20" fill="#ffffff" opacity="0.9"/>
+        <!-- Seagulls -->
+        <path d="M50 65 Q60 58 70 65 Q80 58 90 65" stroke="#be123c" stroke-width="1.5" fill="none" opacity="0.7"/>
+        <path d="M120 50 Q128 44 136 50 Q144 44 152 50" stroke="#be123c" stroke-width="1.2" fill="none" opacity="0.6"/>
+        <!-- Waves -->
+        <path d="M0 160 Q50 148 100 160 T200 160 L200 240 L0 240 Z" fill="#0284c7" opacity="0.8"/>
+        <path d="M0 182 Q50 172 100 182 T200 182 L200 240 L0 240 Z" fill="#0369a1"/>
+        <path d="M0 206 Q50 198 100 206 T200 206 L200 240 L0 240 Z" fill="#075985"/>
+        <!-- Silhouette of reader on shoreline rock -->
+        <ellipse cx="140" cy="178" rx="20" ry="8" fill="#1e293b"/>
+        <circle cx="140" cy="154" r="5" fill="#0f172a"/>
+        <path d="M136 160 Q140 157 144 160 L147 175 L133 175 Z" fill="#0f172a"/>
+        <!-- Book in hand -->
+        <polygon points="144,166 151,163 151,170 144,172" fill="#fed7aa"/>
+        <!-- Cover Title Box -->
+        <rect x="16" y="20" width="168" height="42" rx="8" fill="rgba(255,255,255,0.92)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+        <text x="100" y="38" font-size="12" font-weight="900" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#991b1b" letter-spacing="1">LAUT BERCERITA</text>
+        <text x="100" y="52" font-size="8.5" font-weight="700" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#475569">LEILA S. CHUDORI</text>
+      </svg>
+    `;
+  }
+
+  if (w.coverType === 'laskar-pelangi' || w.id === 'w-laskar-pelangi' || (w.title && w.title.includes('Laskar Pelangi'))) {
+    return `
+      <svg viewBox="0 0 200 240" class="w-full h-full object-cover select-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad-laskar-${w.id || 'lp'}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#38bdf8"/>
+            <stop offset="28%" stop-color="#818cf8"/>
+            <stop offset="55%" stop-color="#f472b6"/>
+            <stop offset="80%" stop-color="#fb923c"/>
+            <stop offset="100%" stop-color="#fdba74"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="240" fill="url(#grad-laskar-${w.id || 'lp'})"/>
+        <!-- Small Bentang logo top left -->
+        <text x="16" y="24" font-size="7.5" font-weight="800" fill="#ffffff" opacity="0.9" letter-spacing="0.5">bentang</text>
+        <!-- Golden Sun circle -->
+        <circle cx="170" cy="36" r="13" fill="#fef08a" opacity="0.9"/>
+        <!-- Stars -->
+        <circle cx="42" cy="40" r="1.5" fill="#ffffff" opacity="0.9"/>
+        <circle cx="85" cy="26" r="1.8" fill="#ffffff" opacity="0.95"/>
+        <circle cx="130" cy="52" r="1.2" fill="#ffffff" opacity="0.8"/>
+        <!-- Script text Laskar -->
+        <text x="74" y="60" font-size="14" font-style="italic" font-weight="700" font-family="'Caveat', 'Brush Script MT', cursive, sans-serif" fill="#ffffff">Laskar</text>
+        <!-- Bold Title Pelangi -->
+        <text x="100" y="92" font-size="28" font-weight="900" font-family="'Plus Jakarta Sans', system-ui, sans-serif" text-anchor="middle" fill="#ffffff" letter-spacing="0.5">Pelangi</text>
+        <!-- Author subtitle -->
+        <text x="100" y="108" font-size="8" font-weight="700" font-family="system-ui, sans-serif" text-anchor="middle" fill="#ffffff" opacity="0.9" letter-spacing="1">ANDREA HIRATA</text>
+        <!-- Silhouette of hill ground at bottom -->
+        <path d="M0 190 Q50 176 100 184 Q150 192 200 180 L200 240 L0 240 Z" fill="#0f172a"/>
+        <!-- Silhouettes of student friends (Laskar Pelangi) standing together -->
+        <circle cx="28" cy="174" r="3.2" fill="#0f172a"/><rect x="26" y="177" width="4.5" height="15" fill="#0f172a"/>
+        <circle cx="44" cy="172" r="3.5" fill="#0f172a"/><rect x="41.5" y="175" width="5" height="17" fill="#0f172a"/>
+        <circle cx="62" cy="170" r="3.8" fill="#0f172a"/><rect x="59.5" y="173" width="5.5" height="19" fill="#0f172a"/>
+        <circle cx="80" cy="168" r="4" fill="#0f172a"/><rect x="77" y="172" width="6" height="20" fill="#0f172a"/>
+        <circle cx="100" cy="167" r="4.2" fill="#0f172a"/><rect x="97" y="171" width="6.5" height="21" fill="#0f172a"/>
+        <circle cx="120" cy="169" r="4" fill="#0f172a"/><rect x="117" y="173" width="6" height="20" fill="#0f172a"/>
+        <circle cx="140" cy="171" r="3.8" fill="#0f172a"/><rect x="137.5" y="174" width="5.5" height="19" fill="#0f172a"/>
+        <circle cx="158" cy="173" r="3.5" fill="#0f172a"/><rect x="155.5" y="176" width="5" height="17" fill="#0f172a"/>
+        <circle cx="174" cy="175" r="3.2" fill="#0f172a"/><rect x="172" y="178" width="4.5" height="15" fill="#0f172a"/>
+      </svg>
+    `;
+  }
+
+  if (w.coverType === 'jaga-bumi' || w.id === 'w-jaga-bumi' || (w.title && w.title.includes('Jaga Bumi'))) {
+    return `
+      <svg viewBox="0 0 200 240" class="w-full h-full object-cover select-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad-bumi-${w.id || '2'}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#bbf7d0"/>
+            <stop offset="55%" stop-color="#34d399"/>
+            <stop offset="100%" stop-color="#047857"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="240" fill="url(#grad-bumi-${w.id || '2'})"/>
+        <!-- Globe Circle -->
+        <circle cx="100" cy="122" r="46" fill="#38bdf8"/>
+        <!-- Continents -->
+        <path d="M78 104 Q94 92 106 105 Q118 114 112 128 Q96 135 84 122 Z" fill="#10b981"/>
+        <path d="M92 130 Q106 140 120 136 Q128 128 122 120 Z" fill="#10b981"/>
+        <path d="M68 118 Q74 110 80 114 Q78 126 70 124 Z" fill="#10b981"/>
+        <!-- Sprout emerging from Earth -->
+        <path d="M100 120 L100 82" stroke="#14532d" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="88" cy="78" rx="14" ry="7" transform="rotate(-32 88 78)" fill="#22c55e"/>
+        <ellipse cx="112" cy="78" rx="14" ry="7" transform="rotate(32 112 78)" fill="#15803d"/>
+        <!-- Sun rays -->
+        <circle cx="100" cy="82" r="4" fill="#fef08a"/>
+        <!-- Cover Title Box -->
+        <rect x="16" y="20" width="168" height="42" rx="8" fill="rgba(255,255,255,0.92)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+        <text x="100" y="37" font-size="12" font-weight="900" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#065f46" letter-spacing="0.5">JAGA BUMI</text>
+        <text x="100" y="52" font-size="8.5" font-weight="700" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#047857">UNTUK MASA DEPAN</text>
+      </svg>
+    `;
+  }
+
+  if (w.coverType === 'langit-sama' || w.id === 'w-langit-sama' || (w.title && w.title.includes('Langit Masih Sama'))) {
+    return `
+      <svg viewBox="0 0 200 240" class="w-full h-full object-cover select-none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad-langit-${w.id || '3'}" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#1e1b4b"/>
+            <stop offset="50%" stop-color="#4c1d95"/>
+            <stop offset="100%" stop-color="#831843"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="240" fill="url(#grad-langit-${w.id || '3'})"/>
+        <!-- Crescent Moon -->
+        <path d="M136 72 A 18 18 0 1 0 152 92 A 14 14 0 1 1 136 72 Z" fill="#fde047"/>
+        <!-- Stars -->
+        <circle cx="48" cy="62" r="2.2" fill="#ffffff"/>
+        <circle cx="82" cy="78" r="1.6" fill="#ffffff" opacity="0.85"/>
+        <circle cx="162" cy="50" r="2" fill="#ffffff"/>
+        <circle cx="38" cy="112" r="1.5" fill="#ffffff" opacity="0.8"/>
+        <circle cx="124" cy="118" r="2.2" fill="#ffffff" opacity="0.9"/>
+        <circle cx="170" cy="100" r="1.4" fill="#ffffff" opacity="0.75"/>
+        <!-- Hills silhouette -->
+        <path d="M0 168 Q60 148 120 172 Q160 156 200 176 L200 240 L0 240 Z" fill="#0f172a"/>
+        <!-- Stargazing figures -->
+        <circle cx="94" cy="164" r="4.5" fill="#e2e8f0"/>
+        <path d="M91 169 L97 169 L95 182 L93 182 Z" fill="#cbd5e1"/>
+        <circle cx="106" cy="165" r="4" fill="#e2e8f0"/>
+        <path d="M103 169 L109 169 L108 182 L105 182 Z" fill="#cbd5e1"/>
+        <!-- Cover Title Box -->
+        <rect x="16" y="20" width="168" height="42" rx="8" fill="rgba(255,255,255,0.92)" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+        <text x="100" y="37" font-size="11.5" font-weight="900" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#4338ca" letter-spacing="0.5">LANGIT MASIH SAMA</text>
+        <text x="100" y="52" font-size="8.5" font-weight="700" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#6d28d9">ANTOLOGI PUISI SISWA</text>
+      </svg>
+    `;
+  }
+
+  // Fallback cover graphic for custom created works
+  return `
+    <svg viewBox="0 0 200 240" class="w-full h-full object-cover select-none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad-def-${w.id || 'x'}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0284c7"/>
+          <stop offset="100%" stop-color="#0f172a"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="240" fill="url(#grad-def-${w.id || 'x'})"/>
+      <circle cx="100" cy="105" r="38" fill="rgba(255,255,255,0.1)"/>
+      <path d="M80 120 L100 85 L120 120 Z" fill="#38bdf8" opacity="0.8"/>
+      <rect x="16" y="24" width="168" height="42" rx="8" fill="rgba(255,255,255,0.92)"/>
+      <text x="100" y="44" font-size="11" font-weight="900" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#0f172a">${(w.title || 'KARYA SISWA').slice(0, 18).toUpperCase()}</text>
+      <text x="100" y="56" font-size="8" font-weight="700" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#0284c7">SMPN 2 KASIHAN</text>
+    </svg>
+  `;
+}
+
+window.renderM5View = function() {
+  const currentTab = window.appState.m5Tab || 'galeri';
+  const currentCategory = window.appState.m5Category || 'semua';
+
+  // 1. Synchronize Mobile Tabs
+  const mobTabGaleri = document.getElementById('m5-mob-tab-galeri');
+  const mobTabPilihan = document.getElementById('m5-mob-tab-pilihan');
+  if (mobTabGaleri && mobTabPilihan) {
+    if (currentTab === 'galeri') {
+      mobTabGaleri.className = 'flex-1 py-1.5 rounded-full font-bold text-xs bg-[#1d75f2] text-white shadow-xs transition text-center';
+      mobTabPilihan.className = 'flex-1 py-1.5 rounded-full font-semibold text-xs text-white/90 hover:text-white transition text-center';
+    } else {
+      mobTabGaleri.className = 'flex-1 py-1.5 rounded-full font-semibold text-xs text-white/90 hover:text-white transition text-center';
+      mobTabPilihan.className = 'flex-1 py-1.5 rounded-full font-bold text-xs bg-[#1d75f2] text-white shadow-xs transition text-center';
+    }
+  }
+
+  // 2. Synchronize Desktop Tabs
+  const deskTabGaleri = document.getElementById('m5-desk-tab-galeri');
+  const deskTabPilihan = document.getElementById('m5-desk-tab-pilihan');
+  if (deskTabGaleri && deskTabPilihan) {
+    if (currentTab === 'galeri') {
+      deskTabGaleri.className = 'px-5 py-2 rounded-xl font-bold text-xs bg-[#1d75f2] text-white shadow-xs transition';
+      deskTabPilihan.className = 'px-5 py-2 rounded-xl font-semibold text-xs text-slate-700 hover:text-slate-900 transition';
+    } else {
+      deskTabGaleri.className = 'px-5 py-2 rounded-xl font-semibold text-xs text-slate-700 hover:text-slate-900 transition';
+      deskTabPilihan.className = 'px-5 py-2 rounded-xl font-bold text-xs bg-[#1d75f2] text-white shadow-xs transition';
+    }
+  }
+
+  // 3. Synchronize Category filter pills
+  document.querySelectorAll('.m5-cat-pill').forEach(btn => {
+    const cat = btn.getAttribute('data-cat');
+    if (cat === currentCategory) {
+      btn.className = 'm5-cat-pill px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-white transition shrink-0';
+    } else {
+      btn.className = 'm5-cat-pill px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition shrink-0';
+    }
+  });
+
+  // 4. Render Works Feed
+  window.renderM5Works();
+};
+
+window.renderM5Works = function() {
+  const container = document.getElementById('m5-works-list');
   if (!container) return;
 
-  const works = window.appState.works;
-  container.innerHTML = works.map(w => `
-    <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow space-y-4">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <img src="${w.authorAvatar}" class="w-10 h-10 rounded-full object-cover border border-slate-200" />
-          <div>
-            <h4 class="font-bold text-slate-800 text-sm">${w.authorName}</h4>
-            <p class="text-xs text-slate-400">Kelas ${w.authorClass} • SMPN 2 Kasihan • ${w.date}</p>
-          </div>
+  const currentTab = window.appState.m5Tab || 'galeri';
+  const currentCategory = window.appState.m5Category || 'semua';
+  const searchQuery = (window.appState.m5SearchQuery || '').toLowerCase().trim();
+
+  let works = window.appState.works || [];
+  if (!Array.isArray(works)) works = [];
+
+  // Filter by Tab
+  if (currentTab === 'pilihan') {
+    works = works.filter(w => w.isFeatured);
+  }
+
+  // Filter by Category
+  if (currentCategory !== 'semua') {
+    works = works.filter(w => (w.category || '').toLowerCase() === currentCategory.toLowerCase());
+  }
+
+  // Filter by Search Query
+  if (searchQuery) {
+    works = works.filter(w => {
+      const matchTitle = (w.title || '').toLowerCase().includes(searchQuery);
+      const matchAuthor = (w.authorName || '').toLowerCase().includes(searchQuery);
+      const matchClass = (w.authorClass || '').toLowerCase().includes(searchQuery);
+      const matchQuote = (w.quote || '').toLowerCase().includes(searchQuery);
+      const matchContent = (w.content || '').toLowerCase().includes(searchQuery);
+      return matchTitle || matchAuthor || matchClass || matchQuote || matchContent;
+    });
+  }
+
+  // Update Status and Count Badges
+  const countBadge = document.getElementById('m5-works-count');
+  if (countBadge) {
+    countBadge.textContent = `${works.length} Karya`;
+  }
+
+  const modeBadge = document.getElementById('m5-current-mode-badge');
+  if (modeBadge) {
+    if (currentTab === 'pilihan') {
+      modeBadge.textContent = 'Menampilkan Karya Pilihan Terbaik';
+    } else if (currentCategory !== 'semua') {
+      modeBadge.textContent = `Kategori: ${currentCategory}`;
+    } else if (searchQuery) {
+      modeBadge.textContent = `Hasil Pencarian: "${window.appState.m5SearchQuery}"`;
+    } else {
+      modeBadge.textContent = 'Menampilkan Galeri Karya Siswa';
+    }
+  }
+
+  if (works.length === 0) {
+    container.innerHTML = `
+      <div class="bg-white rounded-3xl p-8 border border-slate-200/90 text-center space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mx-auto text-xl">
+          <i class="fa-solid fa-folder-open"></i>
         </div>
-        <span class="text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full uppercase tracking-wider">${w.category}</span>
-      </div>
-
-      <div>
-        <h3 class="font-bold text-slate-900 text-base mb-1.5">${w.title}</h3>
-        <p class="text-xs text-slate-700 leading-relaxed line-clamp-3">${w.content}</p>
-        <button onclick="openKaryaModal(${w.id})" class="text-xs font-bold text-sky-600 hover:text-sky-700 mt-1 inline-block">
-          Baca Selengkapnya
+        <h4 class="font-extrabold text-slate-800 text-sm">Tidak Ada Karya yang Sesuai</h4>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto">
+          Coba ganti kata kunci pencarian atau pilih kategori lain untuk melihat karya literasi teman.
+        </p>
+        <button type="button" onclick="setM5Category('semua'); clearM5Search();" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl transition">
+          Reset Filter
         </button>
       </div>
+    `;
+    return;
+  }
 
-      <!-- Action buttons -->
-      <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
-        <button onclick="likeKarya(${w.id})" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-heart"></i> <span>${w.likes || 0}</span> Suka
-        </button>
-        <span class="text-xs text-slate-400">•</span>
-        <span class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-comments mr-1 text-slate-400"></i> ${w.comments ? w.comments.length : 0} Komentar</span>
-      </div>
+  const likedIds = window.appState.m5LikedWorkIds || [];
+  const bookmarkedIds = window.appState.m5BookmarkedIds || [];
 
-      <!-- Comment Section -->
-      <div class="space-y-2 pt-2">
-        <div class="space-y-2 max-h-48 overflow-y-auto">
-          ${(w.comments || []).map(c => `
-            <div class="p-2.5 bg-slate-50 rounded-xl text-xs flex items-start gap-2">
-              <span class="font-bold text-slate-800 shrink-0">${c.author}:</span>
-              <p class="text-slate-600 leading-snug flex-1">${c.text}</p>
+  container.innerHTML = works.map(w => {
+    const isLiked = likedIds.includes(String(w.id));
+    const isBookmarked = bookmarkedIds.includes(String(w.id));
+    const commentCount = (w.comments && w.comments.length) || w.commentsCount || 0;
+    const likeCount = w.likes || 0;
+    const coverSvg = getM5CoverSvg(w);
+
+    return `
+      <!-- M5 Work Card (Exact Match to User Reference Photo) -->
+      <article class="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition duration-200 space-y-3">
+        
+        <!-- Card Header: Avatar, Author, Class/Category, and Right Ellipsis Menu Button -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5 sm:gap-3">
+            <img src="${w.authorAvatar || AVATAR_AISYAH_M5}" alt="${w.authorName}" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border border-slate-200 shrink-0 shadow-2xs" />
+            <div class="leading-tight">
+              <h4 class="font-extrabold text-slate-900 text-xs sm:text-sm tracking-tight">${w.authorName}</h4>
+              <p class="text-[11px] sm:text-xs text-slate-400 font-medium">
+                ${w.authorClass || 'Kelas VIII'} • <span class="text-teal-700 font-semibold">${w.category}</span>
+              </p>
             </div>
-          `).join('')}
+          </div>
+
+          <button type="button" onclick="openM5OptionsMenu('${w.id}')" class="w-8 h-8 rounded-full hover:bg-slate-100 active:scale-95 flex items-center justify-center text-slate-400 hover:text-slate-600 transition" title="Opsi Karya">
+            <i class="fa-solid fa-ellipsis text-base sm:text-lg"></i>
+          </button>
         </div>
 
-        <!-- Add comment input -->
-        <form onsubmit="handleCommentSubmit(event, ${w.id})" class="flex gap-2 pt-1">
-          <input type="text" id="comment-input-${w.id}" placeholder="Tuliskan apresiasi konstruktif (bagus, hebat, kreatif)..." class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-sky-500" required />
-          <button type="submit" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition">
-            Kirim
-          </button>
-        </form>
+        <!-- Card Body: Left Thumbnail Cover Graphic + Right Detail Content -->
+        <div class="flex gap-3 sm:gap-4 items-start">
+          
+          <!-- Left Cover Thumbnail (Aspect Ratio matching photo) -->
+          <div onclick="openM5DetailModal('${w.id}')" class="w-24 sm:w-32 h-28 sm:h-36 rounded-xl overflow-hidden shrink-0 shadow-2xs border border-slate-200/80 cursor-pointer group relative">
+            ${coverSvg}
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition flex items-center justify-center">
+              <span class="opacity-0 group-hover:opacity-100 bg-white/90 text-slate-800 text-[10px] font-bold px-2 py-1 rounded-md shadow-xs transition">
+                Baca
+              </span>
+            </div>
+          </div>
+
+          <!-- Right Content Column: Title, Italic Quote, Action Bar -->
+          <div class="flex-1 min-w-0 flex flex-col justify-between self-stretch">
+            
+            <div onclick="openM5DetailModal('${w.id}')" class="cursor-pointer group">
+              <h3 class="font-black text-slate-900 text-xs sm:text-base leading-snug group-hover:text-teal-700 transition truncate">
+                ${w.title}
+              </h3>
+              <p class="text-[11px] sm:text-xs text-slate-600 italic leading-relaxed line-clamp-3 sm:line-clamp-4 mt-1">
+                "${w.quote || (w.content ? w.content.slice(0, 110) + '...' : '')}"
+              </p>
+            </div>
+
+            <!-- Bottom Action Row: Like (Heart), Comment (Bubble), Bookmark (Ribbon) -->
+            <div class="flex items-center gap-5 sm:gap-6 pt-2.5 text-xs font-bold text-slate-600 select-none">
+              
+              <!-- Red Heart Like Button with Count -->
+              <button type="button" onclick="toggleM5Like('${w.id}')" class="flex items-center gap-1.5 active:scale-90 transition group" title="Suka Karya Ini">
+                <i class="fa-solid fa-heart text-sm sm:text-base transition-transform group-hover:scale-110 ${isLiked ? 'text-rose-500' : 'text-slate-300 hover:text-rose-400'}"></i>
+                <span class="text-xs sm:text-sm font-black ${isLiked ? 'text-rose-600' : 'text-slate-600'}">
+                  ${likeCount}
+                </span>
+              </button>
+
+              <!-- Comment Bubble Button with Count -->
+              <button type="button" onclick="openM5CommentModal('${w.id}')" class="flex items-center gap-1.5 text-slate-600 hover:text-teal-700 active:scale-90 transition group" title="Tuliskan Apresiasi">
+                <i class="fa-regular fa-comment text-sm sm:text-base transition-transform group-hover:scale-110"></i>
+                <span class="text-xs sm:text-sm font-black">
+                  ${commentCount}
+                </span>
+              </button>
+
+              <!-- Bookmark Button -->
+              <button type="button" onclick="toggleM5Bookmark('${w.id}')" class="text-slate-400 hover:text-amber-500 active:scale-90 transition" title="Simpan Karya ke Koleksi">
+                <i class="${isBookmarked ? 'fa-solid text-amber-500' : 'fa-regular text-slate-400 hover:text-amber-500'} fa-bookmark text-sm sm:text-base"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </article>
+    `;
+  }).join('');
+};
+
+window.toggleM5Like = function(workId) {
+  const works = window.appState.works || [];
+  const w = works.find(x => String(x.id) === String(workId));
+  if (!w) return;
+
+  let likedIds = window.appState.m5LikedWorkIds || [];
+  const strId = String(workId);
+  const alreadyLiked = likedIds.includes(strId);
+
+  if (alreadyLiked) {
+    likedIds = likedIds.filter(id => id !== strId);
+    w.likes = Math.max(0, (w.likes || 1) - 1);
+  } else {
+    likedIds.push(strId);
+    w.likes = (w.likes || 0) + 1;
+    if (typeof window.addPoints === 'function') {
+      window.addPoints(5, 'Memberi Like Apresiasi pada Karya Teman');
+    }
+    showToast('Apresiasi Diterima!', `Kamu menyukai karya "${w.title}" (+5 Poin GLS)`, 'points');
+  }
+
+  window.appState.m5LikedWorkIds = likedIds;
+  setStorage('lentera_m5_likes', likedIds);
+  setStorage(STORAGE_KEYS.WORKS, works);
+
+  window.renderM5Works();
+  if (typeof window.renderGaleriKarya === 'function') {
+    window.renderGaleriKarya();
+  }
+};
+
+window.toggleM5Bookmark = function(workId) {
+  let bookmarkedIds = window.appState.m5BookmarkedIds || [];
+  const strId = String(workId);
+  const exists = bookmarkedIds.includes(strId);
+
+  const works = window.appState.works || [];
+  const w = works.find(x => String(x.id) === strId);
+  const title = w ? w.title : 'Karya';
+
+  if (exists) {
+    bookmarkedIds = bookmarkedIds.filter(id => id !== strId);
+    showToast('Koleksi Favorit', `"${title}" dihapus dari daftar simpan.`, 'info');
+  } else {
+    bookmarkedIds.push(strId);
+    showToast('Koleksi Favorit', `"${title}" berhasil disimpan ke daftar bacaan favoritmu!`, 'success');
+  }
+
+  window.appState.m5BookmarkedIds = bookmarkedIds;
+  setStorage('lentera_m5_bookmarks', bookmarkedIds);
+  window.renderM5Works();
+};
+
+window.setM5Tab = function(tab) {
+  window.appState.m5Tab = tab;
+  window.renderM5View();
+};
+
+window.setM5Category = function(cat) {
+  window.appState.m5Category = cat;
+  window.renderM5View();
+};
+
+window.handleM5SearchInput = function(val) {
+  window.appState.m5SearchQuery = val;
+  // Sync desktop and mobile search inputs
+  const mobInput = document.getElementById('m5-mobile-search-input');
+  const deskInput = document.getElementById('m5-desk-search-input');
+  if (mobInput && mobInput.value !== val) mobInput.value = val;
+  if (deskInput && deskInput.value !== val) deskInput.value = val;
+  window.renderM5Works();
+};
+
+window.toggleM5MobileSearch = function() {
+  const bar = document.getElementById('m5-mobile-search-bar');
+  const input = document.getElementById('m5-mobile-search-input');
+  if (!bar) return;
+  bar.classList.toggle('hidden');
+  if (!bar.classList.contains('hidden') && input) {
+    input.focus();
+  }
+};
+
+window.clearM5Search = function() {
+  window.appState.m5SearchQuery = '';
+  const mobInput = document.getElementById('m5-mobile-search-input');
+  const deskInput = document.getElementById('m5-desk-search-input');
+  if (mobInput) mobInput.value = '';
+  if (deskInput) deskInput.value = '';
+  window.renderM5Works();
+};
+
+window.openM5CommentModal = function(workId) {
+  const works = window.appState.works || [];
+  const w = works.find(x => String(x.id) === String(workId));
+  if (!w) return;
+
+  window.appState.activeM5WorkId = workId;
+
+  const modal = document.getElementById('modal-m5-comment');
+  const summaryBox = document.getElementById('modal-m5-work-summary');
+  const subtitle = document.getElementById('modal-m5-comment-subtitle');
+  const existingComments = document.getElementById('modal-m5-existing-comments');
+  const commentCountBadge = document.getElementById('modal-m5-comment-count-badge');
+  const input = document.getElementById('modal-m5-input-text');
+  const positiveTag = document.getElementById('modal-m5-positive-tag');
+
+  if (subtitle) {
+    subtitle.textContent = `Beri ulasan konstruktif untuk karya "${w.title}"`;
+  }
+
+  if (summaryBox) {
+    summaryBox.innerHTML = `
+      <img src="${w.authorAvatar || AVATAR_AISYAH_M5}" class="w-10 h-10 rounded-full object-cover border border-slate-200 shrink-0" />
+      <div class="min-w-0 flex-1">
+        <h4 class="font-extrabold text-slate-900 text-xs truncate">${w.title}</h4>
+        <p class="text-[11px] text-slate-500">${w.authorName} • ${w.authorClass} • <span class="font-semibold text-teal-700">${w.category}</span></p>
       </div>
-    </div>
-  `).join('');
+    `;
+  }
+
+  const comments = w.comments || [];
+  if (commentCountBadge) {
+    commentCountBadge.textContent = `${comments.length} ulasan`;
+  }
+
+  if (existingComments) {
+    if (comments.length === 0) {
+      existingComments.innerHTML = `
+        <p class="text-xs text-slate-400 italic py-2 text-center">Belum ada ulasan. Jadilah pembaca pertama yang memberikan apresiasi!</p>
+      `;
+    } else {
+      existingComments.innerHTML = comments.map(c => `
+        <div class="p-2.5 bg-slate-50 rounded-xl text-xs space-y-0.5 border border-slate-100">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-800">${c.author} <span class="text-[10px] font-normal text-slate-400">(${c.role === 'guru' ? 'Guru' : c.role === 'kepsek' ? 'Kepala Sekolah' : 'Siswa'})</span></span>
+            <span class="text-[10px] text-slate-400">${c.date || 'Baru saja'}</span>
+          </div>
+          <p class="text-slate-600 leading-snug">${c.text}</p>
+        </div>
+      `).join('');
+    }
+  }
+
+  if (input) input.value = '';
+  if (positiveTag) positiveTag.classList.add('hidden');
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
 };
 
-window.likeKarya = function(workId) {
-  const w = window.appState.works.find(x => x.id === workId);
-  if (!w) return;
-
-  w.likes = (w.likes || 0) + 1;
-  setStorage(STORAGE_KEYS.WORKS, window.appState.works);
-
-  window.addPoints(5, `Memberi Apresiasi Like pada Karya Teman`);
-  renderApresiasiFeed();
-  renderGaleriKarya();
+window.closeM5CommentModal = function() {
+  const modal = document.getElementById('modal-m5-comment');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 };
 
-window.handleCommentSubmit = function(e, workId) {
-  if (e) e.preventDefault();
-  const user = window.appState.currentUser;
-  if (!user) return;
+window.insertM5QuickComment = function(phrase) {
+  const input = document.getElementById('modal-m5-input-text');
+  if (!input) return;
+  input.value = phrase;
+  window.validateM5CommentText(phrase);
+  input.focus();
+};
 
-  const input = document.getElementById(`comment-input-${workId}`);
-  const commentText = input?.value.trim();
-  if (!commentText) return;
+window.validateM5CommentText = function(text) {
+  const positiveWords = ['bagus', 'keren', 'hebat', 'menginspirasi', 'rapi', 'kreatif', 'salut', 'suka', 'indah', 'menarik', 'luar biasa', 'apik', 'mantap', 'setuju', 'terharu', 'makna', 'pesan'];
+  const hasPositive = positiveWords.some(pw => (text || '').toLowerCase().includes(pw));
+  const tag = document.getElementById('modal-m5-positive-tag');
+  if (tag) {
+    tag.classList.toggle('hidden', !hasPositive);
+  }
+};
 
-  // Positive word filter
-  const positiveWords = ['bagus', 'keren', 'hebat', 'menginspirasi', 'rapi', 'kreatif', 'salut', 'suka', 'indah', 'menarik', 'luar biasa', 'apik', 'mantap', 'setuju'];
-  const hasPositive = positiveWords.some(w => commentText.toLowerCase().includes(w));
+window.submitM5ModalComment = function() {
+  const workId = window.appState.activeM5WorkId;
+  if (!workId) return;
 
-  const w = window.appState.works.find(x => x.id === workId);
+  const works = window.appState.works || [];
+  const w = works.find(x => String(x.id) === String(workId));
   if (!w) return;
+
+  const input = document.getElementById('modal-m5-input-text');
+  const commentText = (input ? input.value : '').trim();
+  if (!commentText) {
+    showToast('Perhatian', 'Silakan ketikkan kalimat apresiasi terlebih dahulu.', 'info');
+    return;
+  }
+
+  const currentUser = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', role: 'siswa' };
+  const positiveWords = ['bagus', 'keren', 'hebat', 'menginspirasi', 'rapi', 'kreatif', 'salut', 'suka', 'indah', 'menarik', 'luar biasa', 'apik', 'mantap', 'setuju', 'terharu', 'makna', 'pesan'];
+  const hasPositive = positiveWords.some(pw => commentText.toLowerCase().includes(pw));
 
   if (!w.comments) w.comments = [];
   w.comments.push({
     id: `c-${Date.now()}`,
-    author: user.name,
-    role: user.role,
+    author: currentUser.name,
+    role: currentUser.role,
     text: commentText,
     date: 'Hari ini'
   });
+  w.commentsCount = w.comments.length;
 
-  setStorage(STORAGE_KEYS.WORKS, window.appState.works);
+  setStorage(STORAGE_KEYS.WORKS, works);
 
   if (hasPositive) {
-    window.addPoints(10, `Komentar Positif & Apresiasi Teman`);
-    showToast('Apresiasi Diterima!', 'Komentar bernada positif berhasil disampaikan (+10 Poin).', 'success');
+    if (typeof window.addPoints === 'function') {
+      window.addPoints(30, 'Memberikan Apresiasi Positif & Konstruktif M5');
+    }
+    showToast('Apresiasi Terverifikasi!', 'Komentar apresiatif berhasil dikirim (+30 Poin GLS)', 'success');
   } else {
-    showToast('Komentar Terkirim', 'Komentarmu telah diposting.', 'info');
+    if (typeof window.addPoints === 'function') {
+      window.addPoints(10, 'Memberikan Komentar Karya Teman');
+    }
+    showToast('Komentar Terkirim', 'Ulasanmu berhasil diposting (+10 Poin)', 'info');
   }
 
-  input.value = '';
-  renderApresiasiFeed();
+  window.closeM5CommentModal();
+  window.renderM5Works();
+  if (typeof window.renderGaleriKarya === 'function') {
+    window.renderGaleriKarya();
+  }
+};
+
+window.openM5DetailModal = function(workId) {
+  const works = window.appState.works || [];
+  const w = works.find(x => String(x.id) === String(workId));
+  if (!w) return;
+
+  window.appState.activeM5WorkId = workId;
+
+  const modal = document.getElementById('modal-m5-detail');
+  const badge = document.getElementById('modal-m5-detail-badge');
+  const title = document.getElementById('modal-m5-detail-title');
+  const avatar = document.getElementById('modal-m5-detail-avatar');
+  const author = document.getElementById('modal-m5-detail-author');
+  const meta = document.getElementById('modal-m5-detail-meta');
+  const likes = document.getElementById('modal-m5-detail-likes');
+  const likeBtn = document.getElementById('modal-m5-detail-like-btn');
+  const coverBox = document.getElementById('modal-m5-detail-cover-box');
+  const content = document.getElementById('modal-m5-detail-content');
+  const btnApresiasi = document.getElementById('modal-m5-detail-action-apresiasi');
+
+  if (badge) badge.textContent = w.category;
+  if (title) title.textContent = w.title;
+  if (avatar) avatar.src = w.authorAvatar || AVATAR_AISYAH_M5;
+  if (author) author.textContent = w.authorName;
+  if (meta) meta.textContent = `${w.authorClass} • SMPN 2 Kasihan • ${w.date || 'Terkini'}`;
+  if (likes) likes.textContent = w.likes || 0;
+  if (content) content.textContent = w.content;
+  if (coverBox) coverBox.innerHTML = getM5CoverSvg(w);
+
+  if (likeBtn) {
+    likeBtn.onclick = () => {
+      window.toggleM5Like(workId);
+      if (likes) likes.textContent = w.likes || 0;
+    };
+  }
+
+  if (btnApresiasi) {
+    btnApresiasi.onclick = () => {
+      window.closeM5DetailModal();
+      window.openM5CommentModal(workId);
+    };
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeM5DetailModal = function() {
+  const modal = document.getElementById('modal-m5-detail');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openM5OptionsMenu = function(workId) {
+  const works = window.appState.works || [];
+  const w = works.find(x => String(x.id) === String(workId));
+  if (!w) return;
+
+  window.appState.activeM5WorkId = workId;
+
+  const modal = document.getElementById('modal-m5-options');
+  const title = document.getElementById('modal-m5-options-title');
+  if (title) title.textContent = `Opsi: ${w.title}`;
+
+  const btnRead = document.getElementById('btn-opt-read');
+  const btnComment = document.getElementById('btn-opt-comment');
+  const btnBookmark = document.getElementById('btn-opt-bookmark');
+  const btnShare = document.getElementById('btn-opt-share');
+
+  if (btnRead) {
+    btnRead.onclick = () => {
+      window.closeM5OptionsMenu();
+      window.openM5DetailModal(workId);
+    };
+  }
+
+  if (btnComment) {
+    btnComment.onclick = () => {
+      window.closeM5OptionsMenu();
+      window.openM5CommentModal(workId);
+    };
+  }
+
+  if (btnBookmark) {
+    btnBookmark.onclick = () => {
+      window.closeM5OptionsMenu();
+      window.toggleM5Bookmark(workId);
+    };
+  }
+
+  if (btnShare) {
+    btnShare.onclick = () => {
+      window.closeM5OptionsMenu();
+      showToast('Bagikan Rekomendasi', `Tautan karya "${w.title}" karya ${w.authorName} siap dibagikan ke mading literasi kelas!`, 'info');
+    };
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeM5OptionsMenu = function() {
+  const modal = document.getElementById('modal-m5-options');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openM5GuideModal = function() {
+  const modal = document.getElementById('modal-m5-guide');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeM5GuideModal = function() {
+  const modal = document.getElementById('modal-m5-guide');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+// Legacy compatibility handler for index.html or other modules
+window.renderApresiasiFeed = function() {
+  window.renderM5Works();
+};
+
+window.likeKarya = function(workId) {
+  window.toggleM5Like(workId);
+};
+
+window.handleCommentSubmit = function(e, workId) {
+  if (e) e.preventDefault();
+  window.openM5CommentModal(workId);
+};
+
+// ==========================================
+// 11b. PORTOFOLIO SAYA CONTROLLER (Full Screen Responsive for Laptop & Smartphone)
+// ==========================================
+
+window.getM5CoverSvg = getM5CoverSvg;
+
+window.setPortfolioCategory = function(cat) {
+  if (!window.appState) return;
+  window.appState.portfolioCategory = cat;
+  
+  // Update button pill styles
+  const pills = document.querySelectorAll('.port-category-pill');
+  pills.forEach(pill => {
+    pill.className = 'port-category-pill px-4 sm:px-5 py-1.5 rounded-xl text-xs font-medium transition bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 whitespace-nowrap';
+  });
+  
+  const activePill = document.getElementById(`port-tab-${cat}`);
+  if (activePill) {
+    activePill.className = 'port-category-pill px-4 sm:px-5 py-1.5 rounded-xl text-xs font-bold transition border border-sky-400 bg-sky-50 text-sky-600 whitespace-nowrap shadow-2xs';
+  }
+
+  // Update Section Title based on category
+  const titleEl = document.getElementById('portfolio-section-title');
+  if (titleEl) {
+    const titles = {
+      semua: 'Karya Terbaru',
+      jurnal: 'Jurnal Membaca (M1 & M2)',
+      karya: 'Karya Siswa (M3)',
+      video: 'Video & Presentasi (M4)',
+      apresiasi: 'Apresiasi & Ulasan Teman (M5)'
+    };
+    titleEl.textContent = titles[cat] || 'Karya Terbaru';
+  }
+
+  window.renderPortofolioView();
+};
+
+window.togglePortfolioViewAll = function() {
+  if (!window.appState) return;
+  window.appState.portfolioViewAll = !window.appState.portfolioViewAll;
+  
+  const btn = document.getElementById('portfolio-btn-viewall');
+  if (btn) {
+    btn.innerHTML = window.appState.portfolioViewAll 
+      ? `<span>Tampilkan Ringkas</span> <i class="fa-solid fa-chevron-up text-[10px]"></i>`
+      : `<span>Lihat Semua</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>`;
+  }
+
+  window.renderPortofolioView();
+};
+
+window.togglePortofolioDrawer = function() {
+  const drawer = document.getElementById('drawer-portfolio');
+  if (drawer) {
+    drawer.classList.toggle('hidden');
+  }
+};
+
+window.closePortofolioDrawer = function() {
+  const drawer = document.getElementById('drawer-portfolio');
+  if (drawer) {
+    drawer.classList.add('hidden');
+  }
+};
+
+window.openPortofolioNotificationModal = function() {
+  const m = document.getElementById('modal-portfolio-notification');
+  if (m) m.classList.remove('hidden');
+};
+
+window.closePortofolioNotificationModal = function() {
+  const m = document.getElementById('modal-portfolio-notification');
+  if (m) m.classList.add('hidden');
+};
+
+let activePortfolioWorkId = null;
+
+window.openPortfolioOptionsMenu = function(workId, e) {
+  if (e) e.stopPropagation();
+  activePortfolioWorkId = workId;
+  const works = window.appState?.m5Works || DEFAULT_WORKS;
+  const w = works.find(item => item.id === workId) || works[0];
+  
+  const titleEl = document.getElementById('portfolio-options-title');
+  if (titleEl && w) {
+    titleEl.textContent = w.title;
+  }
+
+  const readBtn = document.getElementById('port-opt-read-btn');
+  if (readBtn) {
+    readBtn.onclick = () => {
+      window.closePortfolioOptionsMenu();
+      window.readPortfolioWork(workId);
+    };
+  }
+
+  const commentBtn = document.getElementById('port-opt-comment-btn');
+  if (commentBtn) {
+    commentBtn.onclick = () => {
+      window.closePortfolioOptionsMenu();
+      window.openPortfolioCommentModal(workId);
+    };
+  }
+
+  const shareBtn = document.getElementById('port-opt-share-btn');
+  if (shareBtn) {
+    shareBtn.onclick = () => {
+      window.closePortfolioOptionsMenu();
+      if (typeof showToast === 'function') {
+        showToast('Tautan Disalin', `Tautan publik untuk "${w ? w.title : 'Karya'}" berhasil disalin ke papan klip!`, 'success');
+      }
+    };
+  }
+
+  const saveBtn = document.getElementById('port-opt-save-btn');
+  if (saveBtn) {
+    saveBtn.onclick = () => {
+      window.closePortfolioOptionsMenu();
+      if (typeof showToast === 'function') {
+        showToast('Portofolio Favorit', `"${w ? w.title : 'Karya'}" telah disematkan ke portofolio utama siswa.`, 'info');
+      }
+    };
+  }
+
+  const m = document.getElementById('modal-portfolio-options');
+  if (m) m.classList.remove('hidden');
+};
+
+window.closePortfolioOptionsMenu = function() {
+  const m = document.getElementById('modal-portfolio-options');
+  if (m) m.classList.add('hidden');
+};
+
+window.openPortfolioCommentModal = function(workId, e) {
+  if (e) e.stopPropagation();
+  activePortfolioWorkId = workId;
+  const works = window.appState?.m5Works || DEFAULT_WORKS;
+  const w = works.find(item => item.id === workId) || works[0];
+
+  const titleEl = document.getElementById('port-comment-work-title');
+  if (titleEl && w) {
+    titleEl.textContent = w.title;
+  }
+
+  const inputEl = document.getElementById('port-comment-input');
+  if (inputEl) inputEl.value = '';
+
+  const submitBtn = document.getElementById('port-comment-submit-btn');
+  if (submitBtn) {
+    submitBtn.onclick = () => {
+      const commentText = inputEl ? inputEl.value.trim() : '';
+      if (!commentText) {
+        if (typeof showToast === 'function') {
+          showToast('Pesan Kosong', 'Tuliskan sedikit apresiasi santun untuk kawanmu!', 'warning');
+        }
+        return;
+      }
+
+      if (w) {
+        if (!w.comments) w.comments = [];
+        w.comments.unshift({
+          id: 'c-' + Date.now(),
+          author: window.appState.currentUser?.name || 'Aisyah Putri',
+          role: 'siswa',
+          text: commentText,
+          date: 'Baru saja'
+        });
+        w.commentsCount = (w.commentsCount || 0) + 1;
+        saveState();
+      }
+
+      window.closePortfolioCommentModal();
+      if (typeof showToast === 'function') {
+        showToast('Apresiasi Terkirim! ✨', 'Terima kasih telah memberikan apresiasi santun. Kamu mendapatkan +30 Poin GLS!', 'success');
+      }
+      window.renderPortofolioView();
+    };
+  }
+
+  const m = document.getElementById('modal-portfolio-comment');
+  if (m) m.classList.remove('hidden');
+};
+
+window.closePortfolioCommentModal = function() {
+  const m = document.getElementById('modal-portfolio-comment');
+  if (m) m.classList.add('hidden');
+};
+
+window.togglePortfolioLike = function(workId, e) {
+  if (e) e.stopPropagation();
+  const works = window.appState?.m5Works || DEFAULT_WORKS;
+  const w = works.find(item => item.id === workId);
+  if (!w) return;
+
+  const key = `port_liked_${workId}`;
+  const isLiked = localStorage.getItem(key) === 'true';
+
+  if (isLiked) {
+    w.likes = Math.max(0, (w.likes || 1) - 1);
+    localStorage.removeItem(key);
+    if (typeof showToast === 'function') {
+      showToast('Batal Menyukai', `Menghapus apresiasi dari "${w.title}".`, 'info');
+    }
+  } else {
+    w.likes = (w.likes || 0) + 1;
+    localStorage.setItem(key, 'true');
+    if (typeof showToast === 'function') {
+      showToast('Apresiasi Diberikan! ❤️', `Kamu menyukai "${w.title}" (+10 Poin GLS)`, 'success');
+    }
+  }
+
+  saveState();
+  window.renderPortofolioView();
+};
+
+window.readPortfolioWork = function(workId) {
+  if (typeof window.openM5DetailModal === 'function') {
+    window.openM5DetailModal(workId);
+  } else {
+    navigateTo('m5');
+  }
+};
+
+window.renderPortofolioView = function() {
+  const container = document.getElementById('portfolio-items-container');
+  if (!container) return;
+
+  const user = window.appState?.currentUser || { name: 'Aisyah Putri', class: 'VIII C', level: 'Penulis Muda' };
+  
+  // Sync profile card info
+  const nameEl = document.getElementById('portfolio-user-name');
+  if (nameEl) nameEl.textContent = user.name || 'Aisyah Putri';
+
+  const classEl = document.getElementById('portfolio-user-class');
+  if (classEl) classEl.textContent = user.class || 'VIII C';
+
+  const levelEl = document.getElementById('portfolio-user-level');
+  if (levelEl) levelEl.textContent = user.level || 'Penulis Muda';
+
+  // Sync 5M milestone counts
+  const journals = window.appState?.journals || [];
+  const statBuku = document.getElementById('port-stat-buku');
+  if (statBuku) statBuku.textContent = Math.max(8, journals.length || 8);
+
+  const temuanList = window.appState?.findings || [];
+  const statTemuan = document.getElementById('port-stat-temuan');
+  if (statTemuan) statTemuan.textContent = Math.max(12, temuanList.length || 12);
+
+  const works = window.appState?.m5Works || DEFAULT_WORKS;
+  const statKarya = document.getElementById('port-stat-karya');
+  if (statKarya) statKarya.textContent = Math.max(5, works.length || 5);
+
+  const statPresentasi = document.getElementById('port-stat-presentasi');
+  if (statPresentasi) statPresentasi.textContent = '3';
+
+  const statApresiasi = document.getElementById('port-stat-apresiasi');
+  if (statApresiasi) {
+    const totalApresiasi = works.reduce((sum, item) => sum + (item.commentsCount || (item.comments ? item.comments.length : 0)), 0);
+    statApresiasi.textContent = Math.max(18, totalApresiasi || 18);
+  }
+
+  // Filter items according to active category
+  const activeCategory = window.appState?.portfolioCategory || 'semua';
+  let filteredItems = [];
+
+  if (activeCategory === 'semua') {
+    filteredItems = [...works];
+  } else if (activeCategory === 'jurnal') {
+    filteredItems = works.filter(w => (w.category && w.category.toLowerCase().includes('resensi')) || (w.title && w.title.toLowerCase().includes('resensi')) || (w.title && w.title.toLowerCase().includes('jurnal')));
+    if (filteredItems.length === 0) {
+      filteredItems = works.slice(0, 2);
+    }
+  } else if (activeCategory === 'karya') {
+    filteredItems = works.filter(w => (w.category && (w.category.toLowerCase().includes('poster') || w.category.toLowerCase().includes('puisi') || w.category.toLowerCase().includes('cerpen'))));
+    if (filteredItems.length === 0) {
+      filteredItems = works.slice(1, 3);
+    }
+  } else if (activeCategory === 'video') {
+    filteredItems = works.filter(w => (w.category && w.category.toLowerCase().includes('video')) || (w.title && w.title.toLowerCase().includes('video')));
+    if (filteredItems.length === 0) {
+      filteredItems = [
+        {
+          id: 'w-video-lp',
+          title: 'Video Book Talk – Laskar Pelangi',
+          date: '10 September 2026',
+          category: 'Video Menceritakan',
+          likes: 88,
+          commentsCount: 16,
+          coverType: 'laskar-pelangi'
+        },
+        {
+          id: 'w-video-sendang',
+          title: 'Video Storytelling – Legenda Sendang Kasihan',
+          date: '1 September 2026',
+          category: 'Video Menceritakan',
+          likes: 114,
+          commentsCount: 22,
+          coverType: 'jaga-bumi'
+        }
+      ];
+    }
+  } else if (activeCategory === 'apresiasi') {
+    filteredItems = [...works].sort((a, b) => (b.commentsCount || 0) - (a.commentsCount || 0));
+  }
+
+  // If view all is false, limit to top 3 items to match user screenshot precisely
+  const displayItems = window.appState?.portfolioViewAll ? filteredItems : filteredItems.slice(0, 3);
+
+  if (displayItems.length === 0) {
+    container.innerHTML = `
+      <div class="bg-white rounded-2xl p-8 text-center border border-slate-200 text-slate-400">
+        <i class="fa-solid fa-folder-open text-3xl mb-2 text-slate-300"></i>
+        <p class="font-bold text-sm text-slate-600">Belum ada karya dalam kategori ini</p>
+        <p class="text-xs text-slate-400 mt-1">Siswa dapat menambahkan karya baru melalui tahapan alur M3 atau M4.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = displayItems.map(item => {
+    const isLiked = localStorage.getItem(`port_liked_${item.id}`) === 'true';
+    const commentsNum = item.commentsCount !== undefined ? item.commentsCount : (item.comments ? item.comments.length : 0);
+    const coverSvg = typeof window.getM5CoverSvg === 'function' ? window.getM5CoverSvg(item) : '';
+
+    return `
+      <div class="bg-white rounded-2xl p-2.5 sm:p-3.5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition flex items-center gap-3 sm:gap-4 group">
+        <!-- Thumbnail Cover (Left) -->
+        <div onclick="readPortfolioWork('${item.id}')" class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 shadow-2xs relative border border-slate-100 cursor-pointer group-hover:scale-102 transition" title="Baca Karya">
+          ${coverSvg}
+        </div>
+
+        <!-- Details (Right) -->
+        <div class="flex-1 min-w-0 pr-1">
+          <h4 onclick="readPortfolioWork('${item.id}')" class="font-extrabold text-slate-900 text-xs sm:text-sm hover:text-sky-600 transition cursor-pointer line-clamp-1 leading-snug" title="${item.title}">
+            ${item.title}
+          </h4>
+          <p class="text-[11px] sm:text-xs text-slate-400 font-medium mt-0.5">${item.date || 'Terbit'}</p>
+
+          <!-- Action bar (Hearts, Comments, Ellipsis) -->
+          <div class="flex items-center gap-4 sm:gap-6 mt-2.5">
+            <!-- Heart button -->
+            <button type="button" onclick="togglePortfolioLike('${item.id}', event)" class="flex items-center gap-1.5 text-slate-600 hover:text-rose-500 transition active:scale-95 group/btn" title="Sukai Karya">
+              <i class="fa-solid fa-heart ${isLiked ? 'text-rose-500 animate-bounce' : 'text-rose-500'} text-xs sm:text-sm"></i>
+              <span class="text-xs font-bold text-slate-700">${item.likes || 0}</span>
+            </button>
+
+            <!-- Comment button -->
+            <button type="button" onclick="openPortfolioCommentModal('${item.id}', event)" class="flex items-center gap-1.5 text-slate-600 hover:text-sky-600 transition active:scale-95" title="Beri Apresiasi Santun">
+              <i class="fa-regular fa-comment text-slate-400 group-hover:text-slate-600 text-xs sm:text-sm"></i>
+              <span class="text-xs font-bold text-slate-700">${commentsNum}</span>
+            </button>
+
+            <!-- Ellipsis Options button -->
+            <button type="button" onclick="openPortfolioOptionsMenu('${item.id}', event)" class="ml-auto w-7 h-7 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center transition" title="Opsi Tindakan">
+              <i class="fa-solid fa-ellipsis text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 };
 
 // ==========================================
@@ -5389,6 +7876,21 @@ function bootstrapApp() {
   if (galeriSearch) {
     galeriSearch.addEventListener('input', () => filterGaleriKarya());
   }
+
+  // Responsive dynamic listener for full-screen M1, M4, M5 & Portofolio layouts
+  window.addEventListener('resize', () => {
+    if (window.appState && (window.appState.currentView === 'm1' || window.appState.currentView === 'm4' || window.appState.currentView === 'm5' || window.appState.currentView === 'portofolio')) {
+      const mainHeader = document.getElementById('main-header');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (window.innerWidth < 768) {
+        if (mainHeader) mainHeader.classList.add('hidden');
+        if (mobileNav) mobileNav.classList.add('hidden');
+      } else {
+        if (mainHeader) mainHeader.classList.remove('hidden');
+        if (mobileNav) mobileNav.classList.add('hidden');
+      }
+    }
+  });
 }
 
 if (document.readyState === 'loading') {
