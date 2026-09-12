@@ -637,7 +637,7 @@ function updateBerandaStats() {
   if (statWorks) statWorks.textContent = `${userWorks.length} Karya`;
 }
 
-// Student Phone Tab Controller
+// Student Tab Controller
 window.switchPhoneTab = function(tabName) {
   const tabs = ['beranda', 'buku', 'tantangan', 'notifikasi', 'profil'];
   tabs.forEach(t => {
@@ -654,8 +654,8 @@ window.switchPhoneTab = function(tabName) {
       const icon = navBtn.querySelector('i');
       const label = navBtn.querySelector('span');
       if (t === tabName) {
-        navBtn.classList.add('text-[#082e54]', 'font-bold');
-        navBtn.classList.remove('text-slate-400');
+        navBtn.classList.add('text-[#082e54]', 'font-bold', 'bg-sky-50');
+        navBtn.classList.remove('text-slate-500', 'text-slate-400');
         if (icon) {
           icon.classList.remove('text-slate-400');
           icon.classList.add('text-[#082e54]');
@@ -665,8 +665,8 @@ window.switchPhoneTab = function(tabName) {
           label.classList.add('text-[#082e54]', 'font-bold');
         }
       } else {
-        navBtn.classList.remove('text-[#082e54]', 'font-bold');
-        navBtn.classList.add('text-slate-400');
+        navBtn.classList.remove('text-[#082e54]', 'font-bold', 'bg-sky-50');
+        navBtn.classList.add('text-slate-500');
         if (icon) {
           icon.classList.remove('text-[#082e54]');
           icon.classList.add('text-slate-400');
@@ -1990,38 +1990,11 @@ window.filterGuruData = function() {
 };
 
 // ==========================================
-// 14.1 GURU PHONE MOCKUP CONTROLLERS
+// 14.1 GURU DASHBOARD TAB CONTROLLERS
 // ==========================================
 
 window.setGuruViewMode = function(mode) {
-  const mobileContainer = document.getElementById('guru-mobile-container');
-  const desktopContainer = document.getElementById('guru-desktop-container');
-  const btnMobile = document.getElementById('btn-mode-guru-mobile');
-  const btnDesktop = document.getElementById('btn-mode-guru-desktop');
-
-  if (mode === 'desktop') {
-    if (mobileContainer) mobileContainer.classList.add('hidden');
-    if (desktopContainer) desktopContainer.classList.remove('hidden');
-    if (btnMobile) {
-      btnMobile.classList.remove('bg-white', 'text-[#146f92]', 'shadow-xs');
-      btnMobile.classList.add('text-slate-600');
-    }
-    if (btnDesktop) {
-      btnDesktop.classList.add('bg-white', 'text-[#146f92]', 'shadow-xs', 'font-bold');
-      btnDesktop.classList.remove('text-slate-600');
-    }
-  } else {
-    if (mobileContainer) mobileContainer.classList.remove('hidden');
-    if (desktopContainer) desktopContainer.classList.add('hidden');
-    if (btnMobile) {
-      btnMobile.classList.add('bg-white', 'text-[#146f92]', 'shadow-xs', 'font-bold');
-      btnMobile.classList.remove('text-slate-600');
-    }
-    if (btnDesktop) {
-      btnDesktop.classList.remove('bg-white', 'text-[#146f92]', 'shadow-xs', 'font-bold');
-      btnDesktop.classList.add('text-slate-600');
-    }
-  }
+  // Retained for backward compatibility
 };
 
 window.switchGuruPhoneTab = function(tabName) {
@@ -2041,11 +2014,11 @@ window.switchGuruPhoneTab = function(tabName) {
 
     if (btn) {
       if (s === tabName) {
-        btn.classList.add('text-[#082e54]', 'font-black');
-        btn.classList.remove('text-slate-400', 'font-semibold');
+        btn.classList.add('text-[#16779e]', 'font-bold', 'bg-[#e8f4fd]');
+        btn.classList.remove('text-slate-500', 'hover:bg-slate-50');
       } else {
-        btn.classList.remove('text-[#082e54]', 'font-black');
-        btn.classList.add('text-slate-400', 'font-semibold');
+        btn.classList.remove('text-[#16779e]', 'font-bold', 'bg-[#e8f4fd]');
+        btn.classList.add('text-slate-500');
       }
     }
   });
@@ -2633,9 +2606,9 @@ window.submitPhoneChallenge = function() {
 // 18. APPLICATION BOOTSTRAPPER
 // ==========================================
 
-document.addEventListener('DOMContentLoaded', () => {
+function bootstrapApp() {
   // If user is already stored or default user, go to beranda or their respective role view
-  if (window.appState.currentUser) {
+  if (window.appState && window.appState.currentUser) {
     navigateTo(window.appState.currentUser.role === 'guru' ? 'guru' : (window.appState.currentUser.role === 'kepsek' ? 'sekolah' : 'beranda'));
   } else {
     navigateTo('login');
@@ -2646,4 +2619,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (galeriSearch) {
     galeriSearch.addEventListener('input', () => filterGaleriKarya());
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootstrapApp);
+} else {
+  bootstrapApp();
+}
