@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Siswa, Guru, dan Data Literasi Sekolah
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "journals": {
+      "title": "Jurnal Membaca",
+      "description": "Catatan membaca harian siswa 5M",
+      "type": "object",
+      "properties": {
+        "studentName": { "type": "string" },
+        "studentClass": { "type": "string" },
+        "bookTitle": { "type": "string" },
+        "pageStart": { "type": "number" },
+        "pageEnd": { "type": "number" },
+        "duration": { "type": "number" },
+        "summary": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "stars": { "type": "number" }
+      },
+      "required": ["studentName", "bookTitle"]
+    },
+    "reviews": {
+      "title": "Karya & Resensi",
+      "description": "Resensi, sinopsis, atau cerpen siswa",
+      "type": "object",
+      "properties": {
+        "authorName": { "type": "string" },
+        "authorClass": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "likes": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["authorName", "title"]
+    },
+    "settings": {
+      "title": "Pengaturan Sekolah",
+      "description": "Konfigurasi target literasi sekolah",
+      "type": "object",
+      "properties": {
+        "targetReadingMinutes": { "type": "number" },
+        "schoolName": { "type": "string" }
+      }
+    }
+  }
+}
