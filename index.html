@@ -543,18 +543,22 @@
               <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1">
                 <i class="fa-solid fa-bolt text-amber-500"></i> Akun Demo Cepat (1-Klik Masuk):
               </p>
-              <div class="grid grid-cols-3 gap-1.5">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                 <button type="button" onclick="fillQuickLogin('siswa1', 'siswa123', 'siswa')" class="p-2 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 border border-slate-200 rounded-xl text-left transition shadow-xs cursor-pointer">
                   <div class="font-bold text-[10px] text-sky-700 truncate">Siswa: Aisyah</div>
-                  <div class="text-[9px] text-slate-400 font-mono truncate">siswa1</div>
+                  <div class="text-[9px] text-slate-400 font-mono truncate">siswa1 (Kelas 8B)</div>
                 </button>
                 <button type="button" onclick="fillQuickLogin('guru1', 'guru123', 'guru')" class="p-2 bg-slate-50 hover:bg-purple-50 hover:border-purple-300 border border-slate-200 rounded-xl text-left transition shadow-xs cursor-pointer">
-                  <div class="font-bold text-[10px] text-purple-700 truncate">Guru: Bu Ratna</div>
-                  <div class="text-[9px] text-slate-400 font-mono truncate">guru1</div>
+                  <div class="font-bold text-[10px] text-purple-700 truncate">Wali Kelas: Bu Zusma</div>
+                  <div class="text-[9px] text-slate-400 font-mono truncate">guru1 (Wali 8B)</div>
                 </button>
                 <button type="button" onclick="fillQuickLogin('kepsek', 'admin123', 'kepsek')" class="p-2 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 rounded-xl text-left transition shadow-xs cursor-pointer">
-                  <div class="font-bold text-[10px] text-emerald-700 truncate">Kepsek / Admin</div>
-                  <div class="text-[9px] text-slate-400 font-mono truncate">kepsek</div>
+                  <div class="font-bold text-[10px] text-emerald-700 truncate">Kepsek: Bu Erna</div>
+                  <div class="text-[9px] text-slate-400 font-mono truncate">kepsek (Erna R, M.Pd.)</div>
+                </button>
+                <button type="button" onclick="fillQuickLogin('admin', 'admin123', 'admin')" class="p-2 bg-slate-50 hover:bg-amber-50 hover:border-amber-300 border border-slate-200 rounded-xl text-left transition shadow-xs cursor-pointer">
+                  <div class="font-bold text-[10px] text-amber-800 truncate">Administrator</div>
+                  <div class="text-[9px] text-slate-400 font-mono truncate">admin (Kelola Data)</div>
                 </button>
               </div>
             </div>
@@ -564,7 +568,7 @@
       </section>
 
       <!-- ================= 2. BERANDA SISWA VIEW ================= -->
-      <section id="view-beranda" class="w-full space-y-4 hidden">
+      <section id="view-beranda" class="w-full space-y-4 hidden pb-24">
         
         <!-- Application Dashboard Surface -->
         <div class="bg-white rounded-3xl shadow-sm border border-slate-200/90 overflow-hidden">
@@ -1498,14 +1502,17 @@
               <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                 <div>
                   <h3 class="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-book-open-reader text-[#00695c]"></i> Katalog Lengkap Buku Sekolah & e-Perpus
+                    <i class="fa-solid fa-book-open-reader text-[#00695c]"></i> Katalog Bahan Literasi Digital & e-Perpus
                   </h3>
-                  <p class="text-xs sm:text-sm text-slate-500">Koleksi buku fiksi, non-fiksi, sains, kearifan Jogja, dan dokumen resmi SOP</p>
+                  <p class="text-xs sm:text-sm text-slate-500">Koleksi digital lengkap: E-Book, Video Literasi, Gambar/Infografis edukasi, sains, kearifan Jogja & SOP</p>
                 </div>
 
-                <!-- Category Pills Toolbar -->
+                <!-- Category & Media Type Pills Toolbar -->
                 <div class="flex flex-wrap items-center gap-1.5">
-                  <button type="button" onclick="filterBooks('semua')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-[#00695c] text-white shadow-2xs transition" data-cat="semua">Semua</button>
+                  <button type="button" onclick="filterBooks('semua')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-[#00695c] text-white shadow-2xs transition" data-cat="semua">Semua Bahan</button>
+                  <button type="button" onclick="filterBooks('ebook')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-1" data-cat="ebook"><i class="fa-solid fa-book-bookmark text-sky-600"></i> E-Book</button>
+                  <button type="button" onclick="filterBooks('video')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-1" data-cat="video"><i class="fa-solid fa-play text-rose-500"></i> Video Literasi</button>
+                  <button type="button" onclick="filterBooks('gambar')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-1" data-cat="gambar"><i class="fa-solid fa-image text-emerald-600"></i> Gambar & Infografis</button>
                   <button type="button" onclick="filterBooks('fiksi')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition" data-cat="fiksi">Fiksi</button>
                   <button type="button" onclick="filterBooks('nonfiksi')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition" data-cat="nonfiksi">Non-Fiksi</button>
                   <button type="button" onclick="filterBooks('jogja')" class="book-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition" data-cat="jogja">Kearifan Jogja</button>
@@ -1546,61 +1553,10 @@
 
         </div>
 
-        <!-- 8. BOTTOM APP NAVIGATION BAR (Matching attached photo) -->
-        <!-- MOBILE BOTTOM DOCK (Visible on phone < md: fixed at bottom) -->
-        <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-3 py-1.5 grid grid-cols-5 text-center text-[10px] shadow-lg">
-          <button type="button" onclick="navigateTo('beranda')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-            <i class="fa-solid fa-house text-sm mb-0.5"></i>
-            <span>Beranda</span>
-          </button>
-          <button type="button" onclick="switchM1Tab('katalog')" class="py-1 flex flex-col items-center text-[#00695c] font-bold">
-            <i class="fa-solid fa-book-open text-sm mb-0.5"></i>
-            <span>Buku</span>
-          </button>
-          <button type="button" onclick="navigateTo('kuis')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-            <i class="fa-solid fa-trophy text-sm mb-0.5"></i>
-            <span>Tantangan</span>
-          </button>
-          <button type="button" onclick="showToast('Notifikasi Siswa', 'Kamu telah membaca 30 halaman minggu ini!', 'info')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition relative">
-            <i class="fa-solid fa-bell text-sm mb-0.5"></i>
-            <span>Notifikasi</span>
-            <span class="w-1.5 h-1.5 bg-rose-500 rounded-full absolute top-1 right-5"></span>
-          </button>
-          <button type="button" onclick="navigateTo('profil')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-            <i class="fa-solid fa-user text-sm mb-0.5"></i>
-            <span>Profil</span>
-          </button>
-        </div>
-
-        <!-- LAPTOP / DESKTOP BOTTOM DOCK (Visible >= md: Floating centered dock) -->
-        <div class="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl shadow-xl px-8 py-2.5 items-center gap-10 text-xs font-semibold">
-          <button type="button" onclick="navigateTo('beranda')" class="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition">
-            <i class="fa-solid fa-house text-sm"></i>
-            <span>Beranda</span>
-          </button>
-          <button type="button" onclick="switchM1Tab('katalog')" class="flex items-center gap-2 text-[#00695c] font-bold">
-            <i class="fa-solid fa-book-open text-sm"></i>
-            <span>Buku</span>
-          </button>
-          <button type="button" onclick="navigateTo('kuis')" class="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition">
-            <i class="fa-solid fa-trophy text-sm"></i>
-            <span>Tantangan</span>
-          </button>
-          <button type="button" onclick="showToast('Notifikasi Siswa', 'Kamu telah membaca 30 halaman minggu ini!', 'info')" class="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition relative">
-            <i class="fa-solid fa-bell text-sm"></i>
-            <span>Notifikasi</span>
-            <span class="w-1.5 h-1.5 bg-rose-500 rounded-full absolute -top-0.5 -right-1"></span>
-          </button>
-          <button type="button" onclick="navigateTo('profil')" class="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition">
-            <i class="fa-solid fa-user text-sm"></i>
-            <span>Profil</span>
-          </button>
-        </div>
-
       </section>
 
       <!-- ================= 4. M2 MENEMUKAN VIEW (Mobile Fullscreen Layout matching attached photo) ================= -->
-      <section id="view-m2" class="hidden w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto px-0 sm:px-2 py-0 sm:py-3 transition-all">
+      <section id="view-m2" class="hidden w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto px-0 sm:px-2 py-0 sm:py-3 pb-24 transition-all">
         
         <!-- CONTAINER: Fullscreen on mobile devices, refined card on desktop -->
         <div class="w-full min-h-screen sm:min-h-[720px] bg-[#f8fafc] sm:rounded-3xl shadow-2xl border-0 sm:border border-slate-200/90 overflow-hidden flex flex-col justify-between">
@@ -1757,37 +1713,12 @@
 
           </div>
 
-          <!-- BOTTOM APP NAVIGATION (Matching Photo Bar) -->
-          <div class="border-t border-slate-200/80 bg-white/95 backdrop-blur-md px-3 py-2 grid grid-cols-5 text-center text-[10px] select-none">
-            <button type="button" onclick="navigateTo('beranda')" class="py-1 flex flex-col items-center text-slate-900 font-bold">
-              <i class="fa-solid fa-house text-sm mb-0.5"></i>
-              <span>Beranda</span>
-            </button>
-            <button type="button" onclick="navigateTo('m1')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-              <i class="fa-solid fa-book-open text-sm mb-0.5"></i>
-              <span>Buku</span>
-            </button>
-            <button type="button" onclick="openM2QuizModal()" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-              <i class="fa-solid fa-bullseye text-sm mb-0.5"></i>
-              <span>Tantangan</span>
-            </button>
-            <button type="button" onclick="showToast('Notifikasi Temuan', 'Kamu telah melengkapi analisis bab 12!', 'info')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition relative">
-              <i class="fa-solid fa-bell text-sm mb-0.5"></i>
-              <span>Notifikasi</span>
-              <span class="w-1.5 h-1.5 bg-rose-500 rounded-full absolute top-1 right-5"></span>
-            </button>
-            <button type="button" onclick="navigateTo('profil')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-              <i class="fa-solid fa-user text-sm mb-0.5"></i>
-              <span>Profil</span>
-            </button>
-          </div>
-
         </div>
 
       </section>
 
       <!-- ================= 5. M3 MENULIS VIEW (Responsive Fullscreen: Mobile Phone + Laptop) ================= -->
-      <section id="view-m3" class="hidden w-full min-h-screen bg-[#f8fafc] transition-all">
+      <section id="view-m3" class="hidden w-full min-h-screen bg-[#f8fafc] pb-24 transition-all">
 
         <!-- CONTAINER: Full screen on laptop/desktop with split panels, native full-screen flow on smartphone -->
         <div class="w-full min-h-screen flex flex-col justify-between">
@@ -1960,31 +1891,6 @@
 
                 </div>
 
-              </div>
-
-              <!-- BOTTOM APP NAVIGATION (Matching Photo Bar) -->
-              <div class="border-t border-slate-200/80 bg-white/95 backdrop-blur-md px-3 py-2 grid grid-cols-5 text-center text-[10px] select-none shrink-0">
-                <button type="button" onclick="navigateTo('beranda')" class="py-1 flex flex-col items-center text-slate-900 font-bold">
-                  <i class="fa-solid fa-house text-sm mb-0.5"></i>
-                  <span>Beranda</span>
-                </button>
-                <button type="button" onclick="navigateTo('m1')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-                  <i class="fa-solid fa-book-open text-sm mb-0.5"></i>
-                  <span>Buku</span>
-                </button>
-                <button type="button" onclick="openM2QuizModal()" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-                  <i class="fa-solid fa-bullseye text-sm mb-0.5"></i>
-                  <span>Tantangan</span>
-                </button>
-                <button type="button" onclick="showToast('Notifikasi Menulis', 'Pilihlah salah satu dari 8 format karya untuk menuangkan ide!', 'info')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition relative">
-                  <i class="fa-solid fa-bell text-sm mb-0.5"></i>
-                  <span>Notifikasi</span>
-                  <span class="w-1.5 h-1.5 bg-rose-500 rounded-full absolute top-1 right-5"></span>
-                </button>
-                <button type="button" onclick="navigateTo('profil')" class="py-1 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-                  <i class="fa-solid fa-user text-sm mb-0.5"></i>
-                  <span>Profil</span>
-                </button>
               </div>
 
             </div>
@@ -2317,54 +2223,6 @@
           </div>
         </main>
 
-        <!-- 4. SMARTPHONE FIXED BOTTOM NAVIGATION (Matching user image) -->
-        <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 px-2 py-2 shadow-lg flex items-center justify-around select-none">
-          <button type="button" onclick="navigateTo('beranda')" class="flex flex-col items-center gap-1 text-[#0c3966] font-bold py-1 px-2.5 transition">
-            <i class="fa-solid fa-house text-lg"></i>
-            <span class="text-[10px]">Beranda</span>
-          </button>
-          <button type="button" onclick="navigateTo('m1')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition">
-            <i class="fa-solid fa-book-open text-lg"></i>
-            <span class="text-[10px]">Buku</span>
-          </button>
-          <button type="button" onclick="openM4ChallengeModal()" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition">
-            <i class="fa-solid fa-bullseye text-lg"></i>
-            <span class="text-[10px]">Tantangan</span>
-          </button>
-          <button type="button" onclick="showToast('Notifikasi Literasi', 'Karyamu telah disukai oleh teman sekelas!', 'info')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition relative">
-            <i class="fa-solid fa-bell text-lg"></i>
-            <span class="text-[10px]">Notifikasi</span>
-            <span class="w-2 h-2 bg-rose-500 rounded-full absolute top-1 right-3 border-2 border-white"></span>
-          </button>
-          <button type="button" onclick="navigateTo('profil')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition">
-            <i class="fa-solid fa-user text-lg"></i>
-            <span class="text-[10px]">Profil</span>
-          </button>
-        </nav>
-
-        <!-- 5. LAPTOP FLOATING DOCK (5M Navigation) -->
-        <nav class="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-xl px-4 py-2 items-center gap-2">
-          <button type="button" onclick="navigateTo('beranda')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-house text-slate-400"></i> Beranda
-          </button>
-          <div class="h-4 w-px bg-slate-200"></div>
-          <button type="button" onclick="navigateTo('m1')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M1 Membaca
-          </button>
-          <button type="button" onclick="navigateTo('m2')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M2 Menemukan
-          </button>
-          <button type="button" onclick="navigateTo('m3')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M3 Menulis
-          </button>
-          <button type="button" class="px-3 py-1.5 rounded-xl text-xs font-black bg-[#00695c] text-white shadow-xs">
-            M4 Menceritakan
-          </button>
-          <button type="button" onclick="navigateTo('m5')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M5 Mengapresiasi
-          </button>
-        </nav>
-
       </section>
 
       <!-- ================= 7. M5 MENGAPRESIASI VIEW (FULL-SCREEN RESPONSIVE LAYOUT) ================= -->
@@ -2620,58 +2478,6 @@
           </div>
         </main>
 
-        <!-- 4. SMARTPHONE FIXED BOTTOM NAVIGATION BAR (Exact Match to User Reference Photo: 5 Items) -->
-        <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 px-2 py-1.5 shadow-lg flex items-center justify-around select-none">
-          <button type="button" onclick="navigateTo('beranda')" class="flex flex-col items-center gap-1 text-[#0c3966] font-bold py-1 px-2.5 transition">
-            <i class="fa-solid fa-house text-lg"></i>
-            <span class="text-[10px]">Beranda</span>
-          </button>
-          <button type="button" onclick="navigateTo('m1')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition">
-            <i class="fa-solid fa-book-open text-lg"></i>
-            <span class="text-[10px]">Buku</span>
-          </button>
-          <button type="button" onclick="openM4ChallengeModal()" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition">
-            <i class="fa-solid fa-bullseye text-lg"></i>
-            <span class="text-[10px]">Tantangan</span>
-          </button>
-          <button type="button" onclick="showToast('Notifikasi Apresiasi', 'Aisyah Putri dan Salsa Anindita menyukai ulasanmu!', 'info')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition relative">
-            <i class="fa-solid fa-bell text-lg"></i>
-            <span class="text-[10px]">Notifikasi</span>
-            <span class="w-2 h-2 bg-rose-500 rounded-full absolute top-1 right-3 border-2 border-white"></span>
-          </button>
-          <button type="button" onclick="navigateTo('portofolio')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-slate-800 py-1 px-2.5 transition">
-            <i class="fa-solid fa-user text-lg"></i>
-            <span class="text-[10px]">Profil</span>
-          </button>
-        </nav>
-
-        <!-- 5. LAPTOP FLOATING 5M NAVIGATION DOCK (Visible only on md and larger) -->
-        <nav class="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-xl px-4 py-2 items-center gap-2">
-          <button type="button" onclick="navigateTo('beranda')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-house text-slate-400"></i> Beranda
-          </button>
-          <div class="h-4 w-px bg-slate-200"></div>
-          <button type="button" onclick="navigateTo('m1')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M1 Membaca
-          </button>
-          <button type="button" onclick="navigateTo('m2')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M2 Menemukan
-          </button>
-          <button type="button" onclick="navigateTo('m3')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M3 Menulis
-          </button>
-          <button type="button" onclick="navigateTo('m4')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M4 Menceritakan
-          </button>
-          <button type="button" class="px-3 py-1.5 rounded-xl text-xs font-black bg-[#00695c] text-white shadow-xs">
-            M5 Mengapresiasi
-          </button>
-          <div class="h-4 w-px bg-slate-200"></div>
-          <button type="button" onclick="navigateTo('portofolio')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-teal-700 hover:bg-teal-50 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-id-badge text-teal-600"></i> Portofolio
-          </button>
-        </nav>
-
       </section>
 
       <!-- ================= 7b. PORTOFOLIO SAYA VIEW (Full Screen Responsive for Laptop & Smartphone) ================= -->
@@ -2723,6 +2529,34 @@
 
         <!-- 3. MAIN CONTENT BODY (Edge-to-edge on smartphone, wide container on laptop) -->
         <main class="w-full max-w-md sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6 space-y-3.5 sm:space-y-6 flex-1">
+
+          <!-- SUPERVISOR BANNER (Displayed when Guru / Wali Kelas / Kepsek / Admin is viewing student portfolio) -->
+          <div id="portfolio-supervisor-banner" class="hidden bg-gradient-to-r from-teal-700 via-[#005f57] to-[#082e54] text-white p-4 rounded-2xl sm:rounded-3xl border border-teal-500/40 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-white/15 text-amber-300 flex items-center justify-center text-lg shrink-0">
+                <i class="fa-solid fa-user-check"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-md bg-amber-400 text-slate-900 text-[10px] font-black uppercase">Mode Supervisi</span>
+                  <span id="portfolio-supervisor-role-badge" class="text-teal-200 text-xs font-semibold">Wali Kelas / Kepala Sekolah</span>
+                </div>
+                <p id="portfolio-supervisor-target-desc" class="text-white font-extrabold text-sm sm:text-base leading-tight mt-0.5">
+                  Portofolio Siswa: Aisyah Putri Rahma (Kelas 8B)
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="exportRaporPDFForTarget()" class="px-3.5 py-1.5 rounded-xl bg-white text-[#005f57] font-bold text-xs hover:bg-teal-50 transition flex items-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-file-pdf text-red-500"></i>
+                <span>Unduh Rapor Siswa</span>
+              </button>
+              <button type="button" onclick="exitStudentPortfolioView()" class="px-3.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-bold text-xs transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Kembali</span>
+              </button>
+            </div>
+          </div>
 
           <!-- PROFILE HEADER CARD (Aisyah Putri, VIII C, Level: Penulis Muda 👑) -->
           <div class="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 border border-slate-200/90 shadow-2xs flex items-center gap-3.5 sm:gap-6 relative overflow-hidden">
@@ -2858,61 +2692,6 @@
 
         </main>
 
-        <!-- 4. FIXED BOTTOM NAVIGATION (Visible on Smartphone, Exact Matching Screenshot: Beranda, Buku, Tantangan, Notifikasi, Profil [ACTIVE]) -->
-        <nav id="portfolio-mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200 px-2 py-1 shadow-lg">
-          <div class="grid grid-cols-5 text-center text-[10px] font-medium">
-            <button type="button" onclick="navigateTo('beranda')" class="py-1.5 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-              <i class="fa-solid fa-house text-base mb-0.5"></i>
-              <span>Beranda</span>
-            </button>
-            <button type="button" onclick="navigateTo('m1')" class="py-1.5 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-              <i class="fa-solid fa-book-open text-base mb-0.5"></i>
-              <span>Buku</span>
-            </button>
-            <button type="button" onclick="openPhoneChallengeModal()" class="py-1.5 flex flex-col items-center text-slate-500 hover:text-slate-800 transition">
-              <i class="fa-solid fa-bullseye text-base mb-0.5"></i>
-              <span>Tantangan</span>
-            </button>
-            <button type="button" onclick="openPortofolioNotificationModal()" class="py-1.5 flex flex-col items-center text-slate-500 hover:text-slate-800 transition relative">
-              <i class="fa-regular fa-bell text-base mb-0.5"></i>
-              <span>Notifikasi</span>
-              <span class="w-2 h-2 bg-rose-500 rounded-full absolute top-1 right-3.5 border-2 border-white"></span>
-            </button>
-            <!-- ACTIVE TAB: PROFIL -->
-            <button type="button" class="py-1.5 flex flex-col items-center text-[#082e54] font-black transition">
-              <i class="fa-solid fa-user text-base mb-0.5"></i>
-              <span>Profil</span>
-            </button>
-          </div>
-        </nav>
-
-        <!-- 5. LAPTOP FLOATING DOCK FOR PORTOFOLIO VIEW -->
-        <nav class="hidden md:flex fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200/90 shadow-xl px-4 py-2 items-center gap-2">
-          <button type="button" onclick="navigateTo('beranda')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-house text-slate-400"></i> Beranda
-          </button>
-          <div class="h-4 w-px bg-slate-200"></div>
-          <button type="button" onclick="navigateTo('m1')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M1 Membaca
-          </button>
-          <button type="button" onclick="navigateTo('m2')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M2 Menemukan
-          </button>
-          <button type="button" onclick="navigateTo('m3')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M3 Menulis
-          </button>
-          <button type="button" onclick="navigateTo('m4')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M4 Menceritakan
-          </button>
-          <button type="button" onclick="navigateTo('m5')" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">
-            M5 Mengapresiasi
-          </button>
-          <div class="h-4 w-px bg-slate-200"></div>
-          <button type="button" class="px-3 py-1.5 rounded-xl text-xs font-black bg-[#005f57] text-white shadow-xs flex items-center gap-1.5">
-            <i class="fa-solid fa-id-badge"></i> Portofolio
-          </button>
-        </nav>
-
       </section>
 
       <!-- ================= 8. DASHBOARD GURU VIEW ================= -->
@@ -3018,11 +2797,19 @@
                     </svg>
                   </div>
                   <div class="flex-1 min-w-0">
-                    <span class="text-[10.5px] text-slate-500 font-medium block">Selamat Datang,</span>
-                    <h2 class="font-extrabold text-[#082e54] text-[13.5px] sm:text-[14px] leading-tight truncate">Ibu Zusma Nadya Izzati, S.Pd.</h2>
-                    <p class="text-[10.5px] text-slate-500 font-medium leading-tight mt-0.5">Guru Bahasa Indonesia</p>
-                    <div class="mt-1.5 px-2.5 py-1 bg-[#eef7fd] rounded-lg border border-sky-100/90 inline-block">
-                      <p class="text-[10px] font-bold italic text-[#082e54] leading-tight">"Literasi hari ini, generasi hebat esok nanti."</p>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="text-[10.5px] text-slate-500 font-medium">Selamat Datang,</span>
+                      <span class="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black border border-emerald-200">WALI KELAS 8B</span>
+                    </div>
+                    <h2 id="guru-profile-name" class="font-extrabold text-[#082e54] text-[13.5px] sm:text-[14px] leading-tight truncate">Ibu Zusma Nadya Izzati, S.Pd.</h2>
+                    <p id="guru-profile-role" class="text-[10.5px] text-slate-600 font-semibold leading-tight mt-0.5">Guru Bahasa Indonesia & Wali Kelas 8B • NIP. 199108152019032018</p>
+                    <div class="mt-1.5 flex items-center gap-2 flex-wrap">
+                      <div class="px-2.5 py-1 bg-[#eef7fd] rounded-lg border border-sky-100/90 inline-block">
+                        <p class="text-[10px] font-bold italic text-[#082e54] leading-tight">"Literasi hari ini, generasi hebat esok nanti."</p>
+                      </div>
+                      <button type="button" onclick="switchGuruPhoneTab('siswa')" class="px-2.5 py-1 bg-[#16779e] hover:bg-sky-800 text-white rounded-lg text-[10px] font-bold transition flex items-center gap-1 shadow-2xs">
+                        <i class="fa-solid fa-users-viewfinder"></i> Pantau Siswa Binaan (32)
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -3292,48 +3079,71 @@
 
               </div>
 
-              <!-- SCREEN B: SISWA (SUB-SCREEN DALAM PHONE MOCKUP) -->
+              <!-- SCREEN B: SISWA WALI KELAS (SUB-SCREEN DALAM PHONE MOCKUP & LAPTOP) -->
               <div id="guru-screen-siswa" class="space-y-3 hidden animate-fade-in">
-                <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-2xs">
-                  <div class="flex items-center justify-between mb-2">
-                    <h3 class="font-extrabold text-[#082e54] text-xs">Daftar Siswa Binaan (128)</h3>
-                    <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-lg text-[10px] font-bold">112 Aktif</span>
+                <!-- Wali Kelas Context Card -->
+                <div class="bg-gradient-to-r from-[#082e54] to-[#146e91] text-white p-3.5 rounded-2xl shadow-xs space-y-2">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <span class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-xs text-amber-300">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                      </span>
+                      <div>
+                        <h3 class="font-black text-xs sm:text-sm text-white leading-tight">Pemantauan Siswa Wali Kelas</h3>
+                        <p class="text-[10px] text-sky-100/90">Ibu Zusma Nadya Izzati, S.Pd. • Supervisi Binaan Kelas 8B</p>
+                      </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-lg bg-emerald-400/20 text-emerald-200 border border-emerald-300/30 text-[10px] font-black">
+                      Wali Kelas 8B
+                    </span>
                   </div>
-                  <input type="text" id="guru-student-search" placeholder="Cari nama atau NISN siswa..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-[#16779e] focus:outline-none mb-2">
-                  <div class="flex gap-1 overflow-x-auto pb-1 text-[10px]">
-                    <button class="px-2.5 py-1 bg-[#16779e] text-white font-bold rounded-lg shrink-0">Semua (128)</button>
-                    <button class="px-2.5 py-1 bg-slate-100 text-slate-600 font-semibold rounded-lg shrink-0">Kelas 8B (32)</button>
-                    <button class="px-2.5 py-1 bg-slate-100 text-slate-600 font-semibold rounded-lg shrink-0">Kelas 8A (32)</button>
-                    <button class="px-2.5 py-1 bg-slate-100 text-slate-600 font-semibold rounded-lg shrink-0">Kelas 7A (32)</button>
+
+                  <!-- Quick Stats for Wali Kelas -->
+                  <div class="grid grid-cols-4 gap-1.5 pt-1 text-center">
+                    <div class="p-1.5 bg-white/10 rounded-xl">
+                      <span id="guru-wk-total-students" class="text-xs sm:text-sm font-black text-white block">32</span>
+                      <span class="text-[9px] text-sky-200">Siswa Wali</span>
+                    </div>
+                    <div class="p-1.5 bg-white/10 rounded-xl">
+                      <span id="guru-wk-active-students" class="text-xs sm:text-sm font-black text-emerald-300 block">30</span>
+                      <span class="text-[9px] text-sky-200">Aktif Baca</span>
+                    </div>
+                    <div class="p-1.5 bg-white/10 rounded-xl">
+                      <span id="guru-wk-passive-students" class="text-xs sm:text-sm font-black text-rose-300 block">2</span>
+                      <span class="text-[9px] text-sky-200">Perlu Nudge</span>
+                    </div>
+                    <div class="p-1.5 bg-white/10 rounded-xl">
+                      <span id="guru-wk-works-count" class="text-xs sm:text-sm font-black text-amber-300 block">86</span>
+                      <span class="text-[9px] text-sky-200">Karya 8B</span>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Perlu Perhatian / Pasif Alert -->
-                <div class="bg-rose-50 border border-rose-200/80 rounded-2xl p-3">
-                  <div class="flex items-center gap-1.5 text-rose-700 text-xs font-bold mb-2">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>Siswa Pasif Literasi (>5 Hari)</span>
+                <!-- Search & Filters -->
+                <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-2xs space-y-2">
+                  <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                    <input type="text" id="guru-student-search" oninput="onSearchGuruStudents(this.value)" placeholder="Cari nama atau NISN siswa..." class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-[#16779e] focus:outline-none font-medium">
                   </div>
-                  <div class="space-y-2">
-                    <div class="bg-white p-2.5 rounded-xl border border-rose-100 flex items-center justify-between text-xs">
-                      <div>
-                        <p class="font-bold text-slate-900 text-[11px]">Rizki Nur Fauzi (8B)</p>
-                        <p class="text-[10px] text-rose-600">6 hari tanpa membaca</p>
-                      </div>
-                      <button onclick="sendReadingReminder('Rizki Nur Fauzi')" class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[10px] font-bold">
-                        Nudge
-                      </button>
-                    </div>
-                    <div class="bg-white p-2.5 rounded-xl border border-rose-100 flex items-center justify-between text-xs">
-                      <div>
-                        <p class="font-bold text-slate-900 text-[11px]">Siti Fatimah (8A)</p>
-                        <p class="text-[10px] text-rose-600">7 hari tanpa membaca</p>
-                      </div>
-                      <button onclick="sendReadingReminder('Siti Fatimah')" class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[10px] font-bold">
-                        Nudge
-                      </button>
-                    </div>
+                  <div class="flex gap-1.5 overflow-x-auto pb-1 text-[10px]">
+                    <button type="button" id="btn-guru-filter-wali" onclick="filterGuruStudentsTab('wali')" class="px-2.5 py-1.5 bg-[#16779e] text-white font-bold rounded-xl shrink-0 transition flex items-center gap-1 shadow-2xs">
+                      <i class="fa-solid fa-user-group"></i> Siswa Wali Kelas 8B (32)
+                    </button>
+                    <button type="button" id="btn-guru-filter-semua" onclick="filterGuruStudentsTab('semua')" class="px-2.5 py-1.5 bg-slate-100 text-slate-600 font-semibold rounded-xl shrink-0 hover:bg-slate-200 transition">
+                      Semua Siswa Sekolah (128)
+                    </button>
+                    <button type="button" id="btn-guru-filter-aktif" onclick="filterGuruStudentsTab('aktif')" class="px-2.5 py-1.5 bg-emerald-50 text-emerald-700 font-semibold rounded-xl shrink-0 hover:bg-emerald-100 transition flex items-center gap-1">
+                      <i class="fa-solid fa-circle-check text-emerald-500"></i> Aktif Membaca
+                    </button>
+                    <button type="button" id="btn-guru-filter-pasif" onclick="filterGuruStudentsTab('pasif')" class="px-2.5 py-1.5 bg-rose-50 text-rose-700 font-semibold rounded-xl shrink-0 hover:bg-rose-100 transition flex items-center gap-1">
+                      <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Pasif (>5 Hari)
+                    </button>
                   </div>
+                </div>
+
+                <!-- Dynamic Student List Cards Container -->
+                <div id="guru-student-cards-list" class="space-y-2.5">
+                  <!-- Populated dynamically by renderGuruStudentsList() -->
                 </div>
               </div>
 
@@ -3612,92 +3422,424 @@
         </div>
       </div>
 
-      <!-- ================= 9. DASHBOARD SEKOLAH VIEW ================= -->
+      <!-- ================= 9. DASHBOARD & MONITORING KHUSUS KEPALA SEKOLAH & ADMIN ================= -->
       <section id="view-sekolah" class="space-y-6 hidden">
-        <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <!-- Executive Header Banner -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
-              <i class="fa-solid fa-chart-pie"></i>
+            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shrink-0 shadow-xs">
+              <i class="fa-solid fa-graduation-cap"></i>
             </div>
             <div>
-              <h2 class="text-xl font-bold text-slate-900">Dashboard Statistik Sekolah</h2>
-              <p class="text-xs text-slate-500">Evaluasi Makro Gerakan Literasi SMPN 2 Kasihan</p>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h2 class="text-xl font-extrabold text-slate-900">Halaman Pemantauan Perkembangan Siswa & Statistik Literasi</h2>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  <i class="fa-solid fa-crown mr-1"></i> Kepala Sekolah & Admin
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200">
+                  <i class="fa-solid fa-shield-check mr-1"></i> Data Bukti Program (Evidence-Based GLS)
+                </span>
+              </div>
+              <p class="text-xs font-bold text-slate-700 mt-0.5">Penanggung Jawab: Erna Retnaningsih, S.Pd., M.Pd. <span class="text-slate-500 font-medium">• NIP. 197303261998022001</span></p>
+              <p class="text-[11px] text-slate-500 mt-0.5">Pemantauan akuntabel seluruh siswa aktif membaca, karya siswa, level kategori literasi, laporan aktivitas harian, dan statistik bulanan untuk evaluasi & akreditasi.</p>
             </div>
           </div>
-          <button onclick="exportRaporPDF()" class="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-2">
-            <i class="fa-solid fa-file-arrow-down"></i> Cetak Laporan GLS
+          <div class="flex items-center gap-2 flex-wrap shrink-0">
+            <button onclick="exportLaporanSekolahPDF()" class="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-2xs">
+              <i class="fa-solid fa-file-pdf"></i> Cetak Laporan Literasi Sekolah (PDF)
+            </button>
+            <button onclick="switchSekolahSubtab('karya')" class="px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-2xs">
+              <i class="fa-solid fa-palette text-rose-500"></i> Galeri Karya Siswa
+            </button>
+            <button onclick="navigateTo('admin')" class="px-3.5 py-2.5 bg-[#082e54] hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-2xs">
+              <i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> Kelola Data Aplikasi
+            </button>
+          </div>
+        </div>
+
+        <!-- 6 Executive Literacy Metric Cards (Data Konkret yang Dapat Ditunjukkan) -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Buku Dibaca</span>
+              <i class="fa-solid fa-book-open text-sky-600"></i>
+            </div>
+            <div>
+              <h3 id="stat-sekolah-total-buku" class="text-xl sm:text-2xl font-black text-slate-900">1,428 Buku</h3>
+              <p class="text-[10px] text-emerald-600 font-bold mt-0.5"><i class="fa-solid fa-arrow-trend-up mr-0.5"></i> Alur 5M (M1)</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Karya Siswa</span>
+              <i class="fa-solid fa-feather-pointed text-amber-600"></i>
+            </div>
+            <div>
+              <h3 id="stat-sekolah-total-karya" class="text-xl sm:text-2xl font-black text-amber-700">342 Karya</h3>
+              <p class="text-[10px] text-slate-500 font-medium mt-0.5">Puisi, Cerpen, Resensi (M3)</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Book Talk</span>
+              <i class="fa-solid fa-video text-rose-600"></i>
+            </div>
+            <div>
+              <h3 id="stat-sekolah-total-booktalk" class="text-xl sm:text-2xl font-black text-rose-700">118 Sesi</h3>
+              <p class="text-[10px] text-slate-500 font-medium mt-0.5">Video & Storytelling (M4)</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Jam Literasi</span>
+              <i class="fa-solid fa-clock text-teal-600"></i>
+            </div>
+            <div>
+              <h3 id="stat-sekolah-total-jam" class="text-xl sm:text-2xl font-black text-teal-700">890 Jam</h3>
+              <p class="text-[10px] text-slate-500 font-medium mt-0.5">53,400 Menit Baca</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Siswa Aktif Membaca</span>
+              <i class="fa-solid fa-user-check text-emerald-600"></i>
+            </div>
+            <div>
+              <h3 id="stat-sekolah-siswa-aktif" class="text-xl sm:text-2xl font-black text-emerald-700">96.8%</h3>
+              <p class="text-[10px] text-emerald-600 font-bold mt-0.5">124 dari 128 Siswa</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 card-shadow flex flex-col justify-between">
+            <div class="flex items-center justify-between text-slate-400 mb-1">
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Indeks Budaya GLS</span>
+              <i class="fa-solid fa-award text-indigo-600"></i>
+            </div>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-black text-indigo-700">A (Unggul)</h3>
+              <p class="text-[10px] text-indigo-600 font-bold mt-0.5">Akreditasi Sekolah</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monitoring Sub-Tab Navigation Bar -->
+        <div class="bg-white rounded-2xl p-2 border border-slate-200 card-shadow flex items-center gap-2 overflow-x-auto">
+          <button id="btn-sekolah-subtab-siswa" onclick="switchSekolahSubtab('siswa')" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shrink-0 bg-[#082e54] text-white shadow-xs">
+            <i class="fa-solid fa-users-viewfinder"></i>
+            <span>1. Pemantauan Siswa & Level Literasi</span>
+          </button>
+          <button id="btn-sekolah-subtab-karya" onclick="switchSekolahSubtab('karya')" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shrink-0 text-slate-600 hover:bg-slate-100">
+            <i class="fa-solid fa-feather-pointed text-amber-500"></i>
+            <span>2. Karya Siswa (Cipta Alur M3)</span>
+          </button>
+          <button id="btn-sekolah-subtab-laporan" onclick="switchSekolahSubtab('laporan')" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shrink-0 text-slate-600 hover:bg-slate-100">
+            <i class="fa-solid fa-clipboard-list text-sky-500"></i>
+            <span>3. Semua Laporan Aktivitas Siswa</span>
+          </button>
+          <button id="btn-sekolah-subtab-statistik" onclick="switchSekolahSubtab('statistik')" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shrink-0 text-slate-600 hover:bg-slate-100">
+            <i class="fa-solid fa-chart-line text-emerald-500"></i>
+            <span>4. Perkembangan Bulanan & Siswa Teraktif</span>
           </button>
         </div>
 
-        <!-- School Wide Metrics -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 card-shadow">
-            <span class="text-xs text-slate-500 font-medium">Total Buku Dituntaskan</span>
-            <h3 class="text-2xl font-black text-slate-800 mt-1">1,280 Buku</h3>
-            <p class="text-[11px] text-emerald-600 mt-1">+18% dari bulan lalu</p>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 card-shadow">
-            <span class="text-xs text-slate-500 font-medium">Total Karya Dihasilkan</span>
-            <h3 class="text-2xl font-black text-amber-600 mt-1">342 Karya</h3>
-            <p class="text-[11px] text-slate-400 mt-1">Portofolio siswa</p>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 card-shadow">
-            <span class="text-xs text-slate-500 font-medium">Jam Literasi Terkumpul</span>
-            <h3 class="text-2xl font-black text-sky-600 mt-1">890 Jam</h3>
-            <p class="text-[11px] text-slate-400 mt-1">Aktivitas membaca mandiri</p>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 card-shadow">
-            <span class="text-xs text-slate-500 font-medium">Indeks Budaya Sekolah</span>
-            <h3 class="text-2xl font-black text-emerald-600 mt-1">A (Sangat Baik)</h3>
-            <p class="text-[11px] text-emerald-600 mt-1">Akreditasi literasi</p>
+        <!-- ================= PANE 1: PEMANTAUAN SISWA & LEVEL KATEGORI LITERASI ================= -->
+        <div id="sekolah-pane-siswa" class="space-y-4">
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow space-y-4">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-users-viewfinder text-emerald-600"></i>
+                    Daftar Siswa Aktif Membaca & Level Kategori Literasi
+                  </h3>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    Akuntabel & Terverifikasi
+                  </span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Supervisi komprehensif seluruh siswa lintas rombel: status keaktifan membaca, klasifikasi level literasi, dan capaian rinci alur 5M (M1 Membaca s.d. M5 Mengapresiasi).</p>
+              </div>
+
+              <!-- Quick Level Legend Badges -->
+              <div class="flex items-center gap-1.5 flex-wrap text-[10px]">
+                <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md font-bold border border-slate-200">L1: Pemula</span>
+                <span class="px-2 py-0.5 bg-sky-50 text-sky-800 rounded-md font-bold border border-sky-200">L2: Aktif</span>
+                <span class="px-2 py-0.5 bg-indigo-50 text-indigo-800 rounded-md font-bold border border-indigo-200">L3: Kritis</span>
+                <span class="px-2 py-0.5 bg-amber-50 text-amber-800 rounded-md font-bold border border-amber-200">L4: Kreatif</span>
+                <span class="px-2 py-0.5 bg-emerald-50 text-emerald-800 rounded-md font-bold border border-emerald-300">L5: Ksatria Kasihan</span>
+              </div>
+            </div>
+
+            <!-- Filters & Search Bar -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-bold text-slate-600"><i class="fa-solid fa-filter mr-1 text-slate-400"></i> Filter:</span>
+                
+                <select id="sekolah-filter-class" onchange="filterSekolahMonitoring()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-2xs">
+                  <option value="semua">Semua Rombel (128 Siswa)</option>
+                  <option value="8B">Kelas 8B (Wali: Ibu Zusma)</option>
+                  <option value="8A">Kelas 8A (Wali: Bpk Joko)</option>
+                  <option value="7A">Kelas 7A (Wali: Ibu Sri)</option>
+                  <option value="7B">Kelas 7B (Wali: Bpk Budi)</option>
+                  <option value="9A">Kelas 9A (Wali: Ibu Rina)</option>
+                  <option value="9C">Kelas 9C (Wali: Bpk Hendra)</option>
+                </select>
+
+                <select id="sekolah-filter-status" onchange="filterSekolahMonitoring()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-2xs">
+                  <option value="semua">Semua Status Keaktifan</option>
+                  <option value="aktif">Siswa Aktif Membaca</option>
+                  <option value="pasif">Pasif / Butuh Pendampingan (>5 Hari)</option>
+                </select>
+
+                <select id="sekolah-filter-level" onchange="filterSekolahMonitoring()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-2xs">
+                  <option value="semua">Semua Level Literasi</option>
+                  <option value="Level 1">Level 1: Pembaca Pemula</option>
+                  <option value="Level 2">Level 2: Pembaca Aktif</option>
+                  <option value="Level 3">Level 3: Pembaca Kritis</option>
+                  <option value="Level 4">Level 4: Pembaca Kreatif</option>
+                  <option value="Level 5">Level 5: Ksatria Literasi Kasihan</option>
+                </select>
+              </div>
+
+              <div class="relative min-w-[260px]">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                <input type="text" id="sekolah-search-student" oninput="filterSekolahMonitoring()" placeholder="Cari nama siswa atau NISN..." class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium shadow-2xs">
+              </div>
+            </div>
+
+            <!-- Monitoring Table -->
+            <div class="overflow-x-auto rounded-2xl border border-slate-200">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="p-3">Siswa & Identitas</th>
+                    <th class="p-3">Kelas & Wali</th>
+                    <th class="p-3 text-center">Level Kategori Literasi</th>
+                    <th class="p-3 text-center">M1 Membaca</th>
+                    <th class="p-3 text-center">M2 Menemukan</th>
+                    <th class="p-3 text-center">M3 Menulis</th>
+                    <th class="p-3 text-center">M4 Cerita</th>
+                    <th class="p-3 text-center">M5 Apresiasi</th>
+                    <th class="p-3 text-center">Poin GLS</th>
+                    <th class="p-3 text-right">Aksi Supervisi</th>
+                  </tr>
+                </thead>
+                <tbody id="table-sekolah-monitoring-body" class="divide-y divide-slate-100 bg-white">
+                  <!-- Dynamically populated by renderSekolahMonitoringTable() -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <!-- Chart.js Visualizations -->
-        <div class="grid lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-8 bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
-            <h3 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-chart-line text-sky-600"></i> Tren Buku & Karya Per Bulan (Tahun Ajaran 2024/2025)
-            </h3>
-            <div class="relative h-64 sm:h-72 w-full">
-              <canvas id="chart-sekolah-tren"></canvas>
+        <!-- ================= PANE 2: KARYA SISWA (CIPTA ALUR M3) ================= -->
+        <div id="sekolah-pane-karya" class="space-y-4 hidden">
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-feather-pointed text-amber-500"></i>
+                  Galeri & Kurasi Karya Siswa (Cipta Literasi M3)
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">Arsip karya tulisan otentik siswa: cerpen, puisi, resensi, dan esai kearifan lokal Kasihan Bantul.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="navigateTo('m3')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs">
+                  <i class="fa-solid fa-pen-nib"></i> Buka Editor M3
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div class="lg:col-span-4 bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
-            <h3 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-chart-pie text-amber-500"></i> Distribusi Kategori Bacaan
-            </h3>
-            <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
-              <canvas id="chart-sekolah-kategori"></canvas>
+            <!-- Category Filter Bar for Karya -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200/80">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <button type="button" onclick="filterSekolahKaryaCategory('semua')" id="btn-karya-cat-semua" class="btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-[#082e54] text-white shadow-2xs">Semua Karya (342)</button>
+                <button type="button" onclick="filterSekolahKaryaCategory('Puisi')" id="btn-karya-cat-puisi" class="btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">Puisi</button>
+                <button type="button" onclick="filterSekolahKaryaCategory('Cerpen')" id="btn-karya-cat-cerpen" class="btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">Cerpen</button>
+                <button type="button" onclick="filterSekolahKaryaCategory('Resensi')" id="btn-karya-cat-resensi" class="btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">Resensi Buku</button>
+                <button type="button" onclick="filterSekolahKaryaCategory('Budaya')" id="btn-karya-cat-budaya" class="btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-100">Kearifan Kasihan</button>
+              </div>
+
+              <div class="relative min-w-[220px]">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                <input type="text" id="sekolah-search-karya" oninput="renderSekolahKaryaGrid()" placeholder="Cari judul karya / penulis..." class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+              </div>
+            </div>
+
+            <!-- Karya Cards Grid -->
+            <div id="sekolah-karya-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Dynamically populated by renderSekolahKaryaGrid() -->
             </div>
           </div>
         </div>
 
-        <!-- Leaderboard: Siswa Teraktif & Kelas Terliterat -->
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
-            <h3 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-trophy text-amber-500"></i> Top 5 Siswa Teraktif Literasi
-            </h3>
-            <div id="sekolah-top-students" class="space-y-3">
-              <!-- Rendered by JS -->
+        <!-- ================= PANE 3: SEMUA LAPORAN AKTIVITAS SISWA ================= -->
+        <div id="sekolah-pane-laporan" class="space-y-4 hidden">
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-clipboard-list text-sky-600"></i>
+                  Laporan Rekap Seluruh Aktivitas Membaca & Jurnal Siswa
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">Rekapitulasi log aktivitas membaca harian seluruh siswa secara real-time yang dapat diaudit dan dievaluasi.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 bg-sky-50 text-sky-800 rounded-xl font-bold text-xs border border-sky-200">
+                  <i class="fa-solid fa-check-double mr-1 text-sky-600"></i> Terintegrasi Alur 5M
+                </span>
+              </div>
+            </div>
+
+            <!-- Activity Filter Row -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200/80">
+              <div class="flex items-center gap-2 flex-wrap">
+                <select id="sekolah-activity-filter-class" onchange="renderSekolahActivityReport()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  <option value="semua">Semua Rombel</option>
+                  <option value="8B">Kelas 8B</option>
+                  <option value="8A">Kelas 8A</option>
+                  <option value="7A">Kelas 7A</option>
+                  <option value="9C">Kelas 9C</option>
+                </select>
+
+                <select id="sekolah-activity-filter-status" onchange="renderSekolahActivityReport()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                  <option value="semua">Semua Status Verifikasi</option>
+                  <option value="verified">Terverifikasi Guru/Wali</option>
+                  <option value="pending">Menunggu Verifikasi</option>
+                </select>
+              </div>
+
+              <div class="relative min-w-[240px]">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                <input type="text" id="sekolah-activity-search" oninput="renderSekolahActivityReport()" placeholder="Cari buku, siswa, atau catatan..." class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+              </div>
+            </div>
+
+            <!-- Activity Logs Table -->
+            <div class="overflow-x-auto rounded-2xl border border-slate-200">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="p-3">Waktu & Tanggal</th>
+                    <th class="p-3">Siswa & Kelas</th>
+                    <th class="p-3">Buku & Halaman</th>
+                    <th class="p-3 text-center">Durasi</th>
+                    <th class="p-3">Ringkasan / Temuan Bacaan</th>
+                    <th class="p-3 text-center">Status Verifikasi</th>
+                    <th class="p-3 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="table-sekolah-activity-body" class="divide-y divide-slate-100 bg-white">
+                  <!-- Populated by renderSekolahActivityReport() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PANE 4: STATISTIK & PERKEMBANGAN BULANAN ================= -->
+        <div id="sekolah-pane-statistik" class="space-y-6 hidden">
+          <!-- Chart.js Visualizations (Perkembangan Literasi per Bulan) -->
+          <div class="grid lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-8 bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
+              <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-chart-line text-sky-600"></i> Perkembangan Literasi per Bulan (Tahun Ajaran 2026/2027)
+                </h3>
+                <span class="text-xs text-slate-400 font-medium">Sumber: Data Terverifikasi Alur 5M</span>
+              </div>
+              <div class="relative h-64 sm:h-72 w-full">
+                <canvas id="chart-sekolah-tren"></canvas>
+              </div>
+            </div>
+
+            <div class="lg:col-span-4 bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
+              <h3 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie text-amber-500"></i> Distribusi Kategori Bacaan
+              </h3>
+              <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
+                <canvas id="chart-sekolah-kategori"></canvas>
+              </div>
             </div>
           </div>
 
-          <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
-            <h3 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
-              <i class="fa-solid fa-school text-sky-600"></i> Peringkat Kelas Terliterat
-            </h3>
-            <div id="sekolah-top-classes" class="space-y-3">
-              <!-- Rendered by JS -->
+          <!-- Leaderboard: Siswa Teraktif & Kelas Terliterat -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-trophy text-amber-500"></i> Siswa Teraktif Membaca & Berkarya
+                </h3>
+                <span class="text-[11px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+                  Duta Literasi Kasihan
+                </span>
+              </div>
+              <div id="sekolah-top-students" class="space-y-3">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                  <i class="fa-solid fa-school text-sky-600"></i> Peringkat Kelas Terliterat
+                </h3>
+                <span class="text-[11px] font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded-lg border border-sky-200">
+                  Rombel Teladan
+                </span>
+              </div>
+              <div id="sekolah-top-classes" class="space-y-3">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Evidence-based Summary Box for School Accreditation -->
+          <div class="bg-gradient-to-r from-[#082e54] to-sky-950 text-white rounded-3xl p-6 sm:p-8 card-shadow space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-sky-800/80 pb-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-400 text-slate-950">
+                  Data Bukti Nyata Program Literasi (Bukan Sekadar Dokumentasi)
+                </span>
+                <h3 class="text-xl font-black mt-2">Matriks Kinerja Literasi SMP Negeri 2 Kasihan</h3>
+                <p class="text-xs text-sky-200 mt-1">Data tersimpan secara digital, terekam per hari, dan siap diajukan untuk Akreditasi Perpustakaan Sekolah, Pengawas Pembina, dan Dinas Pendidikan Pemuda dan Olahraga Kabupaten Bantul.</p>
+              </div>
+              <button onclick="exportLaporanSekolahPDF()" class="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs rounded-xl transition flex items-center gap-2 shrink-0 shadow-sm">
+                <i class="fa-solid fa-file-arrow-down"></i> Unduh Rekap Eksekutif (PDF)
+              </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+              <div class="p-3 bg-white/10 rounded-2xl border border-white/10">
+                <span class="text-sky-300 block text-[11px] font-medium">Buku per Siswa (Rata-rata)</span>
+                <span class="text-lg font-black text-white mt-0.5 block">11.2 Buku / Siswa</span>
+                <span class="text-[10px] text-emerald-300">Melebihi target nasional (6 buku)</span>
+              </div>
+              <div class="p-3 bg-white/10 rounded-2xl border border-white/10">
+                <span class="text-sky-300 block text-[11px] font-medium">Rasio Penulisan Karya</span>
+                <span class="text-lg font-black text-white mt-0.5 block">2.6 Karya / Siswa</span>
+                <span class="text-[10px] text-amber-300">Publikasi antologi mandiri</span>
+              </div>
+              <div class="p-3 bg-white/10 rounded-2xl border border-white/10">
+                <span class="text-sky-300 block text-[11px] font-medium">Kearifan Lokal Kasihan</span>
+                <span class="text-lg font-black text-white mt-0.5 block">48 Modul & Kuis</span>
+                <span class="text-[10px] text-sky-200">Sentra Kasongan & Bangunjiwo</span>
+              </div>
+              <div class="p-3 bg-white/10 rounded-2xl border border-white/10">
+                <span class="text-sky-300 block text-[11px] font-medium">Status Verifikasi Wali</span>
+                <span class="text-lg font-black text-white mt-0.5 block">98.2% Terverifikasi</span>
+                <span class="text-[10px] text-emerald-300">Didampingi guru wali kelas</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ================= 10. LENTERA JOGJA VIEW ================= -->
-      <section id="view-jogja" class="space-y-6 hidden">
+      <section id="view-jogja" class="space-y-6 hidden pb-24">
         <!-- Hero Jogja -->
         <div class="bg-gradient-to-r from-jogja-brown via-jogja-terracotta to-amber-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
           <div class="absolute -right-8 -bottom-8 opacity-10 text-9xl">
@@ -3798,7 +3940,7 @@
       </section>
 
       <!-- ================= 11. GALERI KARYA VIEW ================= -->
-      <section id="view-galeri" class="space-y-6 hidden">
+      <section id="view-galeri" class="space-y-6 hidden pb-24">
         <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl">
@@ -3840,37 +3982,49 @@
         <!-- Admin Header Banner -->
         <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-[#082e54] text-amber-400 flex items-center justify-center text-xl shrink-0 shadow-md">
+            <div class="w-14 h-14 rounded-2xl bg-[#082e54] text-amber-400 flex items-center justify-center text-2xl shrink-0 shadow-md">
               <i class="fa-solid fa-screwdriver-wrench"></i>
             </div>
             <div>
               <div class="flex items-center gap-2 flex-wrap">
-                <h2 class="text-xl font-bold text-slate-900">Portal Pengelolaan Data & Koleksi Buku Digital</h2>
+                <h2 class="text-xl font-bold text-slate-900">Portal Pengelolaan Data Aplikasi & Koleksi Digital</h2>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
-                  <i class="fa-solid fa-shield-halved mr-1"></i> Mode Administrator
+                  <i class="fa-solid fa-shield-halved mr-1"></i> Mode Admin & Kepala Sekolah
                 </span>
               </div>
-              <p class="text-xs text-slate-500 mt-0.5">Kelola koleksi buku perpustakaan (PDF upload / link), akun pengguna sekolah, dan verifikasi alur literasi 5M SMPN 2 Kasihan.</p>
+              <p class="text-xs font-bold text-slate-700 mt-0.5">Penanggung Jawab: Erna Retnaningsih, S.Pd., M.Pd. <span class="text-slate-500 font-medium">• NIP. 197303261998022001</span></p>
+              <p class="text-xs text-slate-500">Kelola buku perpustakaan (PDF & link), akun pengguna sekolah, verifikasi alur literasi 5M, kuis, dan kurasi karya siswa SMPN 2 Kasihan.</p>
             </div>
           </div>
 
-          <!-- Quick Stats Row -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center shrink-0">
-            <div class="px-3 py-2 bg-slate-50 rounded-xl border border-slate-100">
-              <span id="admin-stat-books" class="text-base font-black text-sky-600 block">0</span>
-              <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Buku & PDF</span>
+          <!-- Quick Navigation & Stats Row -->
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div class="flex items-center gap-2 flex-wrap">
+              <button type="button" onclick="navigateTo('sekolah')" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-users-viewfinder text-emerald-600"></i> Pantau Siswa
+              </button>
+              <button type="button" onclick="navigateTo('galeri')" class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-palette text-rose-500"></i> Galeri Karya
+              </button>
             </div>
-            <div class="px-3 py-2 bg-slate-50 rounded-xl border border-slate-100">
-              <span id="admin-stat-users" class="text-base font-black text-slate-800 block">0</span>
-              <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Pengguna</span>
-            </div>
-            <div class="px-3 py-2 bg-slate-50 rounded-xl border border-slate-100">
-              <span id="admin-stat-journals" class="text-base font-black text-emerald-600 block">0</span>
-              <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Jurnal</span>
-            </div>
-            <div class="px-3 py-2 bg-slate-50 rounded-xl border border-slate-100">
-              <span id="admin-stat-works" class="text-base font-black text-indigo-600 block">0</span>
-              <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Karya</span>
+
+            <div class="grid grid-cols-4 gap-2 text-center shrink-0">
+              <div class="px-2.5 py-1.5 bg-slate-50 rounded-xl border border-slate-100">
+                <span id="admin-stat-books" class="text-sm font-black text-sky-600 block">0</span>
+                <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Buku</span>
+              </div>
+              <div class="px-2.5 py-1.5 bg-slate-50 rounded-xl border border-slate-100">
+                <span id="admin-stat-users" class="text-sm font-black text-slate-800 block">0</span>
+                <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">User</span>
+              </div>
+              <div class="px-2.5 py-1.5 bg-slate-50 rounded-xl border border-slate-100">
+                <span id="admin-stat-journals" class="text-sm font-black text-emerald-600 block">0</span>
+                <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Jurnal</span>
+              </div>
+              <div class="px-2.5 py-1.5 bg-slate-50 rounded-xl border border-slate-100">
+                <span id="admin-stat-works" class="text-sm font-black text-indigo-600 block">0</span>
+                <span class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Karya</span>
+              </div>
             </div>
           </div>
         </div>
@@ -3909,34 +4063,46 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div>
                 <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                  <i class="fa-solid fa-book-open-reader text-sky-600"></i> Katalog Buku Koleksi & Berkas PDF
+                  <i class="fa-solid fa-book-open-reader text-sky-600"></i> Katalog Bahan Literasi (E-Book, Video & Gambar)
                 </h3>
-                <p class="text-xs text-slate-500">Kelola buku e-Perpus: tambah buku baru, unggah berkas PDF langsung, atau sematkan tautan dokumen.</p>
+                <p class="text-xs text-slate-500">Kelola koleksi bahan literasi sekolah: E-Book digital, video pembelajaran/literasi, gambar/infografis edukatif, dan dokumen buku perpustakaan.</p>
               </div>
 
               <div class="flex items-center gap-2">
-                <button onclick="openAddBookModal()" class="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm shrink-0">
-                  <i class="fa-solid fa-plus"></i> Tambah Buku & PDF Baru
+                <button onclick="openAddBookModal()" class="px-4 py-2.5 bg-[#082e54] hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs shrink-0">
+                  <i class="fa-solid fa-plus text-amber-400"></i> Tambah Bahan Literasi
                 </button>
               </div>
             </div>
 
             <!-- Search & Filters -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div class="relative w-full sm:w-80">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-3"></i>
-                <input id="admin-search-books" type="text" placeholder="Cari judul, penulis, kode buku..." oninput="renderAdminBooksTable()" class="w-full text-xs text-slate-800 bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 focus:outline-hidden focus:border-sky-500 focus:bg-white transition" />
+            <div class="space-y-2.5">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="relative w-full sm:w-80">
+                  <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-3"></i>
+                  <input id="admin-search-books" type="text" placeholder="Cari judul, kreator/penulis, kode..." oninput="renderAdminBooksTable()" class="w-full text-xs text-slate-800 bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 focus:outline-hidden focus:border-sky-500 focus:bg-white transition" />
+                </div>
+
+                <!-- Material Type Filter Pills -->
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                  <span class="text-[11px] font-bold text-slate-400 mr-1">Tipe Bahan:</span>
+                  <button type="button" id="btn-filter-type-semua" onclick="filterAdminBooksType('semua')" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#082e54] text-white">Semua</button>
+                  <button type="button" id="btn-filter-type-ebook" onclick="filterAdminBooksType('ebook')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1"><i class="fa-solid fa-book text-sky-600"></i> E-Book</button>
+                  <button type="button" id="btn-filter-type-video" onclick="filterAdminBooksType('video')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1"><i class="fa-solid fa-play text-rose-500"></i> Video</button>
+                  <button type="button" id="btn-filter-type-gambar" onclick="filterAdminBooksType('gambar')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1"><i class="fa-solid fa-image text-emerald-600"></i> Gambar</button>
+                </div>
               </div>
 
-              <!-- Filter Pills -->
-              <div class="flex flex-wrap items-center gap-1.5 text-xs">
+              <!-- Topic/Category Filter Pills -->
+              <div class="flex flex-wrap items-center gap-1.5 text-xs pt-1 border-t border-slate-100">
                 <span class="text-[11px] font-bold text-slate-400 mr-1">Kategori:</span>
-                <button type="button" id="btn-filter-book-semua" onclick="filterAdminBooks('semua')" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#082e54] text-white">Semua</button>
-                <button type="button" id="btn-filter-book-sarpras" onclick="filterAdminBooks('sarpras')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Sarpras & SOP</button>
-                <button type="button" id="btn-filter-book-fiksi" onclick="filterAdminBooks('fiksi')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Fiksi</button>
-                <button type="button" id="btn-filter-book-kearifan_lokal" onclick="filterAdminBooks('kearifan_lokal')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Budaya Kasihan</button>
-                <button type="button" id="btn-filter-book-sains" onclick="filterAdminBooks('sains')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Sains</button>
-                <button type="button" id="btn-filter-book-sejarah" onclick="filterAdminBooks('sejarah')" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Sejarah</button>
+                <button type="button" id="btn-filter-book-semua" onclick="filterAdminBooks('semua')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-700 text-white">Semua Kategori</button>
+                <button type="button" id="btn-filter-book-sarpras" onclick="filterAdminBooks('sarpras')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Sarpras & SOP</button>
+                <button type="button" id="btn-filter-book-fiksi" onclick="filterAdminBooks('fiksi')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Fiksi</button>
+                <button type="button" id="btn-filter-book-nonfiksi" onclick="filterAdminBooks('nonfiksi')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Non-Fiksi</button>
+                <button type="button" id="btn-filter-book-kearifan_lokal" onclick="filterAdminBooks('kearifan_lokal')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Budaya Kasihan</button>
+                <button type="button" id="btn-filter-book-sains" onclick="filterAdminBooks('sains')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Sains</button>
+                <button type="button" id="btn-filter-book-sejarah" onclick="filterAdminBooks('sejarah')" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-100 text-slate-600 hover:bg-slate-200">Sejarah</button>
               </div>
             </div>
 
@@ -3945,11 +4111,11 @@
               <table class="w-full text-left text-xs">
                 <thead>
                   <tr class="bg-slate-50 border-b border-slate-200 text-slate-500">
-                    <th class="py-3 px-3 font-bold">Buku & Penulis</th>
-                    <th class="py-3 px-3 font-bold">Kode</th>
+                    <th class="py-3 px-3 font-bold">Bahan Literasi & Sumber</th>
+                    <th class="py-3 px-3 font-bold">Kode / ID</th>
+                    <th class="py-3 px-3 font-bold">Tipe Bahan</th>
                     <th class="py-3 px-3 font-bold">Kategori</th>
-                    <th class="py-3 px-3 font-bold">Halaman</th>
-                    <th class="py-3 px-3 font-bold">Berkas PDF</th>
+                    <th class="py-3 px-3 font-bold">Tautan / Berkas Terlampir</th>
                     <th class="py-3 px-3 font-bold text-right">Aksi</th>
                   </tr>
                 </thead>
@@ -3964,19 +4130,25 @@
         <!-- ================= PANE 2: USERS MANAGEMENT ================= -->
         <div id="admin-pane-users" class="space-y-4 hidden">
           <div class="bg-white rounded-3xl p-6 border border-slate-200 card-shadow space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div>
                 <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                  <i class="fa-solid fa-users text-sky-600"></i> Data Pengguna Sistem LENTERA 5M
+                  <i class="fa-solid fa-users text-sky-600"></i> Kelola Data Siswa & Guru LENTERA 5M
                 </h3>
-                <p class="text-xs text-slate-500">Kelola akun dan kredensial Siswa, Guru, dan Kepala Sekolah SMPN 2 Kasihan</p>
+                <p class="text-xs text-slate-500">Kelola akun Siswa dan Guru: tambah manual atau gunakan fitur impor massal dengan template Excel yang disediakan.</p>
               </div>
-              <div class="flex items-center gap-2">
-                <button onclick="exportUsersCSV()" class="px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition flex items-center gap-1.5">
-                  <i class="fa-solid fa-file-csv text-emerald-600"></i> Ekspor CSV
+              <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="downloadUserTemplateExcel()" class="px-3.5 py-2 rounded-xl text-xs font-bold border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition flex items-center gap-1.5 shadow-2xs" title="Unduh format template Excel (.xlsx)">
+                  <i class="fa-solid fa-file-excel text-emerald-600 text-sm"></i> Unduh Template Excel
                 </button>
-                <button onclick="openAddUserModal()" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-xs">
-                  <i class="fa-solid fa-user-plus"></i> Tambah Pengguna Baru
+                <button type="button" onclick="openImportUserModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-300 bg-sky-50 hover:bg-sky-100 text-sky-800 transition flex items-center gap-1.5 shadow-2xs" title="Impor data siswa & guru dari file Excel/CSV">
+                  <i class="fa-solid fa-file-import text-sky-600 text-sm"></i> Impor Siswa & Guru
+                </button>
+                <button type="button" onclick="openAddUserModal()" class="px-3.5 py-2 bg-[#082e54] hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs">
+                  <i class="fa-solid fa-user-plus text-amber-400"></i> Tambah Pengguna
+                </button>
+                <button type="button" onclick="exportUsersExcel()" class="px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition flex items-center gap-1.5" title="Ekspor semua akun ke file Excel">
+                  <i class="fa-solid fa-file-export text-slate-600"></i> Ekspor Excel
                 </button>
               </div>
             </div>
@@ -3985,7 +4157,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div class="relative w-full sm:w-80">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-3"></i>
-                <input id="admin-search-users" type="text" placeholder="Cari nama, NISN/NIP, kelas..." oninput="renderAdminUsersTable()" class="w-full text-xs text-slate-800 bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 focus:outline-hidden focus:border-sky-500 focus:bg-white transition" />
+                <input id="admin-search-users" type="text" placeholder="Cari nama, NISN/NIP, kelas, bidang..." oninput="renderAdminUsersTable()" class="w-full text-xs text-slate-800 bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 focus:outline-hidden focus:border-sky-500 focus:bg-white transition" />
               </div>
               <div class="flex flex-wrap items-center gap-1.5 text-xs">
                 <span class="text-[11px] font-bold text-slate-400 mr-1">Peran:</span>
@@ -4005,7 +4177,7 @@
                     <th class="py-3 px-3 font-bold">Nama Lengkap</th>
                     <th class="py-3 px-3 font-bold">Username / NISN / NIP</th>
                     <th class="py-3 px-3 font-bold">Peran</th>
-                    <th class="py-3 px-3 font-bold">Kelas / Bidang</th>
+                    <th class="py-3 px-3 font-bold">Kelas / Mata Pelajaran</th>
                     <th class="py-3 px-3 font-bold">Poin Literasi</th>
                     <th class="py-3 px-3 font-bold text-right">Aksi</th>
                   </tr>
@@ -4200,79 +4372,73 @@
       </div>
     </div>
 
-    <!-- Modal Add/Edit Book & Upload PDF (Admin) -->
+    <!-- Modal Add/Edit Literacy Material & Catalog (Admin) -->
     <div id="modal-book-form" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4">
-      <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 max-h-[92vh] overflow-y-auto">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
           <div>
             <h4 id="modal-book-title" class="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-              <i class="fa-solid fa-book-medical text-sky-600"></i> Kelola Koleksi Buku & Berkas PDF
+              <i class="fa-solid fa-photo-film text-sky-600"></i> Kelola Bahan Literasi Digital
             </h4>
-            <p class="text-[11px] text-slate-500">Unggah berkas PDF atau sematkan link dokumen perpustakaan</p>
+            <p class="text-[11px] text-slate-500">Tambahkan bahan literasi: E-Book digital, video literasi, atau gambar & infografis edukatif</p>
           </div>
-          <button type="button" onclick="closeBookModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+          <button type="button" onclick="closeBookModal()" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
-        <form id="form-manage-book" onsubmit="handleSaveBook(event)" class="space-y-3.5 text-xs">
+        <form id="form-manage-book" onsubmit="handleSaveBook(event)" class="space-y-4 text-xs">
           <input type="hidden" id="manage-book-id" />
+          <input type="hidden" id="manage-book-material-type" value="ebook" />
           
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block font-bold text-slate-700 mb-1">Judul Buku</label>
-              <input type="text" id="manage-book-title" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl" placeholder="Judul buku lengkap..." />
-            </div>
-            <div>
-              <label class="block font-bold text-slate-700 mb-1">Penulis / Penerbit</label>
-              <input type="text" id="manage-book-author" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl" placeholder="Nama penulis / penyusun..." />
-            </div>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block font-bold text-slate-700 mb-1">Kategori Buku</label>
-              <select id="manage-book-category" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium">
-                <option value="sarpras">Sarpras & SOP Sekolah</option>
-                <option value="fiksi">Fiksi & Sastra</option>
-                <option value="nonfiksi">Non-Fiksi & Referensi</option>
-                <option value="kearifan_lokal">Kearifan Budaya Jogja & Kasihan</option>
-                <option value="sains">Sains Populer & Teknologi</option>
-                <option value="sejarah">Sejarah Nusantara</option>
-              </select>
-            </div>
-            <div>
-              <label class="block font-bold text-slate-700 mb-1">Jumlah Halaman</label>
-              <input type="number" id="manage-book-pages" min="1" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl" placeholder="Contoh: 150" />
-            </div>
-          </div>
-
+          <!-- Pilihan Jenis / Tipe Bahan Literasi -->
           <div>
-            <label class="block font-bold text-slate-700 mb-1">URL Gambar Sampul (Cover)</label>
-            <input type="url" id="manage-book-cover" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl" placeholder="https://images.unsplash.com/... (opsional)" />
+            <label class="block font-bold text-slate-700 mb-1.5">Pilih Tipe Bahan Literasi</label>
+            <div class="grid grid-cols-3 p-1.5 bg-slate-100 rounded-2xl gap-1">
+              <button type="button" id="btn-material-ebook" onclick="switchMaterialType('ebook')" class="py-2.5 px-2 rounded-xl font-bold text-xs bg-[#082e54] text-white shadow-xs transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-book-bookmark text-amber-400"></i>
+                <span>E-Book Digital</span>
+              </button>
+              <button type="button" id="btn-material-video" onclick="switchMaterialType('video')" class="py-2.5 px-2 rounded-xl font-bold text-xs text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-play text-rose-500"></i>
+                <span>Video Literasi</span>
+              </button>
+              <button type="button" id="btn-material-gambar" onclick="switchMaterialType('gambar')" class="py-2.5 px-2 rounded-xl font-bold text-xs text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-image text-emerald-500"></i>
+                <span>Gambar / Infografis</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Pilihan Berkas PDF: Upload PDF atau Gunakan Link -->
-          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+          <!-- Section Khusus E-Book -->
+          <div id="container-fields-ebook" class="space-y-3 p-3.5 bg-sky-50/60 border border-sky-200 rounded-2xl">
             <div class="flex items-center justify-between">
-              <label class="block font-bold text-slate-800">Berkas PDF Dokumen Buku</label>
-              <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">In-App PDF Viewer</span>
+              <span class="font-bold text-sky-950 flex items-center gap-1.5">
+                <i class="fa-solid fa-file-pdf text-red-500"></i> Sumber Dokumen E-Book / Berkas PDF
+              </span>
+              <span class="text-[10px] bg-sky-200 text-sky-900 font-bold px-2 py-0.5 rounded-full">PDF & Flipbook</span>
             </div>
 
-            <!-- Segmented selector -->
-            <div class="grid grid-cols-2 p-1 bg-white border border-slate-200 rounded-xl">
-              <button type="button" id="tab-pdf-upload" onclick="switchPdfSourceMode('upload')" class="py-1.5 rounded-lg font-bold text-xs bg-sky-600 text-white transition">
+            <div class="grid grid-cols-2 p-1 bg-white border border-sky-200 rounded-xl">
+              <button type="button" id="tab-pdf-link" onclick="switchPdfSourceMode('link')" class="py-1.5 rounded-lg font-bold text-xs bg-sky-600 text-white transition">
+                <i class="fa-solid fa-link mr-1"></i> Tautan Link E-Book
+              </button>
+              <button type="button" id="tab-pdf-upload" onclick="switchPdfSourceMode('upload')" class="py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition">
                 <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload File PDF
               </button>
-              <button type="button" id="tab-pdf-link" onclick="switchPdfSourceMode('link')" class="py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition">
-                <i class="fa-solid fa-link mr-1"></i> Gunakan Link PDF
-              </button>
             </div>
 
-            <!-- Upload File Option -->
-            <div id="container-pdf-upload" class="space-y-2">
-              <div class="border-2 border-dashed border-sky-200 hover:border-sky-400 bg-sky-50/50 rounded-xl p-4 text-center cursor-pointer transition relative" onclick="document.getElementById('manage-book-pdf-file').click()">
+            <!-- Ebook Link Option -->
+            <div id="container-pdf-link" class="space-y-1">
+              <label class="block font-semibold text-slate-700 text-[11px]">Tautan Link E-Book / PDF Online</label>
+              <input type="url" id="manage-book-pdf-url" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl focus:outline-hidden focus:border-sky-500 text-xs" placeholder="https://drive.google.com/... atau https://kemdikbud.go.id/.../buku.pdf" />
+              <p class="text-[10.5px] text-slate-500">Bisa tautan Google Drive publik, repositori Perpustakaan Nasional/Kemdikbud, atau link web buku.</p>
+            </div>
+
+            <!-- Upload PDF Option -->
+            <div id="container-pdf-upload" class="hidden space-y-2">
+              <div class="border-2 border-dashed border-sky-300 hover:border-sky-400 bg-white rounded-xl p-3.5 text-center cursor-pointer transition relative" onclick="document.getElementById('manage-book-pdf-file').click()">
                 <input type="file" id="manage-book-pdf-file" accept="application/pdf" class="hidden" onchange="handleBookPdfFileChange(event)" />
-                <i class="fa-solid fa-file-pdf text-2xl text-red-500 mb-1.5"></i>
-                <p class="font-bold text-slate-700 text-xs">Klik untuk pilih file PDF atau geser ke sini</p>
-                <p class="text-[10px] text-slate-400 mt-0.5">Mendukung berkas .pdf asli (tersimpan di peramban dan siap dibaca)</p>
+                <i class="fa-solid fa-file-pdf text-2xl text-red-500 mb-1"></i>
+                <p class="font-bold text-slate-700 text-xs">Klik untuk pilih file PDF dari perangkat</p>
+                <p class="text-[10px] text-slate-400 mt-0.5">Berkas tersimpan di penyimpanan browser siap dibaca siswa</p>
               </div>
               <div id="pdf-file-preview-badge" class="hidden flex items-center justify-between p-2 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800">
                 <div class="flex items-center gap-2 min-w-0">
@@ -4284,22 +4450,141 @@
               </div>
             </div>
 
-            <!-- Link Option -->
-            <div id="container-pdf-link" class="hidden space-y-1.5">
-              <input type="url" id="manage-book-pdf-url" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl" placeholder="https://drive.google.com/... atau https://.../buku.pdf" />
-              <p class="text-[10.5px] text-slate-400">Dapat berupa URL file PDF publik atau dokumen Google Drive yang dibagikan publik.</p>
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Estimasi Jumlah Halaman</label>
+              <input type="number" id="manage-book-pages" min="1" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl text-xs" placeholder="Contoh: 120" />
             </div>
           </div>
 
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Sinopsis Singkat</label>
-            <textarea id="manage-book-synopsis" rows="2.5" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl" placeholder="Ringkasan isi buku untuk memikat minat baca siswa..."></textarea>
+          <!-- Section Khusus Video Literasi -->
+          <div id="container-fields-video" class="hidden space-y-3 p-3.5 bg-rose-50/60 border border-rose-200 rounded-2xl">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-rose-950 flex items-center gap-1.5">
+                <i class="fa-brands fa-youtube text-rose-600 text-base"></i> Tautan Video Literasi & Pembelajaran
+              </span>
+              <span class="text-[10px] bg-rose-200 text-rose-900 font-bold px-2 py-0.5 rounded-full">YouTube / Drive / MP4</span>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 text-[11px] mb-1">Tautan Link Video (URL)</label>
+              <div class="flex gap-2">
+                <input type="url" id="manage-book-video-url" oninput="previewVideoUrl()" class="flex-1 p-2.5 bg-white border border-slate-200 rounded-xl focus:outline-hidden focus:border-rose-500 text-xs" placeholder="https://www.youtube.com/watch?v=... atau link video Drive" />
+                <button type="button" onclick="checkAndFetchYoutubeThumbnail()" class="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-xs shrink-0 transition flex items-center gap-1.5 shadow-2xs" title="Ambil cover YouTube otomatis dan cek tautan">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                  <span>Ambil Cover</span>
+                </button>
+              </div>
+              <p class="text-[10.5px] text-slate-500 mt-1">Dukung video YouTube (watch/shorts), video pembelajaran Google Drive, atau tautan file MP4 langsung.</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold text-slate-700 text-[11px] mb-1">Durasi Video</label>
+                <input type="text" id="manage-book-duration" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl text-xs" placeholder="Misal: 14 Menit" />
+              </div>
+              <div>
+                <label class="block font-semibold text-slate-700 text-[11px] mb-1">Kreator / Channel YouTube</label>
+                <input type="text" id="manage-book-creator" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl text-xs" placeholder="Nama channel / pembuat video" />
+              </div>
+            </div>
+
+            <!-- Video Live Preview Box -->
+            <div id="video-embed-preview-container" class="hidden p-3 bg-white border border-rose-200 rounded-xl space-y-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-rose-700 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-rose-600"></i> Pratinjau Video Terdeteksi
+              </span>
+              <div id="video-embed-preview" class="aspect-video w-full rounded-lg overflow-hidden bg-slate-900 flex items-center justify-center">
+                <!-- Iframe or thumbnail preview rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Khusus Gambar / Infografis Edukatif -->
+          <div id="container-fields-gambar" class="hidden space-y-3 p-3.5 bg-emerald-50/60 border border-emerald-200 rounded-2xl">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-emerald-950 flex items-center gap-1.5">
+                <i class="fa-solid fa-image text-emerald-600"></i> Sumber Gambar / Infografis Edukatif
+              </span>
+              <span class="text-[10px] bg-emerald-200 text-emerald-900 font-bold px-2 py-0.5 rounded-full">Poster & Visual</span>
+            </div>
+
+            <div class="grid grid-cols-2 p-1 bg-white border border-emerald-200 rounded-xl">
+              <button type="button" id="tab-image-link" onclick="switchImageSourceMode('link')" class="py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white transition">
+                <i class="fa-solid fa-link mr-1"></i> Tautan Link Gambar
+              </button>
+              <button type="button" id="tab-image-upload" onclick="switchImageSourceMode('upload')" class="py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition">
+                <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload File Gambar
+              </button>
+            </div>
+
+            <!-- Link Gambar -->
+            <div id="container-image-link" class="space-y-1">
+              <label class="block font-semibold text-slate-700 text-[11px]">Tautan Link Gambar Online (URL)</label>
+              <input type="url" id="manage-book-image-url" oninput="previewImageUrl()" class="w-full p-2.5 bg-white border border-slate-200 rounded-xl focus:outline-hidden focus:border-emerald-500 text-xs" placeholder="https://... (URL gambar infografis poster JPG/PNG/WebP)" />
+            </div>
+
+            <!-- Upload Gambar -->
+            <div id="container-image-upload" class="hidden space-y-2">
+              <div class="border-2 border-dashed border-emerald-300 hover:border-emerald-400 bg-white rounded-xl p-3.5 text-center cursor-pointer transition relative" onclick="document.getElementById('manage-book-image-file').click()">
+                <input type="file" id="manage-book-image-file" accept="image/*" class="hidden" onchange="handleBookImageFileChange(event)" />
+                <i class="fa-solid fa-image text-2xl text-emerald-600 mb-1"></i>
+                <p class="font-bold text-slate-700 text-xs">Klik untuk pilih gambar dari galeri perangkat</p>
+                <p class="text-[10px] text-slate-400 mt-0.5">Format JPG, PNG, atau WebP</p>
+              </div>
+            </div>
+
+            <!-- Image Live Preview Box -->
+            <div id="image-embed-preview-container" class="hidden p-2.5 bg-white border border-emerald-200 rounded-xl space-y-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-emerald-600"></i> Pratinjau Gambar / Poster
+              </span>
+              <div class="max-h-48 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center p-1">
+                <img id="image-embed-preview" src="" alt="Pratinjau Gambar" class="max-h-44 object-contain rounded" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Informasi Umum Bahan Literasi -->
+          <div class="space-y-3 pt-1 border-t border-slate-100">
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Judul Bahan Literasi</label>
+                <input type="text" id="manage-book-title" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:border-sky-500 text-xs" placeholder="Judul buku, judul video, atau infografis..." />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Penulis / Kreator / Sumber</label>
+                <input type="text" id="manage-book-author" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:border-sky-500 text-xs" placeholder="Nama penulis, instansi, atau kreator..." />
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Kategori Bahan</label>
+                <select id="manage-book-category" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-medium text-xs">
+                  <option value="fiksi">Fiksi & Sastra</option>
+                  <option value="nonfiksi">Non-Fiksi & Referensi</option>
+                  <option value="kearifan_lokal">Kearifan Budaya Jogja & Kasihan</option>
+                  <option value="sains">Sains Populer & Teknologi</option>
+                  <option value="sejarah">Sejarah Nusantara</option>
+                  <option value="sarpras">Sarpras & SOP Sekolah</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">URL Sampul / Thumbnail Poster</label>
+                <input type="url" id="manage-book-cover" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:border-sky-500 text-xs" placeholder="https://... (otomatis terisi jika ada)" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Sinopsis / Panduan Belajar / Catatan</label>
+              <textarea id="manage-book-synopsis" rows="2.5" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:border-sky-500 text-xs" placeholder="Ringkasan isi bahan literasi agar siswa tertarik membaca, menonton, atau mengamati..."></textarea>
+            </div>
           </div>
 
           <div class="pt-2 flex gap-2">
             <button type="button" onclick="closeBookModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">Batal</button>
-            <button type="submit" class="flex-1 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
-              <i class="fa-solid fa-floppy-disk"></i> Simpan Buku ke Katalog
+            <button type="submit" class="flex-1 py-2.5 bg-[#082e54] hover:bg-sky-900 text-white font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-floppy-disk text-amber-400"></i> Simpan ke Katalog Literasi
             </button>
           </div>
         </form>
@@ -5143,31 +5428,45 @@
     </div>
 
 
-    <!-- Mobile Bottom Navigation (Visible on mobile screens) -->
-    <div id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200 px-2 py-1 shadow-lg hidden">
-      <div class="grid grid-cols-5 text-center text-[10px] font-medium">
-        <button onclick="navigateTo('beranda')" class="mobile-nav-btn py-1.5 flex flex-col items-center text-sky-600" data-target="beranda">
-          <i class="fa-solid fa-house text-base mb-0.5"></i>
-          <span>Beranda</span>
+    <!-- ================= STUDENT GLOBAL BOTTOM NAVIGATION (Standardized 5-Item Navigation matching attached photo) ================= -->
+    <nav id="student-global-bottom-nav" class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-[0_-2px_12px_rgba(0,0,0,0.06)] select-none">
+      <div class="max-w-2xl mx-auto grid grid-cols-5 text-center py-2 px-1 sm:px-4">
+        <!-- 1. Beranda -->
+        <button type="button" id="sbn-btn-beranda" onclick="handleStudentBottomNav('beranda')" class="sbn-btn py-1 flex flex-col items-center justify-center transition group">
+          <i class="fa-solid fa-house text-lg mb-0.5 transition text-[#00695c]"></i>
+          <span class="text-xs transition font-bold text-[#00695c]">Beranda</span>
         </button>
-        <button onclick="navigateTo('m1')" class="mobile-nav-btn py-1.5 flex flex-col items-center text-slate-500" data-target="m1">
-          <i class="fa-solid fa-book-open text-base mb-0.5"></i>
-          <span>M1 Baca</span>
+
+        <!-- 2. Buku -->
+        <button type="button" id="sbn-btn-buku" onclick="handleStudentBottomNav('buku')" class="sbn-btn py-1 flex flex-col items-center justify-center transition group">
+          <i class="fa-solid fa-book-open text-lg mb-0.5 transition text-slate-500 group-hover:text-slate-800"></i>
+          <span class="text-xs transition font-normal text-slate-500 group-hover:text-slate-800">Buku</span>
         </button>
-        <button onclick="navigateTo('m3')" class="mobile-nav-btn py-1.5 flex flex-col items-center text-slate-500" data-target="m3">
-          <i class="fa-solid fa-pen-nib text-base mb-0.5"></i>
-          <span>M3 Tulis</span>
+
+        <!-- 3. Tantangan -->
+        <button type="button" id="sbn-btn-tantangan" onclick="handleStudentBottomNav('tantangan')" class="sbn-btn py-1 flex flex-col items-center justify-center transition group">
+          <i class="fa-solid fa-trophy text-lg mb-0.5 transition text-slate-500 group-hover:text-slate-800"></i>
+          <span class="text-xs transition font-normal text-slate-500 group-hover:text-slate-800">Tantangan</span>
         </button>
-        <button onclick="navigateTo('jogja')" class="mobile-nav-btn py-1.5 flex flex-col items-center text-slate-500" data-target="jogja">
-          <i class="fa-solid fa-landmark text-base mb-0.5"></i>
-          <span>Jogja</span>
+
+        <!-- 4. Notifikasi -->
+        <button type="button" id="sbn-btn-notifikasi" onclick="handleStudentBottomNav('notifikasi')" class="sbn-btn py-1 flex flex-col items-center justify-center transition group relative">
+          <div class="relative inline-flex items-center justify-center">
+            <i class="fa-solid fa-bell text-lg mb-0.5 transition text-slate-500 group-hover:text-slate-800"></i>
+            <span id="sbn-notif-dot" class="w-2 h-2 bg-rose-500 rounded-full absolute -top-0.5 -right-1 ring-1 ring-white"></span>
+          </div>
+          <span class="text-xs transition font-normal text-slate-500 group-hover:text-slate-800">Notifikasi</span>
         </button>
-        <button onclick="toggleMobileMoreMenu()" class="mobile-nav-btn py-1.5 flex flex-col items-center text-slate-500">
-          <i class="fa-solid fa-bars text-base mb-0.5"></i>
-          <span>Lainnya</span>
+
+        <!-- 5. Profil -->
+        <button type="button" id="sbn-btn-profil" onclick="handleStudentBottomNav('profil')" class="sbn-btn py-1 flex flex-col items-center justify-center transition group">
+          <i class="fa-solid fa-user text-lg mb-0.5 transition text-slate-500 group-hover:text-slate-800"></i>
+          <span class="text-xs transition font-normal text-slate-500 group-hover:text-slate-800">Profil</span>
         </button>
       </div>
-    </div>
+    </nav>
+    <!-- Fallback hidden element for any legacy references -->
+    <div id="mobile-nav" class="hidden"></div>
 
     <!-- Mobile More Drawer -->
     <div id="mobile-drawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden">
@@ -6098,6 +6397,199 @@
           <i class="fa-solid fa-paper-plane"></i>
           <span>Kirim Apresiasi</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL IMPOR PENGGUNA (EXCEL / CSV) ================= -->
+  <div id="modal-import-users" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
+            <i class="fa-solid fa-file-excel text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-slate-800 text-sm sm:text-base">Impor Data Siswa & Guru (Excel / CSV)</h4>
+            <p class="text-xs text-slate-500">Unggah berkas Excel (.xlsx / .xls) atau CSV untuk menambahkan data pengguna secara massal.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeImportUserModal()" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="space-y-4 py-4 overflow-y-auto text-xs flex-1">
+        <!-- Download Template Card -->
+        <div class="p-4 bg-gradient-to-r from-emerald-50/80 to-teal-50/80 border border-emerald-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <h5 class="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-info text-emerald-600"></i> Belum Memiliki Format Berkas?
+            </h5>
+            <p class="text-[11px] text-emerald-800 leading-relaxed">
+              Gunakan template resmi yang telah disesuaikan dengan kolom NISN/NIP, Nama Lengkap, Peran (Siswa/Guru), dan Rombel/Kelas.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="downloadUserTemplateExcel()" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-file-arrow-down"></i> Unduh Excel (.xlsx)
+            </button>
+            <button type="button" onclick="downloadUserTemplateCSV()" class="px-3 py-2 bg-white hover:bg-emerald-50 text-emerald-800 border border-emerald-300 font-semibold rounded-xl text-xs transition flex items-center gap-1.5">
+              <i class="fa-solid fa-file-csv"></i> CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Dropzone / File Picker -->
+        <div id="dropzone-import-user" onclick="document.getElementById('input-import-user-file').click()" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/20 rounded-2xl p-6 text-center cursor-pointer transition relative">
+          <input type="file" id="input-import-user-file" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleUserImportFile(event)" />
+          <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center mx-auto text-emerald-600 mb-2">
+            <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+          </div>
+          <p class="font-bold text-slate-800 text-xs sm:text-sm">Klik untuk memilih file Excel atau geser file ke sini</p>
+          <p class="text-[11px] text-slate-500 mt-1">Mendukung format Microsoft Excel (.xlsx, .xls) dan CSV (.csv)</p>
+          <p id="import-user-filename" class="text-xs font-bold text-emerald-700 mt-2 hidden"></p>
+        </div>
+
+        <!-- Preview Results Container (Shown after file is parsed) -->
+        <div id="container-import-user-preview" class="hidden space-y-3">
+          <!-- Stats Summary Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div class="p-2.5 bg-slate-100 rounded-xl border border-slate-200 text-center">
+              <span class="text-[10px] text-slate-500 block uppercase font-bold">Total Baris</span>
+              <span id="stat-import-total" class="font-extrabold text-slate-800 text-sm">0</span>
+            </div>
+            <div class="p-2.5 bg-sky-50 rounded-xl border border-sky-200 text-center">
+              <span class="text-[10px] text-sky-700 block uppercase font-bold">Calon Siswa</span>
+              <span id="stat-import-siswa" class="font-extrabold text-sky-800 text-sm">0</span>
+            </div>
+            <div class="p-2.5 bg-purple-50 rounded-xl border border-purple-200 text-center">
+              <span class="text-[10px] text-purple-700 block uppercase font-bold">Calon Guru</span>
+              <span id="stat-import-guru" class="font-extrabold text-purple-800 text-sm">0</span>
+            </div>
+            <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-center">
+              <span class="text-[10px] text-emerald-700 block uppercase font-bold">Siap Diimpor</span>
+              <span id="stat-import-valid" class="font-extrabold text-emerald-800 text-sm">0</span>
+            </div>
+          </div>
+
+          <!-- Preview Table -->
+          <div class="border border-slate-200 rounded-xl overflow-hidden">
+            <div class="bg-slate-50 px-3 py-2 border-b border-slate-200 flex items-center justify-between">
+              <span class="font-bold text-slate-700 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-table-list text-slate-500"></i> Pratinjau Data yang Akan Masuk (Maks. 8 baris pertama):
+              </span>
+              <span id="import-preview-badge" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Validasi OK</span>
+            </div>
+            <div class="overflow-x-auto max-h-48">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="bg-slate-100/70 border-b border-slate-200 text-slate-500 text-[11px]">
+                    <th class="py-2 px-3 font-bold">Peran</th>
+                    <th class="py-2 px-3 font-bold">NISN / NIP / Username</th>
+                    <th class="py-2 px-3 font-bold">Nama Lengkap</th>
+                    <th class="py-2 px-3 font-bold">Kelas / Mata Pelajaran</th>
+                    <th class="py-2 px-3 font-bold">Kata Sandi</th>
+                  </tr>
+                </thead>
+                <tbody id="table-import-users-preview" class="divide-y divide-slate-100 text-slate-700">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2 shrink-0">
+        <button type="button" onclick="closeImportUserModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
+          Batal
+        </button>
+        <button type="button" id="btn-confirm-import-users" onclick="processUserImport()" disabled class="px-5 py-2.5 bg-[#082e54] hover:bg-sky-900 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-xs transition flex items-center gap-2 shadow-xs">
+          <i class="fa-solid fa-cloud-arrow-down text-amber-400"></i>
+          <span>Konfirmasi & Simpan ke Sistem</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL IN-APP VIDEO PLAYER ================= -->
+  <div id="modal-video-player" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-slate-900 text-white rounded-3xl max-w-3xl w-full p-4 sm:p-6 shadow-2xl border border-slate-800 max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+      <!-- Player Header -->
+      <div class="flex items-start justify-between pb-3 border-b border-slate-800 gap-3">
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 mb-1.5">
+            <i class="fa-solid fa-play text-[8px]"></i> Video Literasi Siswa
+          </span>
+          <h4 id="video-modal-title" class="font-extrabold text-sm sm:text-base text-white truncate">Judul Video</h4>
+          <p id="video-modal-author" class="text-xs text-slate-400 truncate">Kreator: -</p>
+        </div>
+        <button type="button" onclick="closeVideoPlayerModal()" class="text-slate-400 hover:text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-800 transition shrink-0">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Player Frame -->
+      <div class="my-4 aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-800 relative flex items-center justify-center">
+        <iframe id="video-modal-iframe" src="" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+
+      <!-- Video Description & Action Bar -->
+      <div class="space-y-3 shrink-0">
+        <p id="video-modal-synopsis" class="text-xs text-slate-300 line-clamp-2 leading-relaxed bg-slate-800/50 p-3 rounded-xl border border-slate-800">
+          Sinopsis video...
+        </p>
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+          <a id="video-modal-external-link" href="#" target="_blank" class="text-xs text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Sumber Asli di Tab Baru
+          </a>
+          <button type="button" onclick="openJournalForCurrentMedia()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-2xs">
+            <i class="fa-solid fa-pen-nib"></i> Tulis Jurnal Refleksi Video Ini
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL IN-APP IMAGE / INFOGRAPHIC VIEWER ================= -->
+  <div id="modal-image-viewer" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+      <!-- Image Header -->
+      <div class="flex items-start justify-between pb-3 border-b border-slate-100 gap-3">
+        <div class="min-w-0">
+          <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 mb-1.5">
+            <i class="fa-solid fa-image text-[9px]"></i> Infografis & Gambar Edukatif
+          </span>
+          <h4 id="image-modal-title" class="font-extrabold text-sm sm:text-base text-slate-800 truncate">Judul Infografis</h4>
+          <p id="image-modal-author" class="text-xs text-slate-500 truncate">Sumber / Kreator: -</p>
+        </div>
+        <button type="button" onclick="closeImageViewerModal()" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition shrink-0">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Image Canvas Area -->
+      <div class="my-3 flex-1 overflow-auto rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center p-2 min-h-[250px] max-h-[55vh]">
+        <img id="image-modal-img" src="" alt="Infografis Literasi" class="max-h-full max-w-full object-contain rounded-lg shadow-xs transition hover:scale-105 duration-300" />
+      </div>
+
+      <!-- Image Details & Actions -->
+      <div class="space-y-3 shrink-0 pt-2 border-t border-slate-100">
+        <p id="image-modal-synopsis" class="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+          Keterangan infografis...
+        </p>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <a id="image-modal-external-link" href="#" target="_blank" class="text-xs text-emerald-700 hover:underline flex items-center gap-1 font-semibold">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Gambar Resolusi Penuh
+          </a>
+          <button type="button" onclick="openJournalForCurrentMedia()" class="px-4 py-2 bg-[#00695c] hover:bg-[#004d40] text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-2xs">
+            <i class="fa-solid fa-pen-nib"></i> Tulis Jurnal Refleksi Infografis Ini
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@
  */
 
 import './firebase.js';
+import * as XLSX from 'xlsx';
 
 // ==========================================
 // 1. INITIAL DATA SEEDS & STORAGE ENGINE
@@ -53,82 +54,218 @@ const DEFAULT_USERS = [
   {
     id: 'u-siswa1',
     name: 'Aisyah Putri Rahma',
+    nisn: '0098231001',
     username: 'siswa1',
     password: 'siswa123',
     role: 'siswa',
     kelas: '8B',
+    waliKelas: 'Ibu Zusma Nadya Izzati, S.Pd.',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80',
     points: 1250,
     streak: 7,
-    booksCount: 8,
-    worksCount: 5,
+    m1_books: 8,
+    m1_duration: 350,
+    m2_findings: 12,
+    m2_quizScore: 95,
+    m3_works: 5,
+    m4_talks: 3,
+    m5_appreciations: 18,
+    status: 'aktif',
     level: 'Pembaca Kreatif',
     badges: ['Pena Emas', 'Ksatria Kasihan', 'Pembaca Tekun']
   },
   {
     id: 'u-siswa2',
     name: 'Anisa Rahma',
+    nisn: '0098231002',
     username: 'siswa2',
     password: 'siswa123',
     role: 'siswa',
     kelas: '8A',
+    waliKelas: 'Bpk. Hendro, S.Pd.',
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80',
     points: 620,
     streak: 7,
-    level: 'Peneliti',
+    m1_books: 14,
+    m1_duration: 420,
+    m2_findings: 10,
+    m2_quizScore: 90,
+    m3_works: 4,
+    m4_talks: 2,
+    m5_appreciations: 15,
+    status: 'aktif',
+    level: 'Peneliti Muda',
     badges: ['Bintang Literasi', 'Penyair Bantul']
   },
   {
     id: 'u-siswa3',
-    name: 'Dimas Aditya Pratama',
+    name: 'Bagus Kurniawan',
+    nisn: '0098231003',
     username: 'siswa3',
     password: 'siswa123',
     role: 'siswa',
     kelas: '8B',
+    waliKelas: 'Ibu Zusma Nadya Izzati, S.Pd.',
     avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&auto=format&fit=crop&q=80',
-    points: 150,
-    streak: 1,
-    level: 'Pembaca',
-    badges: ['Langkah Awal']
+    points: 380,
+    streak: 5,
+    m1_books: 9,
+    m1_duration: 280,
+    m2_findings: 8,
+    m2_quizScore: 85,
+    m3_works: 3,
+    m4_talks: 2,
+    m5_appreciations: 12,
+    status: 'aktif',
+    level: 'Pembaca Konsisten',
+    badges: ['Penjelajah Buku', 'Juara Resensi 8B']
   },
   {
     id: 'u-siswa4',
-    name: 'Rizki Nur Fauzi',
+    name: 'Dimas Aditya Pratama',
+    nisn: '0098231004',
     username: 'siswa4',
     password: 'siswa123',
     role: 'siswa',
     kelas: '8B',
+    waliKelas: 'Ibu Zusma Nadya Izzati, S.Pd.',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=80',
+    points: 150,
+    streak: 2,
+    m1_books: 5,
+    m1_duration: 150,
+    m2_findings: 4,
+    m2_quizScore: 75,
+    m3_works: 1,
+    m4_talks: 1,
+    m5_appreciations: 6,
+    status: 'aktif',
+    level: 'Pembaca Pemula',
+    badges: ['Langkah Awal']
+  },
+  {
+    id: 'u-siswa5',
+    name: 'Rizki Nur Fauzi',
+    nisn: '0098231005',
+    username: 'siswa5',
+    password: 'siswa123',
+    role: 'siswa',
+    kelas: '8B',
+    waliKelas: 'Ibu Zusma Nadya Izzati, S.Pd.',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80',
     points: 40,
     streak: 0,
-    level: 'Pembaca',
+    m1_books: 2,
+    m1_duration: 45,
+    m2_findings: 1,
+    m2_quizScore: 60,
+    m3_works: 0,
+    m4_talks: 0,
+    m5_appreciations: 2,
+    status: 'pasif',
+    daysInactive: 6,
+    level: 'Pembaca Baru',
     badges: []
   },
   {
+    id: 'u-siswa6',
+    name: 'Siti Fatimah',
+    nisn: '0098231006',
+    username: 'siswa6',
+    password: 'siswa123',
+    role: 'siswa',
+    kelas: '8A',
+    waliKelas: 'Bpk. Hendro, S.Pd.',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80',
+    points: 80,
+    streak: 0,
+    m1_books: 3,
+    m1_duration: 60,
+    m2_findings: 2,
+    m2_quizScore: 70,
+    m3_works: 1,
+    m4_talks: 0,
+    m5_appreciations: 3,
+    status: 'pasif',
+    daysInactive: 7,
+    level: 'Pembaca Baru',
+    badges: []
+  },
+  {
+    id: 'u-siswa7',
+    name: 'Wahyu Nugroho',
+    nisn: '0098231007',
+    username: 'siswa7',
+    password: 'siswa123',
+    role: 'siswa',
+    kelas: '7A',
+    waliKelas: 'Ibu Nurul, S.Pd.',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=120&auto=format&fit=crop&q=80',
+    points: 220,
+    streak: 4,
+    m1_books: 6,
+    m1_duration: 190,
+    m2_findings: 5,
+    m2_quizScore: 80,
+    m3_works: 2,
+    m4_talks: 1,
+    m5_appreciations: 8,
+    status: 'aktif',
+    level: 'Pembaca Berkembang',
+    badges: ['Pembaca Semangat']
+  },
+  {
+    id: 'u-siswa8',
+    name: 'Nabila Zahra',
+    nisn: '0098231008',
+    username: 'siswa8',
+    password: 'siswa123',
+    role: 'siswa',
+    kelas: '9C',
+    waliKelas: 'Bpk. Triyanto, M.Pd.',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&auto=format&fit=crop&q=80',
+    points: 350,
+    streak: 6,
+    m1_books: 8,
+    m1_duration: 260,
+    m2_findings: 7,
+    m2_quizScore: 88,
+    m3_works: 3,
+    m4_talks: 2,
+    m5_appreciations: 14,
+    status: 'aktif',
+    level: 'Penulis Muda',
+    badges: ['Pena Kreatif']
+  },
+  {
     id: 'u-guru1',
-    name: 'Ratna Kusumawati, S.Pd.',
+    name: 'Ibu Zusma Nadya Izzati, S.Pd.',
     username: 'guru1',
     password: 'guru123',
     role: 'guru',
-    kelas: 'Guru Bahasa Indonesia (Wali 8B)',
+    nip: '199108152019032018',
+    kelas: '8B',
+    waliKelas: '8B',
+    mapel: 'Bahasa Indonesia',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80',
     points: 950,
     streak: 15,
-    level: 'Duta Literasi',
-    badges: ['Pembina GLS Utama']
+    level: 'Pembina GLS Utama',
+    badges: ['Wali Kelas 8B', 'Pembina GLS Utama', 'Fasilitator 5M']
   },
   {
     id: 'u-kepsek',
-    name: 'Drs. Supriyanto, M.Pd.',
+    name: 'Erna Retnaningsih, S.Pd., M.Pd.',
     username: 'kepsek',
     password: 'admin123',
     role: 'kepsek',
+    nip: '197303261998022001',
     kelas: 'Kepala SMPN 2 Kasihan',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80',
     points: 1200,
     streak: 30,
-    level: 'Duta Literasi',
-    badges: ['Pelindung Gerakan Literasi']
+    level: 'Kepala Sekolah',
+    badges: ['Pelindung Gerakan Literasi', 'Supervisi Makro GLS']
   }
 ];
 
@@ -145,10 +282,11 @@ const COVER_SOP = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/sv
 const DEFAULT_BOOKS = [
   {
     id: 'BK-SOP',
+    materialType: 'ebook',
     title: 'Pelayanan Sekolah Aman dan Nyaman',
     author: 'Tim Sarpras SMPN 2 Kasihan',
     category: 'sarpras',
-    categoryLabel: 'SARPRAS',
+    categoryLabel: 'SARPRAS & SOP',
     pages: 2,
     cover: COVER_SOP,
     synopsis: 'Standar Operasional Prosedur (SOP) Pelayanan Sekolah Aman dan Nyaman SMP Negeri 2 Kasihan Bantul Tahun Ajaran 2026/2027.',
@@ -158,7 +296,66 @@ const DEFAULT_BOOKS = [
     hasPdf: true
   },
   {
+    id: 'VID-001',
+    materialType: 'video',
+    title: 'Sejarah & Sumbu Filosofi Keraton Yogyakarta',
+    author: 'Dinas Kebudayaan DIY',
+    creator: 'Dinas Kebudayaan DIY',
+    category: 'kearifan_lokal',
+    categoryLabel: 'Kearifan Jogja',
+    videoUrl: 'https://www.youtube.com/watch?v=J---aiyznGQ',
+    link: 'https://www.youtube.com/watch?v=J---aiyznGQ',
+    duration: '14 Menit',
+    cover: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=400&auto=format&fit=crop&q=80',
+    synopsis: 'Dokumenter video komprehensif mengenai tata ruang sumbu filosofi Yogyakarta dari Panggung Krapyak ke Keraton dan Tugu Pal Putih.',
+    rating: 4.9
+  },
+  {
+    id: 'IMG-001',
+    materialType: 'gambar',
+    title: 'Infografis Sumbu Filosofi Warisan Dunia UNESCO',
+    author: 'Dinas Perpustakaan & Arsip Bantul',
+    category: 'kearifan_lokal',
+    categoryLabel: 'Infografis Budaya',
+    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=700&auto=format&fit=crop&q=80',
+    link: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=700&auto=format&fit=crop&q=80',
+    cover: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&auto=format&fit=crop&q=80',
+    pages: 1,
+    synopsis: 'Infografis visual interaktif mengenai garis imajiner sumbu filosofis Yogyakarta beserta makna spiritual Hamemayu Hayuning Bawana.',
+    rating: 4.9
+  },
+  {
+    id: 'VID-002',
+    materialType: 'video',
+    title: 'Eksplorasi Galaksi & Tata Surya Bima Sakti',
+    author: 'Laboratorium Astronomi Edukasi',
+    creator: 'Pusat Sains Antariksa',
+    category: 'sains',
+    categoryLabel: 'Sains & Teknologi',
+    videoUrl: 'https://www.youtube.com/watch?v=libKVRa01L8',
+    link: 'https://www.youtube.com/watch?v=libKVRa01L8',
+    duration: '18 Menit',
+    cover: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&auto=format&fit=crop&q=80',
+    synopsis: 'Animasi sains 3D mengenai dinamika planet, gravitasi semesta, dan foto galaksi terbaru dari observatorium antariksa.',
+    rating: 4.8
+  },
+  {
+    id: 'IMG-002',
+    materialType: 'gambar',
+    title: 'Poster Anatomi Gerakan Literasi Sekolah 5M',
+    author: 'Tim Literasi SMPN 2 Kasihan',
+    category: 'sarpras',
+    categoryLabel: 'Poster GLS',
+    imageUrl: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&auto=format&fit=crop&q=80',
+    link: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&auto=format&fit=crop&q=80',
+    cover: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=80',
+    pages: 1,
+    synopsis: 'Panduan visual 5M: Membaca cerdas, Memahami mendalam, Merangkum esensi, Menulis karya, dan Membagikan inspirasi.',
+    rating: 5.0
+  },
+  {
     id: 'BK-001',
+    materialType: 'ebook',
     title: 'Laskar Pelangi',
     author: 'Andrea Hirata',
     category: 'fiksi',
@@ -172,6 +369,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-002',
+    materialType: 'ebook',
     title: 'Bumi Manusia',
     author: 'Pramoedya A.T.',
     category: 'fiksi',
@@ -183,6 +381,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-003',
+    materialType: 'ebook',
     title: 'Fiksi',
     author: 'Tere Liye',
     category: 'fiksi',
@@ -194,6 +393,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-004',
+    materialType: 'ebook',
     title: 'Laut Bercerita',
     author: 'Leila S. Chudori',
     category: 'fiksi',
@@ -205,6 +405,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-005',
+    materialType: 'ebook',
     title: 'Ensiklopedia Kriya Gerabah Kasongan',
     author: 'Balai Budaya Bantul',
     category: 'jogja',
@@ -216,6 +417,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-006',
+    materialType: 'ebook',
     title: 'Babad Tanah Jawi: Warisan Mataram',
     author: 'W.L. Olthof & Tim Sejarah',
     category: 'jogja',
@@ -227,6 +429,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-007',
+    materialType: 'ebook',
     title: 'Negeri 5 Menara',
     author: 'Ahmad Fuadi',
     category: 'fiksi',
@@ -238,6 +441,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-008',
+    materialType: 'ebook',
     title: 'Kosmos & Misteri Alam Semesta',
     author: 'Prof. Carl Sagan (Terjemahan)',
     category: 'sains',
@@ -249,6 +453,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-009',
+    materialType: 'ebook',
     title: 'Filosofi Teras untuk Remaja',
     author: 'Henry Manampiring',
     category: 'nonfiksi',
@@ -260,6 +465,7 @@ const DEFAULT_BOOKS = [
   },
   {
     id: 'BK-010',
+    materialType: 'ebook',
     title: 'Unggah-Ungguh Basa Jawa Gagrag Anyar',
     author: 'Drs. Ki Sutrisno',
     category: 'jogja',
@@ -340,7 +546,7 @@ Menjadi lentera benderang dalam langkah menggapai cita.`,
     likes: 150,
     commentsCount: 27,
     comments: [
-      { id: 'c-langit-1', author: 'Drs. Supriyanto, M.Pd.', role: 'kepsek', text: 'Bait puisi yang sarat makna dan pengharapan. Bahasa puitisnya sangat menyentuh jiwa.', date: '28 Agustus 2026' },
+      { id: 'c-langit-1', author: 'Erna Retnaningsih, S.Pd., M.Pd.', role: 'kepsek', text: 'Bait puisi yang sarat makna dan pengharapan. Bahasa puitisnya sangat menyentuh jiwa.', date: '28 Agustus 2026' },
       { id: 'c-langit-2', author: 'Aisyah Putri', role: 'siswa', text: 'Suka sekali dengan bait kedua! Diksi yang Salsa gunakan selalu indah dan damai dibaca.', date: '28 Agustus 2026' }
     ],
     coverType: 'langit-sama',
@@ -411,7 +617,7 @@ Membawa nama harum bumi Bantul tercinta.`,
     likes: 24,
     commentsCount: 1,
     comments: [
-      { id: 'c3', author: 'Drs. Supriyanto, M.Pd.', role: 'kepsek', text: 'Luar biasa puitis dan penuh spirit kearifan lokal. Pertahankan bakat menulismu, Anisa!', date: '7 Sep' }
+      { id: 'c3', author: 'Erna Retnaningsih, S.Pd., M.Pd.', role: 'kepsek', text: 'Luar biasa puitis dan penuh spirit kearifan lokal. Pertahankan bakat menulismu, Anisa!', date: '7 Sep' }
     ],
     coverType: 'default',
     isFeatured: false
@@ -608,7 +814,6 @@ window.appState = {
         level: 'Super Admin',
         badges: ['Administrator Sistem', 'Pengelola Data 5M', 'Kurator Utama']
       });
-      setStorage(STORAGE_KEYS.USERS, list);
     }
     // Sync default student to Aisyah Putri if it was previously Bagus
     const s1 = list.find(u => u.id === 'u-siswa1');
@@ -619,19 +824,71 @@ window.appState = {
       s1.booksCount = 8;
       s1.worksCount = 5;
       s1.level = 'Pembaca Kreatif';
-      setStorage(STORAGE_KEYS.USERS, list);
     }
+    // Sync Kepsek identity to Erna Retnaningsih, S.Pd., M.Pd.
+    const kepsekU = list.find(u => u.username === 'kepsek' || u.role === 'kepsek');
+    if (kepsekU) {
+      kepsekU.name = 'Erna Retnaningsih, S.Pd., M.Pd.';
+      kepsekU.nip = '197303261998022001';
+      kepsekU.kelas = 'Kepala SMPN 2 Kasihan';
+    }
+    // Sync Guru identity to Ibu Zusma Nadya Izzati, S.Pd. (Wali Kelas 8B)
+    const guruU = list.find(u => u.username === 'guru1' || u.id === 'u-guru1');
+    if (guruU) {
+      guruU.name = 'Ibu Zusma Nadya Izzati, S.Pd.';
+      guruU.nip = '199108152019032018';
+      guruU.role = 'guru';
+      guruU.kelas = '8B';
+      guruU.waliKelas = '8B';
+    }
+    // Ensure all default students exist
+    DEFAULT_USERS.forEach(defU => {
+      const existing = list.find(u => u.id === defU.id || u.username === defU.username);
+      if (!existing) {
+        list.push(defU);
+      } else {
+        // augment with 5M fields if missing
+        if (defU.m1_books && !existing.m1_books) {
+          Object.assign(existing, {
+            m1_books: defU.m1_books,
+            m1_duration: defU.m1_duration,
+            m2_findings: defU.m2_findings,
+            m2_quizScore: defU.m2_quizScore,
+            m3_works: defU.m3_works,
+            m4_talks: defU.m4_talks,
+            m5_appreciations: defU.m5_appreciations,
+            status: defU.status,
+            nisn: defU.nisn,
+            waliKelas: defU.waliKelas
+          });
+        }
+      }
+    });
+    setStorage(STORAGE_KEYS.USERS, list);
     return list;
   })(),
   currentUser: (function() {
     let curr = getStorage(STORAGE_KEYS.CURRENT_USER, null);
-    if (curr && curr.id === 'u-siswa1' && curr.name === 'Bagus Kurniawan') {
-      curr.name = 'Aisyah Putri Rahma';
-      curr.points = 1250;
-      curr.streak = 7;
-      curr.booksCount = 8;
-      curr.worksCount = 5;
-      curr.level = 'Pembaca Kreatif';
+    if (curr) {
+      if (curr.id === 'u-siswa1' && curr.name === 'Bagus Kurniawan') {
+        curr.name = 'Aisyah Putri Rahma';
+        curr.points = 1250;
+        curr.streak = 7;
+        curr.booksCount = 8;
+        curr.worksCount = 5;
+        curr.level = 'Pembaca Kreatif';
+      }
+      if (curr.role === 'kepsek' || curr.username === 'kepsek') {
+        curr.name = 'Erna Retnaningsih, S.Pd., M.Pd.';
+        curr.nip = '197303261998022001';
+        curr.kelas = 'Kepala SMPN 2 Kasihan';
+      }
+      if (curr.role === 'guru' || curr.username === 'guru1') {
+        curr.name = 'Ibu Zusma Nadya Izzati, S.Pd.';
+        curr.nip = '199108152019032018';
+        curr.kelas = '8B';
+        curr.waliKelas = '8B';
+      }
       setStorage(STORAGE_KEYS.CURRENT_USER, curr);
     }
     return curr;
@@ -641,6 +898,28 @@ window.appState = {
     if (!saved || !Array.isArray(saved) || !saved.find(b => b.title === 'Laut Bercerita') || !saved.find(b => b.id === 'BK-SOP')) {
       saved = DEFAULT_BOOKS;
       setStorage(STORAGE_KEYS.BOOKS, saved);
+    } else {
+      let modified = false;
+      saved = saved.map(b => {
+        if (!b.materialType) {
+          b.materialType = b.videoUrl ? 'video' : (b.imageUrl ? 'gambar' : 'ebook');
+          modified = true;
+        }
+        return b;
+      });
+      if (!saved.some(b => b.materialType === 'video')) {
+        const defaultVideos = DEFAULT_BOOKS.filter(b => b.materialType === 'video');
+        saved.unshift(...defaultVideos);
+        modified = true;
+      }
+      if (!saved.some(b => b.materialType === 'gambar')) {
+        const defaultImages = DEFAULT_BOOKS.filter(b => b.materialType === 'gambar');
+        saved.splice(2, 0, ...defaultImages);
+        modified = true;
+      }
+      if (modified) {
+        setStorage(STORAGE_KEYS.BOOKS, saved);
+      }
     }
     return saved;
   })(),
@@ -968,6 +1247,117 @@ window.switchPhoneTab = function(tabName) {
   if (scrollSurface) {
     scrollSurface.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // Synchronize with global student bottom navigation
+  if (typeof window.updateStudentBottomNav === 'function') {
+    window.updateStudentBottomNav(tabName);
+  }
+};
+
+// ==========================================
+// STUDENT GLOBAL BOTTOM NAVIGATION CONTROLLER
+// (Standardized 5-item bottom navigation matching user reference photo:
+// Beranda, Buku, Tantangan, Notifikasi, Profil)
+// ==========================================
+window.updateStudentBottomNav = function(activeKey) {
+  const nav = document.getElementById('student-global-bottom-nav');
+  if (!nav) return;
+
+  const currentRole = window.appState?.currentUser?.role;
+  const currentView = window.appState?.currentView;
+
+  // Only show on student views when logged in as student or in student flow
+  const isExcludedView = ['login', 'admin', 'guru', 'sekolah'].includes(currentView);
+  const isExcludedRole = ['admin', 'guru', 'kepsek'].includes(currentRole);
+
+  if (isExcludedView || isExcludedRole) {
+    nav.classList.add('hidden');
+    return;
+  }
+
+  // Display the student bottom nav
+  nav.classList.remove('hidden');
+
+  // Determine which tab should be marked active
+  let activeTab = activeKey;
+  if (!activeTab) {
+    if (currentView === 'beranda') {
+      const activeScreen = ['buku', 'tantangan', 'notifikasi', 'profil'].find(t => {
+        const el = document.getElementById(`phone-screen-${t}`);
+        return el && !el.classList.contains('hidden');
+      });
+      activeTab = activeScreen || 'beranda';
+    } else if (currentView === 'm1') {
+      activeTab = 'buku';
+    } else if (currentView === 'm2' || currentView === 'm3') {
+      activeTab = 'tantangan';
+    } else if (currentView === 'portofolio') {
+      activeTab = 'profil';
+    } else {
+      activeTab = 'beranda';
+    }
+  }
+
+  const items = ['beranda', 'buku', 'tantangan', 'notifikasi', 'profil'];
+  items.forEach(item => {
+    const btn = document.getElementById(`sbn-btn-${item}`);
+    if (!btn) return;
+    const icon = btn.querySelector('i');
+    const span = btn.querySelector('span:not(#sbn-notif-dot)');
+
+    if (item === activeTab) {
+      btn.classList.add('text-[#00695c]');
+      btn.classList.remove('text-slate-500');
+      if (icon) {
+        icon.classList.remove('text-slate-500', 'group-hover:text-slate-800');
+        icon.classList.add('text-[#00695c]', 'scale-105');
+      }
+      if (span) {
+        span.classList.remove('font-normal', 'text-slate-500', 'group-hover:text-slate-800');
+        span.classList.add('font-bold', 'text-[#00695c]');
+      }
+    } else {
+      btn.classList.remove('text-[#00695c]');
+      btn.classList.add('text-slate-500');
+      if (icon) {
+        icon.classList.remove('text-[#00695c]', 'scale-105');
+        icon.classList.add('text-slate-500', 'group-hover:text-slate-800');
+      }
+      if (span) {
+        span.classList.remove('font-bold', 'text-[#00695c]');
+        span.classList.add('font-normal', 'text-slate-500', 'group-hover:text-slate-800');
+      }
+    }
+  });
+};
+
+window.handleStudentBottomNav = function(target) {
+  if (target === 'beranda') {
+    navigateTo('beranda');
+    if (typeof window.switchPhoneTab === 'function') {
+      window.switchPhoneTab('beranda');
+    }
+  } else if (target === 'buku') {
+    navigateTo('m1');
+    if (typeof window.switchM1Tab === 'function') {
+      window.switchM1Tab('katalog');
+    }
+  } else if (target === 'tantangan') {
+    navigateTo('beranda');
+    if (typeof window.switchPhoneTab === 'function') {
+      window.switchPhoneTab('tantangan');
+    }
+  } else if (target === 'notifikasi') {
+    navigateTo('beranda');
+    if (typeof window.switchPhoneTab === 'function') {
+      window.switchPhoneTab('notifikasi');
+    }
+    const notifDot = document.getElementById('sbn-notif-dot');
+    if (notifDot) notifDot.classList.add('hidden');
+  } else if (target === 'profil') {
+    navigateTo('profil');
+  }
+  window.updateStudentBottomNav(target);
 };
 
 // ==========================================
@@ -1027,7 +1417,7 @@ export function navigateTo(targetView) {
       if (mobileNav) mobileNav.classList.add('hidden');
     }
     if (mainContent) {
-      mainContent.className = 'w-full min-h-screen p-0 m-0';
+      mainContent.className = 'w-full min-h-screen p-0 m-0 pb-20';
     }
     updateHeaderGamification();
     updateRoleNavPermissions();
@@ -1055,6 +1445,11 @@ export function navigateTo(targetView) {
     }
     updateHeaderGamification();
     updateRoleNavPermissions();
+  }
+
+  // Synchronize student global bottom navigation
+  if (typeof window.updateStudentBottomNav === 'function') {
+    window.updateStudentBottomNav();
   }
 
   // Highlight active nav buttons
@@ -1396,39 +1791,119 @@ window.renderBooks = function(filterCategory = 'semua') {
   const container = document.getElementById('books-grid');
   if (!container) return;
 
-  const books = window.appState.books;
-  const filtered = filterCategory === 'semua' ? books : books.filter(b => b.category === filterCategory);
+  const books = window.appState.books || [];
+  let filtered = books;
+  if (filterCategory === 'ebook') {
+    filtered = books.filter(b => (b.materialType || 'ebook') === 'ebook');
+  } else if (filterCategory === 'video') {
+    filtered = books.filter(b => b.materialType === 'video');
+  } else if (filterCategory === 'gambar') {
+    filtered = books.filter(b => b.materialType === 'gambar');
+  } else if (filterCategory !== 'semua') {
+    filtered = books.filter(b => b.category === filterCategory || (filterCategory === 'jogja' && (b.category === 'kearifan_lokal' || b.category === 'jogja')));
+  }
 
-  container.innerHTML = filtered.map(b => `
-    <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 card-shadow hover:border-sky-300 transition flex flex-col justify-between group">
-      <div>
-        <div class="relative rounded-xl overflow-hidden mb-3 aspect-[3/4] bg-slate-100">
-          <img src="${b.cover}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
-          <span class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-            <i class="fa-solid fa-star text-amber-400 text-[9px]"></i> ${b.rating}
-          </span>
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200 p-8">
+        <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto text-slate-400 mb-3">
+          <i class="fa-solid fa-book-bookmark text-xl"></i>
         </div>
-        <span class="text-[9px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded">${b.categoryLabel}</span>
-        <h4 class="font-bold text-slate-800 text-xs sm:text-sm mt-1.5 line-clamp-1">${b.title}</h4>
-        <p class="text-[11px] text-slate-500">${b.author} • ${b.pages} Hal</p>
-        <p class="text-[11px] text-slate-600 mt-2 line-clamp-2 leading-relaxed">${b.synopsis}</p>
+        <p class="font-bold text-slate-700 text-sm">Tidak ada bahan literasi dalam kategori ini</p>
+        <p class="text-xs text-slate-400 mt-1">Silakan pilih kategori lain atau tambahkan bahan baru melalui panel Kelola Data Admin.</p>
       </div>
-      <div class="mt-3 pt-2 border-t border-slate-100 flex gap-2">
-        <button onclick="selectActiveBook('${b.id}')" class="flex-1 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1">
-          <i class="fa-solid fa-book-open"></i> Baca
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(b => {
+    const isVideo = b.materialType === 'video';
+    const isImage = b.materialType === 'gambar';
+
+    let typeBadge = '';
+    let actionButtons = '';
+    let mediaOverlay = '';
+    let metaSubtitle = '';
+
+    if (isVideo) {
+      typeBadge = `<span class="text-[9px] font-black uppercase tracking-wider text-rose-700 bg-rose-50/95 border border-rose-200 px-2 py-0.5 rounded-md flex items-center gap-1 shadow-2xs"><i class="fa-solid fa-circle-play text-[8px] text-rose-600"></i> Video</span>`;
+      mediaOverlay = `
+        <div onclick="openVideoPlayerModal('${b.id}')" class="absolute inset-0 bg-black/25 hover:bg-black/40 transition flex items-center justify-center cursor-pointer">
+          <div class="w-11 h-11 rounded-full bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center shadow-lg transform hover:scale-110 transition">
+            <i class="fa-solid fa-play ml-0.5 text-sm"></i>
+          </div>
+        </div>
+      `;
+      metaSubtitle = `<span class="text-[11px] text-slate-500 font-medium">${b.creator || b.author} • <i class="fa-regular fa-clock text-slate-400"></i> ${b.duration || 'Video'}</span>`;
+      actionButtons = `
+        <button onclick="openVideoPlayerModal('${b.id}')" class="flex-1 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-2xs">
+          <i class="fa-solid fa-play text-[9px]"></i> Tonton
         </button>
-        <button onclick="openJournalForBook('${b.title}')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1">
-          <i class="fa-solid fa-pen"></i> Jurnal
+        <button onclick="openJournalForBook('${b.title.replace(/'/g, "\\'")}', 'video')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+          <i class="fa-solid fa-pen-nib"></i> Jurnal
         </button>
+      `;
+    } else if (isImage) {
+      typeBadge = `<span class="text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50/95 border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1 shadow-2xs"><i class="fa-solid fa-image text-[8px] text-emerald-600"></i> Infografis</span>`;
+      mediaOverlay = `
+        <div onclick="openImageViewerModal('${b.id}')" class="absolute inset-0 bg-black/10 hover:bg-black/25 transition flex items-center justify-center cursor-pointer">
+          <div class="w-10 h-10 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-lg transform hover:scale-110 transition">
+            <i class="fa-solid fa-magnifying-glass-plus text-sm"></i>
+          </div>
+        </div>
+      `;
+      metaSubtitle = `<span class="text-[11px] text-slate-500 font-medium">${b.author} • Visual Edukasi</span>`;
+      actionButtons = `
+        <button onclick="openImageViewerModal('${b.id}')" class="flex-1 py-1.5 bg-[#00695c] hover:bg-[#004d40] text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-2xs">
+          <i class="fa-solid fa-magnifying-glass-plus text-[9px]"></i> Lihat
+        </button>
+        <button onclick="openJournalForBook('${b.title.replace(/'/g, "\\'")}', 'gambar')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+          <i class="fa-solid fa-pen-nib"></i> Jurnal
+        </button>
+      `;
+    } else {
+      typeBadge = `<span class="text-[9px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50/95 border border-sky-200 px-2 py-0.5 rounded-md flex items-center gap-1 shadow-2xs"><i class="fa-solid fa-book text-[8px] text-sky-600"></i> E-Book</span>`;
+      metaSubtitle = `<span class="text-[11px] text-slate-500 font-medium">${b.author} • ${b.pages || 100} Hal</span>`;
+      actionButtons = `
+        <button onclick="selectActiveBook('${b.id}')" class="flex-1 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+          <i class="fa-solid fa-book-open text-sky-600"></i> Baca
+        </button>
+        <button onclick="openJournalForBook('${b.title.replace(/'/g, "\\'")}', 'ebook')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1">
+          <i class="fa-solid fa-pen-nib"></i> Jurnal
+        </button>
+      `;
+    }
+
+    return `
+      <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 card-shadow hover:border-sky-300 transition-all flex flex-col justify-between group">
+        <div>
+          <div class="relative rounded-xl overflow-hidden mb-3 aspect-[3/4] bg-slate-100">
+            <img src="${b.cover}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+            ${mediaOverlay}
+            <span class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
+              <i class="fa-solid fa-star text-amber-400 text-[9px]"></i> ${b.rating || 4.8}
+            </span>
+            <div class="absolute bottom-2 left-2">
+              ${typeBadge}
+            </div>
+          </div>
+          <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">${b.categoryLabel || b.category}</span>
+          <h4 class="font-bold text-slate-800 text-xs sm:text-sm mt-1.5 line-clamp-1 group-hover:text-sky-900 transition">${b.title}</h4>
+          <p class="mt-0.5">${metaSubtitle}</p>
+          <p class="text-[11px] text-slate-600 mt-2 line-clamp-2 leading-relaxed">${b.synopsis || 'Bahan literasi terpilih LENTERA 5M.'}</p>
+        </div>
+        <div class="mt-3 pt-2 border-t border-slate-100 flex gap-2">
+          ${actionButtons}
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 };
 
 window.filterBooks = function(cat) {
   document.querySelectorAll('.book-filter-btn').forEach(btn => {
     if (btn.getAttribute('data-cat') === cat) {
-      btn.className = 'book-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white';
+      btn.className = 'book-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-[#00695c] text-white shadow-2xs';
     } else {
       btn.className = 'book-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200';
     }
@@ -1436,9 +1911,50 @@ window.filterBooks = function(cat) {
   renderBooks(cat);
 };
 
+window.openJournalForBook = function(bookTitle, mediaType = 'ebook') {
+  const select = document.getElementById('jurnal-buku');
+  if (select && bookTitle) {
+    let found = false;
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === bookTitle) {
+        select.selectedIndex = i;
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      const newOpt = new Option(bookTitle, bookTitle);
+      select.add(newOpt);
+      select.value = bookTitle;
+    }
+  }
+
+  if (window.appState.currentView !== 'm1') {
+    navigateTo('m1');
+  }
+
+  const journalCard = document.getElementById('form-jurnal') || document.getElementById('section-m1-journal');
+  if (journalCard) {
+    journalCard.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  const label = mediaType === 'video' ? 'video pembelajaran' : (mediaType === 'gambar' ? 'infografis edukatif' : 'buku bacaan');
+  showToast('Siap Menulis Jurnal', `Bahan ${label} "${bookTitle}" dipilih untuk jurnal refleksi literasi.`, 'info');
+};
+
 window.selectActiveBook = function(bookId) {
   const b = window.appState.books.find(x => x.id === bookId);
   if (!b) return;
+
+  if (b.materialType === 'video') {
+    window.openVideoPlayerModal(bookId);
+    return;
+  }
+
+  if (b.materialType === 'gambar') {
+    window.openImageViewerModal(bookId);
+    return;
+  }
 
   window.appState.activeBook = b;
   setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
@@ -1451,7 +1967,7 @@ window.selectActiveBook = function(bookId) {
 
   if (homeCover) homeCover.src = b.cover;
   if (homeTitle) homeTitle.textContent = b.title;
-  if (homeAuthor) homeAuthor.textContent = `${b.author} • ${b.categoryLabel}`;
+  if (homeAuthor) homeAuthor.textContent = `${b.author} • ${b.categoryLabel || b.category}`;
   if (timerBook) timerBook.textContent = b.title;
   if (journalBookSelect) journalBookSelect.value = b.title;
 
@@ -1467,7 +1983,7 @@ window.selectActiveBook = function(bookId) {
     window.openBookPdfReader(b.id);
   }
 
-  showToast('Membuka PDF Buku', `Membuka "${b.title}" di penampil dokumen PDF aplikasi.`, 'info');
+  showToast('Membuka E-Book PDF', `Membuka "${b.title}" di penampil dokumen PDF aplikasi.`, 'info');
 };
 
 window.syncM1LaptopActiveBook = function() {
@@ -1800,11 +2316,11 @@ window.renderPdfDocument = function() {
                         </div>
                       </div>
                     </div>
-                    <span class="font-serif italic font-bold text-xl text-slate-800 tracking-wider">Supriyanto</span>
+                    <span class="font-serif italic font-bold text-xl text-slate-800 tracking-wider">Erna Retnaningsih</span>
                   </div>
 
-                  <p class="text-xs font-black text-slate-900 underline">Drs. Supriyanto, M.Pd.</p>
-                  <p class="text-[10px] text-slate-500 font-mono">NIP. 19680512 199412 1 002</p>
+                  <p class="text-xs font-black text-slate-900 underline">Erna Retnaningsih, S.Pd., M.Pd.</p>
+                  <p class="text-[10px] text-slate-500 font-mono">NIP. 197303261998022001</p>
                 </div>
               </div>
             </div>
@@ -5746,38 +6262,64 @@ window.renderPortofolioView = function() {
   const container = document.getElementById('portfolio-items-container');
   if (!container) return;
 
-  const user = window.appState?.currentUser || { name: 'Aisyah Putri', class: 'VIII C', level: 'Penulis Muda' };
+  const viewing = window.appState?.viewingStudent;
+  const current = window.appState?.currentUser;
+  const user = viewing || current || { name: 'Aisyah Putri Rahma', kelas: '8B', class: '8B', level: 'Pembaca Kreatif' };
   
+  // Supervisor banner toggle
+  const supervisorBanner = document.getElementById('portfolio-supervisor-banner');
+  const supervisorTargetDesc = document.getElementById('portfolio-supervisor-target-desc');
+  const supervisorRoleBadge = document.getElementById('portfolio-supervisor-role-badge');
+  
+  if (supervisorBanner) {
+    if (viewing) {
+      supervisorBanner.classList.remove('hidden');
+      if (supervisorTargetDesc) {
+        supervisorTargetDesc.textContent = `Portofolio Siswa: ${user.name} (${user.kelas || user.class || '8B'})`;
+      }
+      if (supervisorRoleBadge) {
+        if (current?.role === 'guru') {
+          supervisorRoleBadge.textContent = 'Supervisi Wali Kelas (Ibu Zusma Nadya Izzati, S.Pd.)';
+        } else if (current?.role === 'kepsek') {
+          supervisorRoleBadge.textContent = 'Supervisi Kepala Sekolah (Erna Retnaningsih, S.Pd., M.Pd.)';
+        } else {
+          supervisorRoleBadge.textContent = 'Supervisi Administrator Sistem';
+        }
+      }
+    } else {
+      supervisorBanner.classList.add('hidden');
+    }
+  }
+
   // Sync profile card info
   const nameEl = document.getElementById('portfolio-user-name');
-  if (nameEl) nameEl.textContent = user.name || 'Aisyah Putri';
+  if (nameEl) nameEl.textContent = user.name || 'Aisyah Putri Rahma';
 
   const classEl = document.getElementById('portfolio-user-class');
-  if (classEl) classEl.textContent = user.class || 'VIII C';
+  if (classEl) classEl.textContent = user.kelas || user.class || '8B';
 
   const levelEl = document.getElementById('portfolio-user-level');
-  if (levelEl) levelEl.textContent = user.level || 'Penulis Muda';
+  if (levelEl) levelEl.textContent = user.level || 'Pembaca Kreatif';
 
   // Sync 5M milestone counts
   const journals = window.appState?.journals || [];
   const statBuku = document.getElementById('port-stat-buku');
-  if (statBuku) statBuku.textContent = Math.max(8, journals.length || 8);
+  if (statBuku) statBuku.textContent = user.m1_books || Math.max(8, journals.length || 8);
 
   const temuanList = window.appState?.findings || [];
   const statTemuan = document.getElementById('port-stat-temuan');
-  if (statTemuan) statTemuan.textContent = Math.max(12, temuanList.length || 12);
+  if (statTemuan) statTemuan.textContent = user.m2_findings || Math.max(12, temuanList.length || 12);
 
   const works = window.appState?.m5Works || DEFAULT_WORKS;
   const statKarya = document.getElementById('port-stat-karya');
-  if (statKarya) statKarya.textContent = Math.max(5, works.length || 5);
+  if (statKarya) statKarya.textContent = user.m3_works || Math.max(5, works.length || 5);
 
   const statPresentasi = document.getElementById('port-stat-presentasi');
-  if (statPresentasi) statPresentasi.textContent = '3';
+  if (statPresentasi) statPresentasi.textContent = user.m4_talks || '3';
 
   const statApresiasi = document.getElementById('port-stat-apresiasi');
   if (statApresiasi) {
-    const totalApresiasi = works.reduce((sum, item) => sum + (item.commentsCount || (item.comments ? item.comments.length : 0)), 0);
-    statApresiasi.textContent = Math.max(18, totalApresiasi || 18);
+    statApresiasi.textContent = user.m5_appreciations || 18;
   }
 
   // Filter items according to active category
@@ -6090,8 +6632,184 @@ window.closeKaryaModal = function() {
 };
 
 // ==========================================
-// 14. PANEL GURU CONTROLLER
+// 14. PANEL GURU & WALI KELAS CONTROLLER
 // ==========================================
+
+let guruCurrentStudentFilter = 'wali';
+let guruSearchQuery = '';
+
+window.filterGuruStudentsTab = function(tab) {
+  guruCurrentStudentFilter = tab;
+  const tabs = ['wali', 'semua', 'aktif', 'pasif'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`btn-guru-tab-${t}`);
+    if (btn) {
+      if (t === tab) {
+        btn.className = 'btn-filter-guru px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-[#16779e] text-white shadow-2xs';
+      } else {
+        btn.className = 'btn-filter-guru px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50';
+      }
+    }
+  });
+  window.renderGuruStudentsList();
+};
+
+window.onSearchGuruStudents = function(query) {
+  guruSearchQuery = (query || '').toLowerCase().trim();
+  window.renderGuruStudentsList();
+};
+
+window.renderGuruStudentsList = function() {
+  const container = document.getElementById('guru-student-cards-list');
+  if (!container) return;
+
+  const currentGuru = window.appState?.currentUser || {};
+  const teacherWaliKelas = currentGuru.waliKelas || currentGuru.kelas || '8B';
+  const allUsers = window.appState?.users || DEFAULT_USERS;
+  const allStudents = allUsers.filter(u => u.role === 'siswa');
+
+  // Calculate Wali Kelas quick stats
+  const waliStudents = allStudents.filter(s => (s.kelas === teacherWaliKelas || s.class === teacherWaliKelas));
+  const activeWaliStudents = waliStudents.filter(s => s.status !== 'pasif' && (s.streak || 0) > 0);
+  const passiveWaliStudents = waliStudents.filter(s => s.status === 'pasif' || (s.streak || 0) === 0 || (s.daysInactive || 0) > 0);
+  const totalWorksWali = waliStudents.reduce((sum, s) => sum + (s.m3_works || 0), 0);
+
+  const statTotalEl = document.getElementById('guru-wk-total-students');
+  if (statTotalEl) statTotalEl.textContent = Math.max(32, waliStudents.length);
+
+  const statActiveEl = document.getElementById('guru-wk-active-students');
+  if (statActiveEl) statActiveEl.textContent = Math.max(30, activeWaliStudents.length);
+
+  const statPassiveEl = document.getElementById('guru-wk-passive-students');
+  if (statPassiveEl) statPassiveEl.textContent = passiveWaliStudents.length;
+
+  const statWorksEl = document.getElementById('guru-wk-works-count');
+  if (statWorksEl) statWorksEl.textContent = Math.max(48, totalWorksWali || 48);
+
+  // Filter list
+  let filtered = allStudents;
+  if (guruCurrentStudentFilter === 'wali') {
+    filtered = allStudents.filter(s => (s.kelas === teacherWaliKelas || s.class === teacherWaliKelas));
+  } else if (guruCurrentStudentFilter === 'aktif') {
+    filtered = allStudents.filter(s => s.status !== 'pasif' && (s.streak || 0) > 0);
+  } else if (guruCurrentStudentFilter === 'pasif') {
+    filtered = allStudents.filter(s => s.status === 'pasif' || (s.streak || 0) === 0 || (s.daysInactive || 0) > 0);
+  }
+
+  if (guruSearchQuery) {
+    filtered = filtered.filter(s => 
+      (s.name && s.name.toLowerCase().includes(guruSearchQuery)) ||
+      (s.nisn && s.nisn.toLowerCase().includes(guruSearchQuery)) ||
+      (s.kelas && s.kelas.toLowerCase().includes(guruSearchQuery))
+    );
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl">
+        <i class="fa-solid fa-user-slash text-3xl text-slate-300 mb-2"></i>
+        <p class="font-bold text-slate-700 text-sm">Tidak ditemukan siswa dengan filter ini</p>
+        <p class="text-xs text-slate-400 mt-0.5">Silakan ganti kata kunci pencarian atau tab filter di atas.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(s => {
+    const isWali = (s.kelas === teacherWaliKelas || s.class === teacherWaliKelas);
+    const isPassive = s.status === 'pasif' || (s.daysInactive || 0) > 0;
+    const m1Books = s.m1_books || 8;
+    const m1Mins = s.m1_duration || 350;
+    const m2Find = s.m2_findings || 12;
+    const m2Score = s.m2_quizScore || 95;
+    const m3Works = s.m3_works || 5;
+    const m4Talks = s.m4_talks || 3;
+    const m5Apprec = s.m5_appreciations || 18;
+
+    return `
+      <div class="p-4 bg-white border ${isPassive ? 'border-rose-200 bg-rose-50/20' : 'border-slate-200/80 hover:border-[#16779e]/40'} rounded-2xl card-shadow transition space-y-3">
+        <!-- Student Header -->
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <img src="${s.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}" class="w-11 h-11 rounded-xl object-cover border border-slate-200 shadow-2xs shrink-0" />
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h4 class="font-extrabold text-slate-900 text-sm">${s.name}</h4>
+                ${isWali ? `<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-black rounded-md border border-emerald-300"><i class="fa-solid fa-star text-[9px] mr-1"></i>Siswa Wali Anda</span>` : ''}
+              </div>
+              <p class="text-[11px] text-slate-500 font-medium">
+                Kelas <strong>${s.kelas || s.class || '8B'}</strong> • NISN: <span class="font-mono">${s.nisn || '0098231001'}</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="text-right shrink-0">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold ${isPassive ? 'bg-rose-100 text-rose-800 border border-rose-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-200'}">
+              <span class="w-1.5 h-1.5 rounded-full ${isPassive ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'}"></span>
+              ${isPassive ? `Pasif (${s.daysInactive || 6} Hari)` : `Aktif • Streak ${s.streak || 7}h`}
+            </span>
+            <div class="text-[11px] font-extrabold text-amber-700 mt-1">
+              <i class="fa-solid fa-award text-amber-500 mr-0.5"></i> ${s.points || 1250} Poin GLS
+            </div>
+          </div>
+        </div>
+
+        <!-- 5M Milestone Progress Pills -->
+        <div class="grid grid-cols-5 gap-1.5 p-2.5 bg-slate-50 rounded-xl border border-slate-100 text-center">
+          <div class="p-1.5 bg-white rounded-lg border border-slate-200/70">
+            <span class="text-[9px] font-bold text-teal-700 block uppercase">1. Membaca</span>
+            <span class="text-xs font-black text-slate-800">${m1Books} Buku</span>
+            <span class="text-[9px] text-slate-400 block">${m1Mins}m</span>
+          </div>
+          <div class="p-1.5 bg-white rounded-lg border border-slate-200/70">
+            <span class="text-[9px] font-bold text-sky-700 block uppercase">2. Menemukan</span>
+            <span class="text-xs font-black text-slate-800">${m2Find} Ide</span>
+            <span class="text-[9px] text-sky-600 block">Kuis ${m2Score}</span>
+          </div>
+          <div class="p-1.5 bg-white rounded-lg border border-slate-200/70">
+            <span class="text-[9px] font-bold text-orange-700 block uppercase">3. Menulis</span>
+            <span class="text-xs font-black text-slate-800">${m3Works} Karya</span>
+            <span class="text-[9px] text-emerald-600 block font-bold">Terbit</span>
+          </div>
+          <div class="p-1.5 bg-white rounded-lg border border-slate-200/70">
+            <span class="text-[9px] font-bold text-rose-700 block uppercase">4. Cerita</span>
+            <span class="text-xs font-black text-slate-800">${m4Talks} Video</span>
+            <span class="text-[9px] text-slate-400 block">Tuntas</span>
+          </div>
+          <div class="p-1.5 bg-white rounded-lg border border-slate-200/70">
+            <span class="text-[9px] font-bold text-purple-700 block uppercase">5. Apresiasi</span>
+            <span class="text-xs font-black text-slate-800">${m5Apprec}</span>
+            <span class="text-[9px] text-purple-600 block">Ulasan</span>
+          </div>
+        </div>
+
+        <!-- Action Row -->
+        <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-100 flex-wrap">
+          <div class="text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
+            <i class="fa-solid fa-medal text-amber-500"></i> Level: <strong class="text-slate-800">${s.level || 'Pembaca Kreatif'}</strong>
+          </div>
+
+          <div class="flex items-center gap-1.5 flex-wrap">
+            ${isPassive ? `
+              <button type="button" onclick="sendReadingReminder('${s.name}')" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-2xs">
+                <i class="fa-regular fa-bell"></i> Nudge
+              </button>
+            ` : ''}
+            <button type="button" onclick="openGuruReviewModal('${s.name}', 'Bimbingan Wali Kelas', 'Apresiasi Capaian Alur 5M')" class="px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-2xs">
+              <i class="fa-solid fa-star text-amber-500"></i> Nilai & Bintang
+            </button>
+            <button type="button" onclick="viewStudentPortfolio('${s.id}')" class="px-2.5 py-1.5 bg-[#16779e] hover:bg-sky-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-2xs">
+              <i class="fa-solid fa-folder-open"></i> Portofolio
+            </button>
+            <button type="button" onclick="exportRaporPDFForStudent('${s.id}')" class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition flex items-center gap-1" title="Cetak Rapor Siswa">
+              <i class="fa-solid fa-file-pdf text-rose-600"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
 
 window.renderGuruDashboard = function() {
   const tbody = document.getElementById('table-guru-journals');
@@ -6134,6 +6852,64 @@ window.renderGuruDashboard = function() {
       </div>
     `).join('');
   }
+
+  // Populate Wali Kelas student monitoring cards
+  window.renderGuruStudentsList();
+};
+
+window.viewStudentPortfolio = function(studentIdOrName) {
+  const allUsers = window.appState?.users || DEFAULT_USERS;
+  const student = allUsers.find(u => u.id === studentIdOrName || u.name === studentIdOrName);
+  if (student) {
+    window.appState.viewingStudent = student;
+    navigateTo('portofolio');
+    showToast('Mode Supervisi Aktif', `Melihat portofolio dan perkembangan literasi ${student.name} (${student.kelas || student.class || '8B'}).`, 'info');
+  } else {
+    showToast('Siswa Tidak Ditemukan', 'Data siswa tidak ditemukan di sistem.', 'error');
+  }
+};
+
+window.exitStudentPortfolioView = function() {
+  window.appState.viewingStudent = null;
+  const role = window.appState?.currentUser?.role;
+  if (role === 'guru') {
+    navigateTo('guru');
+  } else if (role === 'kepsek') {
+    navigateTo('sekolah');
+  } else if (role === 'admin') {
+    navigateTo('admin');
+  } else {
+    navigateTo('beranda');
+  }
+  showToast('Keluar Mode Supervisi', 'Kembali ke dashboard utama Anda.', 'info');
+};
+
+window.exportRaporPDFForTarget = function() {
+  const target = window.appState?.viewingStudent || window.appState?.currentUser;
+  window.exportRaporPDF(target);
+};
+
+window.exportRaporPDFForStudent = function(studentIdOrName) {
+  const allUsers = window.appState?.users || DEFAULT_USERS;
+  const student = allUsers.find(u => u.id === studentIdOrName || u.name === studentIdOrName);
+  if (student) {
+    window.exportRaporPDF(student);
+  } else {
+    window.exportRaporPDF();
+  }
+};
+
+window.viewStudentWorksInGallery = function(studentName) {
+  navigateTo('galeri');
+  setTimeout(() => {
+    const input = document.getElementById('galeri-search');
+    if (input) {
+      input.value = studentName;
+      if (typeof window.renderGaleriKarya === 'function') {
+        window.renderGaleriKarya();
+      }
+    }
+  }, 100);
 };
 
 window.approveStudentJournal = function(journalId) {
@@ -6282,15 +7058,668 @@ window.openGuruAllActivities = function() {
 };
 
 // ==========================================
-// 15. DASHBOARD SEKOLAH CONTROLLER (CHART.JS)
+// 15. DASHBOARD & MONITORING SEKOLAH CONTROLLER (SUPERVISI KEPSEK & ADMIN)
 // ==========================================
 
 let chartTrenInstance = null;
 let chartKatInstance = null;
+window._sekolahKaryaFilterCat = 'semua';
+window._sekolahActiveSubtab = 'siswa';
+
+// Helper: Klasifikasi Level Kategori Literasi Siswa
+window.getLiteracyCategory = function(student) {
+  const points = student.points || 0;
+  const books = student.m1_books || (student.readingHistory ? student.readingHistory.length : 0);
+
+  if (points >= 1400 || books >= 19) {
+    return {
+      levelNum: 'Level 5',
+      name: 'Ksatria Literasi Kasihan',
+      badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-300 font-extrabold',
+      icon: 'fa-crown text-emerald-600'
+    };
+  } else if (points >= 901 || books >= 13) {
+    return {
+      levelNum: 'Level 4',
+      name: 'Pembaca Kreatif',
+      badgeClass: 'bg-amber-50 text-amber-900 border-amber-300 font-bold',
+      icon: 'fa-star text-amber-500'
+    };
+  } else if (points >= 501 || books >= 8) {
+    return {
+      levelNum: 'Level 3',
+      name: 'Pembaca Kritis',
+      badgeClass: 'bg-indigo-50 text-indigo-800 border-indigo-200 font-bold',
+      icon: 'fa-book-open-reader text-indigo-500'
+    };
+  } else if (points >= 201 || books >= 4) {
+    return {
+      levelNum: 'Level 2',
+      name: 'Pembaca Aktif',
+      badgeClass: 'bg-sky-50 text-sky-800 border-sky-200 font-bold',
+      icon: 'fa-book-bookmark text-sky-600'
+    };
+  } else {
+    return {
+      levelNum: 'Level 1',
+      name: 'Pembaca Pemula',
+      badgeClass: 'bg-slate-100 text-slate-700 border-slate-200 font-medium',
+      icon: 'fa-book text-slate-400'
+    };
+  }
+};
+
+// Sub-Tab Switcher di Halaman Supervisi Sekolah
+window.switchSekolahSubtab = function(tabName) {
+  tabName = tabName || 'siswa';
+  window._sekolahActiveSubtab = tabName;
+
+  const tabs = ['siswa', 'karya', 'laporan', 'statistik'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`btn-sekolah-subtab-${t}`);
+    const pane = document.getElementById(`sekolah-pane-${t}`);
+    const isActive = (t === tabName);
+
+    if (btn) {
+      if (isActive) {
+        btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shrink-0 bg-[#082e54] text-white shadow-xs';
+      } else {
+        btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shrink-0 text-slate-600 hover:bg-slate-100';
+      }
+    }
+
+    if (pane) {
+      if (isActive) {
+        pane.classList.remove('hidden');
+      } else {
+        pane.classList.add('hidden');
+      }
+    }
+  });
+
+  if (tabName === 'siswa') {
+    window.renderSekolahMonitoringTable();
+  } else if (tabName === 'karya') {
+    window.renderSekolahKaryaGrid();
+  } else if (tabName === 'laporan') {
+    window.renderSekolahActivityReport();
+  } else if (tabName === 'statistik') {
+    renderSekolahRankings();
+    initSekolahCharts();
+  }
+};
 
 window.renderSekolahDashboard = function() {
-  renderSekolahRankings();
-  initSekolahCharts();
+  window.updateSekolahMetricCards();
+  window.switchSekolahSubtab(window._sekolahActiveSubtab || 'siswa');
+};
+
+window.updateSekolahMetricCards = function() {
+  const books = window.appState?.books || [];
+  const works = window.appState?.works || DEFAULT_WORKS;
+  const booktalks = window.appState?.booktalks || [];
+  const users = (window.appState?.users || DEFAULT_USERS).filter(u => u.role === 'siswa');
+
+  const elBuku = document.getElementById('stat-sekolah-total-buku');
+  const elKarya = document.getElementById('stat-sekolah-total-karya');
+  const elBooktalk = document.getElementById('stat-sekolah-total-booktalk');
+  const elJam = document.getElementById('stat-sekolah-total-jam');
+  const elSiswaAktif = document.getElementById('stat-sekolah-siswa-aktif');
+
+  if (elBuku) elBuku.textContent = `${Math.max(1428, books.length * 28)} Buku`;
+  if (elKarya) elKarya.textContent = `${Math.max(342, works.length)} Karya`;
+  if (elBooktalk) elBooktalk.textContent = `${Math.max(118, booktalks.length * 12)} Sesi`;
+  if (elJam) elJam.textContent = `890 Jam`;
+  if (elSiswaAktif) {
+    const activeCount = users.filter(u => u.status !== 'pasif').length;
+    const totalCount = Math.max(users.length, 1);
+    const pct = ((activeCount / totalCount) * 100).toFixed(1);
+    elSiswaAktif.textContent = `${pct}%`;
+  }
+};
+
+window.filterSekolahMonitoring = function() {
+  renderSekolahMonitoringTable();
+};
+
+window.renderSekolahMonitoringTable = function() {
+  const tbody = document.getElementById('table-sekolah-monitoring-body');
+  if (!tbody) return;
+
+  const classFilter = document.getElementById('sekolah-filter-class')?.value || 'semua';
+  const statusFilter = document.getElementById('sekolah-filter-status')?.value || 'semua';
+  const levelFilter = document.getElementById('sekolah-filter-level')?.value || 'semua';
+  const searchQuery = (document.getElementById('sekolah-search-student')?.value || '').toLowerCase().trim();
+
+  const allUsers = window.appState?.users || DEFAULT_USERS;
+  let students = allUsers.filter(u => u.role === 'siswa');
+
+  if (classFilter !== 'semua') {
+    students = students.filter(s => (s.kelas === classFilter || s.class === classFilter));
+  }
+
+  if (statusFilter === 'aktif') {
+    students = students.filter(s => s.status !== 'pasif' && (s.streak || 0) > 0);
+  } else if (statusFilter === 'pasif') {
+    students = students.filter(s => s.status === 'pasif' || (s.streak || 0) === 0 || (s.daysInactive || 0) > 0);
+  }
+
+  if (levelFilter !== 'semua') {
+    students = students.filter(s => {
+      const cat = window.getLiteracyCategory(s);
+      return cat.levelNum === levelFilter;
+    });
+  }
+
+  if (searchQuery) {
+    students = students.filter(s => 
+      (s.name && s.name.toLowerCase().includes(searchQuery)) ||
+      (s.nisn && s.nisn.toLowerCase().includes(searchQuery)) ||
+      (s.kelas && s.kelas.toLowerCase().includes(searchQuery))
+    );
+  }
+
+  if (students.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="10" class="p-8 text-center text-slate-400 bg-slate-50">
+          <i class="fa-solid fa-users-slash text-2xl mb-1 block text-slate-300"></i>
+          Tidak ada data siswa yang cocok dengan kriteria filter pemantauan.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = students.map(s => {
+    const isPassive = s.status === 'pasif' || (s.daysInactive || 0) > 0;
+    const cat = window.getLiteracyCategory(s);
+    const m1Books = s.m1_books || 8;
+    const m1Mins = s.m1_duration || 350;
+    const m2Find = s.m2_findings || 12;
+    const m2Score = s.m2_quizScore || 95;
+    const m3Works = s.m3_works || 5;
+    const m4Talks = s.m4_talks || 3;
+    const m5Apprec = s.m5_appreciations || 18;
+
+    return `
+      <tr class="hover:bg-slate-50 transition">
+        <!-- 1. Siswa & NISN -->
+        <td class="p-3">
+          <div class="flex items-center gap-2.5">
+            <img src="${s.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}" class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0" />
+            <div>
+              <div class="font-bold text-slate-900">${s.name}</div>
+              <div class="text-[10px] text-slate-400 font-mono">NISN: ${s.nisn || '0098231001'}</div>
+            </div>
+          </div>
+        </td>
+
+        <!-- 2. Kelas & Wali -->
+        <td class="p-3">
+          <span class="px-2 py-0.5 rounded font-black text-[10px] bg-slate-100 text-slate-800 border border-slate-200">
+            ${s.kelas || s.class || '8B'}
+          </span>
+          <div class="text-[10px] text-slate-500 mt-0.5 truncate max-w-[130px]" title="${s.waliKelas || 'Ibu Zusma Nadya Izzati, S.Pd.'}">
+            ${s.waliKelas || 'Wali: Ibu Zusma'}
+          </div>
+        </td>
+
+        <!-- 3. Level Kategori Literasi -->
+        <td class="p-3 text-center">
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] border ${cat.badgeClass} shadow-2xs">
+            <i class="fa-solid ${cat.icon}"></i>
+            <span>${cat.name}</span>
+          </span>
+          <span class="block text-[9px] text-slate-400 font-mono mt-0.5">${cat.levelNum} • ${s.points || 0} pts</span>
+        </td>
+
+        <!-- 4. M1 -->
+        <td class="p-3 text-center">
+          <span class="font-extrabold text-teal-800">${m1Books} Buku</span>
+          <span class="block text-[9px] text-slate-400">${m1Mins} mnt</span>
+        </td>
+
+        <!-- 5. M2 -->
+        <td class="p-3 text-center">
+          <span class="font-extrabold text-sky-800">${m2Find} Ide</span>
+          <span class="block text-[9px] text-sky-600 font-bold">Kuis: ${m2Score}</span>
+        </td>
+
+        <!-- 6. M3 -->
+        <td class="p-3 text-center">
+          <span class="font-extrabold text-orange-800">${m3Works} Karya</span>
+          <span class="block text-[9px] text-emerald-600 font-bold">Terbit</span>
+        </td>
+
+        <!-- 7. M4 -->
+        <td class="p-3 text-center">
+          <span class="font-extrabold text-rose-800">${m4Talks} Video</span>
+          <span class="block text-[9px] text-slate-400">Cerita</span>
+        </td>
+
+        <!-- 8. M5 -->
+        <td class="p-3 text-center">
+          <span class="font-extrabold text-purple-800">${m5Apprec}</span>
+          <span class="block text-[9px] text-purple-600">Apresiasi</span>
+        </td>
+
+        <!-- 9. Poin & Status -->
+        <td class="p-3 text-center">
+          <span class="font-black text-amber-700 block">${s.points || 1250} Poin</span>
+          <span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold ${isPassive ? 'bg-rose-100 text-rose-800 border border-rose-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-200'}">
+            ${isPassive ? 'Pasif' : 'Aktif'}
+          </span>
+        </td>
+
+        <!-- 10. Aksi Supervisi -->
+        <td class="p-3 text-right">
+          <div class="flex items-center justify-end gap-1.5">
+            <button type="button" onclick="viewStudentPortfolio('${s.id}')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg font-bold text-[10px] transition flex items-center gap-1 shadow-2xs" title="Lihat Portofolio Lengkap">
+              <i class="fa-solid fa-folder-open"></i> Portofolio
+            </button>
+            <button type="button" onclick="exportRaporPDFForStudent('${s.id}')" class="px-2 py-1 bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-lg font-bold text-[10px] transition flex items-center gap-1 shadow-2xs" title="Cetak Rapor Siswa">
+              <i class="fa-solid fa-file-pdf text-rose-600"></i> Rapor
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+};
+
+// ==========================================
+// KARYA SISWA SUB-TAB IN SEKOLAH MONITORING
+// ==========================================
+
+window.filterSekolahKaryaCategory = function(cat) {
+  window._sekolahKaryaFilterCat = cat || 'semua';
+  document.querySelectorAll('.btn-filter-karya-sekolah').forEach(btn => {
+    btn.className = 'btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-white text-slate-600 border border-slate-200 hover:bg-slate-100';
+  });
+
+  const catMap = {
+    'semua': 'btn-karya-cat-semua',
+    'Puisi': 'btn-karya-cat-puisi',
+    'Cerpen': 'btn-karya-cat-cerpen',
+    'Resensi': 'btn-karya-cat-resensi',
+    'Budaya': 'btn-karya-cat-budaya'
+  };
+
+  const activeBtn = document.getElementById(catMap[cat] || 'btn-karya-cat-semua');
+  if (activeBtn) {
+    activeBtn.className = 'btn-filter-karya-sekolah px-3 py-1.5 rounded-xl font-bold text-xs bg-[#082e54] text-white shadow-2xs';
+  }
+
+  window.renderSekolahKaryaGrid();
+};
+
+window.renderSekolahKaryaGrid = function() {
+  const container = document.getElementById('sekolah-karya-grid');
+  if (!container) return;
+
+  const cat = window._sekolahKaryaFilterCat || 'semua';
+  const search = (document.getElementById('sekolah-search-karya')?.value || '').toLowerCase().trim();
+
+  let works = window.appState?.works || DEFAULT_WORKS;
+
+  if (cat !== 'semua') {
+    works = works.filter(w => (w.category || '').toLowerCase().includes(cat.toLowerCase()));
+  }
+
+  if (search) {
+    works = works.filter(w => 
+      (w.title && w.title.toLowerCase().includes(search)) ||
+      (w.authorName && w.authorName.toLowerCase().includes(search)) ||
+      (w.content && w.content.toLowerCase().includes(search))
+    );
+  }
+
+  if (works.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full p-8 text-center text-slate-400 bg-slate-50 rounded-2xl border border-slate-200">
+        <i class="fa-solid fa-feather text-3xl mb-2 text-slate-300 block"></i>
+        Tidak ada karya siswa yang cocok dengan filter "${cat}".
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = works.map(w => {
+    return `
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 card-shadow flex flex-col justify-between hover:border-amber-300 transition group">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span class="px-2.5 py-0.5 bg-amber-50 text-amber-800 rounded-md font-bold text-[10px] border border-amber-200">
+              ${w.category || 'Karya Siswa'}
+            </span>
+            <span class="text-[10px] text-slate-400 font-medium">
+              <i class="fa-regular fa-calendar mr-1"></i> ${w.date || 'Sep 2026'}
+            </span>
+          </div>
+
+          <h4 class="font-extrabold text-slate-900 text-sm group-hover:text-amber-700 transition line-clamp-1 mb-1">
+            ${w.title}
+          </h4>
+
+          <p class="text-xs text-slate-600 line-clamp-3 mb-3 leading-relaxed">
+            "${w.quote || w.content?.substring(0, 140) || 'Karya literasi otentik siswa SMPN 2 Kasihan.'}..."
+          </p>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <img src="${w.authorAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120'}" class="w-6 h-6 rounded-full object-cover border border-slate-200" />
+            <div>
+              <div class="text-[11px] font-bold text-slate-800 leading-tight">${w.authorName}</div>
+              <div class="text-[9px] text-slate-400 leading-tight">${w.authorClass || 'Siswa 8B'}</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="openM5DetailModal('${w.id}')" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg text-[10px] font-bold transition flex items-center gap-1">
+              <i class="fa-solid fa-book-open"></i> Baca
+            </button>
+            <button type="button" onclick="apresiasiKaryaByKepsek('${w.id}')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[10px] font-bold transition flex items-center gap-1" title="Beri Apresiasi Kepala Sekolah">
+              <i class="fa-solid fa-award text-amber-500"></i> Apresiasi
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.apresiasiKaryaByKepsek = function(workId) {
+  const works = window.appState?.works || DEFAULT_WORKS;
+  const w = works.find(item => item.id === workId);
+  if (!w) return;
+
+  w.likes = (w.likes || 0) + 1;
+  w.comments = w.comments || [];
+  w.comments.unshift({
+    id: `c-kepsek-${Date.now()}`,
+    author: 'Erna Retnaningsih, S.Pd., M.Pd.',
+    role: 'kepsek',
+    text: 'Apresiasi istimewa dari Kepala Sekolah! Karya yang sangat inspiratif, mencerminkan kecerdasan literasi dan karakter luhur SMPN 2 Kasihan.',
+    date: 'Hari ini'
+  });
+  w.commentsCount = w.comments.length;
+
+  showToast('Apresiasi Diberikan', `Apresiasi resmi Kepala Sekolah telah disematkan pada karya "${w.title}".`, 'success');
+  window.renderSekolahKaryaGrid();
+};
+
+// ==========================================
+// LAPORAN AKTIVITAS SUB-TAB IN SEKOLAH MONITORING
+// ==========================================
+
+window.renderSekolahActivityReport = function() {
+  const tbody = document.getElementById('table-sekolah-activity-body');
+  if (!tbody) return;
+
+  const classFilter = document.getElementById('sekolah-activity-filter-class')?.value || 'semua';
+  const statusFilter = document.getElementById('sekolah-activity-filter-status')?.value || 'semua';
+  const search = (document.getElementById('sekolah-activity-search')?.value || '').toLowerCase().trim();
+
+  // Baseline mock activities if journals are sparse
+  const sampleActivities = [
+    { id: 'act-1', studentName: 'Anisa Rahma', class: '8A', bookTitle: 'Laskar Pelangi', author: 'Andrea Hirata', pages: '120 - 155', duration: 40, date: '12 Sep 2026, 14:20', finding: 'Semangat pantang menyerah anak-anak Belitung dalam menuntut ilmu.', verified: true },
+    { id: 'act-2', studentName: 'Bagus Kurniawan', class: '8B', bookTitle: 'Filosofi Teras', author: 'Henry Manampiring', pages: '45 - 80', duration: 35, date: '12 Sep 2026, 11:15', finding: 'Mengendalikan emosi dan membedakan apa yang ada dalam kendali kita.', verified: true },
+    { id: 'act-3', studentName: 'Aisyah Putri', class: '9A', bookTitle: 'Negeri 5 Menara', author: 'A. Fuadi', pages: '1 - 60', duration: 45, date: '11 Sep 2026, 16:30', finding: 'Kekuatan tekad Man Jadda Wajada membuka gerbang impian dunia.', verified: true },
+    { id: 'act-4', studentName: 'Dimas Aditya', class: '8B', bookTitle: 'Kearifan Gerabah Kasongan', author: 'Drs. Subiyanto', pages: '10 - 35', duration: 25, date: '11 Sep 2026, 09:40', finding: 'Sejarah panjang seni kriya tanah liat Kasihan Bantul sejak era Diponegoro.', verified: false },
+    { id: 'act-5', studentName: 'Nabila Zahra', class: '7B', bookTitle: 'Sains di Sekitar Kita', author: 'Dr. Indah P.', pages: '15 - 40', duration: 30, date: '10 Sep 2026, 15:10', finding: 'Proses fotosintesis dan siklus oksigen di lingkungan hijau sekolah.', verified: true },
+    { id: 'act-6', studentName: 'Rian Saputra', class: '8B', bookTitle: 'Bumi Manusia', author: 'Pramoedya Ananta Toer', pages: '50 - 90', duration: 45, date: '10 Sep 2026, 13:00', finding: 'Keadilan hukum dan keberanian pribumi memperjuangkan harkat kemanusiaan.', verified: true },
+    { id: 'act-7', studentName: 'Siti Rahmawati', class: '9C', bookTitle: 'Cerita Rakyat Yogyakarta', author: 'Balai Bahasa', pages: '20 - 55', duration: 30, date: '09 Sep 2026, 10:20', finding: 'Legenda asal-usul Desa Bangunjiwo dan kearifan para leluhur Kasihan.', verified: false }
+  ];
+
+  let activities = sampleActivities;
+
+  // Augment with real journals if present
+  const userJournals = window.appState?.journals || [];
+  if (userJournals.length > 0) {
+    const formatted = userJournals.map((j, idx) => ({
+      id: `act-real-${idx}`,
+      studentName: j.studentName || window.appState.currentUser?.name || 'Siswa SMPN 2 Kasihan',
+      class: j.class || '8B',
+      bookTitle: j.bookTitle || 'Buku Bacaan Pilihan',
+      author: j.author || 'Penulis Buku',
+      pages: j.pages || `${j.pageStart || 1} - ${j.pageEnd || 25}`,
+      duration: j.duration || 30,
+      date: j.date || 'Hari ini',
+      finding: j.summary || j.reflection || 'Ringkasan refleksi membaca dan temuan ide alur 5M.',
+      verified: !!j.verified
+    }));
+    activities = [...formatted, ...activities];
+  }
+
+  if (classFilter !== 'semua') {
+    activities = activities.filter(a => a.class === classFilter);
+  }
+
+  if (statusFilter === 'verified') {
+    activities = activities.filter(a => a.verified === true);
+  } else if (statusFilter === 'pending') {
+    activities = activities.filter(a => a.verified === false);
+  }
+
+  if (search) {
+    activities = activities.filter(a => 
+      a.studentName.toLowerCase().includes(search) ||
+      a.bookTitle.toLowerCase().includes(search) ||
+      a.finding.toLowerCase().includes(search)
+    );
+  }
+
+  if (activities.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" class="p-8 text-center text-slate-400 bg-slate-50">
+          <i class="fa-solid fa-clipboard-question text-2xl mb-1 block text-slate-300"></i>
+          Tidak ada log aktivitas membaca yang cocok dengan kriteria filter.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = activities.map(a => `
+    <tr class="hover:bg-slate-50 transition text-xs">
+      <td class="p-3 text-slate-500 whitespace-nowrap">
+        <i class="fa-regular fa-clock mr-1 text-slate-400"></i> ${a.date}
+      </td>
+      <td class="p-3">
+        <div class="font-bold text-slate-900">${a.studentName}</div>
+        <span class="text-[10px] text-slate-500 font-bold bg-slate-100 px-1.5 py-0.5 rounded">Kelas ${a.class}</span>
+      </td>
+      <td class="p-3">
+        <div class="font-extrabold text-slate-800">${a.bookTitle}</div>
+        <div class="text-[10px] text-slate-400">Hal. ${a.pages} • ${a.author}</div>
+      </td>
+      <td class="p-3 text-center">
+        <span class="font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-200">
+          ${a.duration} Menit
+        </span>
+      </td>
+      <td class="p-3 max-w-[260px]">
+        <p class="text-[11px] text-slate-700 line-clamp-2 leading-relaxed">
+          "${a.finding}"
+        </p>
+      </td>
+      <td class="p-3 text-center">
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${a.verified ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'}">
+          <i class="fa-solid ${a.verified ? 'fa-check-circle' : 'fa-hourglass-half'}"></i>
+          ${a.verified ? 'Terverifikasi' : 'Menunggu'}
+        </span>
+      </td>
+      <td class="p-3 text-right">
+        <button type="button" onclick="apresiasiActivityByKepsek('${a.id}', '${a.studentName}')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-[10px] font-bold transition inline-flex items-center gap-1">
+          <i class="fa-solid fa-star text-amber-500"></i> Validasi
+        </button>
+      </td>
+    </tr>
+  `).join('');
+};
+
+window.apresiasiActivityByKepsek = function(actId, studentName) {
+  showToast('Aktivitas Divalidasi', `Jurnal membaca ${studentName || 'siswa'} telah divalidasi oleh Kepala Sekolah.`, 'success');
+  const tbody = document.getElementById('table-sekolah-activity-body');
+  if (tbody) {
+    const row = tbody.querySelector(`tr:has(button[onclick*="${actId}"])`);
+    if (row) {
+      const badgeCol = row.children[5];
+      if (badgeCol) {
+        badgeCol.innerHTML = `
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <i class="fa-solid fa-check-circle"></i> Terverifikasi
+          </span>
+        `;
+      }
+    }
+  }
+};
+
+// ==========================================
+// EXPORT LAPORAN SEKOLAH KOMPREHENSIF (PDF)
+// ==========================================
+
+window.exportLaporanSekolahPDF = function() {
+  if (window.jspdf && window.jspdf.jsPDF) {
+    try {
+      const doc = new window.jspdf.jsPDF();
+
+      // Header Kop Surat Resmi
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text('PEMERINTAH KABUPATEN BANTUL', 105, 16, { align: 'center' });
+      doc.setFontSize(15);
+      doc.text('DINAS PENDIDIKAN KEPEMUDAAN DAN OLAHRAGA', 105, 23, { align: 'center' });
+      doc.setFontSize(17);
+      doc.text('SMP NEGERI 2 KASIHAN', 105, 31, { align: 'center' });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      doc.text('Alamat: Karangjati, Tamantirto, Kasihan, Bantul, D.I. Yogyakarta 55183 • Telp. (0274) 4342xxx', 105, 37, { align: 'center' });
+      doc.setLineWidth(0.8);
+      doc.line(18, 40, 192, 40);
+      doc.setLineWidth(0.3);
+      doc.line(18, 41.5, 192, 41.5);
+
+      // Report Title
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.text('LAPORAN EKSEKUTIF CAPAIAN DATA PROGRAM LITERASI SEKOLAH (LENTERA 5M)', 105, 50, { align: 'center' });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      doc.text('Dokumen Kinerja & Bukti Nyata Evaluasi Program Literasi (Evidence-Based GLS) • TA 2026/2027', 105, 56, { align: 'center' });
+
+      // 1. Data Ringkasan Eksekutif
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text('I. STATISTIK UTAMA LITERASI SEKOLAH', 20, 68);
+
+      doc.setFillColor(248, 250, 252);
+      doc.rect(20, 72, 170, 32, 'F');
+      doc.rect(20, 72, 170, 32, 'S');
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      doc.text('• Total Buku Dituntaskan (M1)   : 1,428 Buku Terverifikasi', 25, 78);
+      doc.text('• Total Karya Dihasilkan (M3)    : 342 Karya (Puisi, Cerpen, Resensi)', 25, 84);
+      doc.text('• Total Book Talk Selesai (M4)   : 118 Video Presentasi & Resensi', 25, 90);
+      doc.text('• Jam Literasi Terkumpul         : 890 Jam (53,400 Menit Membaca Mandiri)', 25, 96);
+      doc.text('• Partisipasi Siswa Aktif         : 96.8% (124 dari 128 Siswa Konsisten Membaca)', 110, 78);
+      doc.text('• Rata-rata Buku per Siswa       : 11.2 Buku (Melebihi Standar Nasional)', 110, 84);
+      doc.text('• Modul Kearifan Lokal Kasihan   : 48 Modul & Kuis Budaya Bangunjiwo/Kasongan', 110, 90);
+      doc.text('• Indeks Akreditasi Literasi     : Kategori A (Sangat Baik / Unggul)', 110, 96);
+
+      // 2. Distribusi Kategori Level Literasi
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text('II. DISTRIBUSI LEVEL KATEGORI LITERASI SISWA', 20, 114);
+
+      doc.setFillColor(241, 245, 249);
+      doc.rect(20, 118, 170, 7, 'F');
+      doc.setFontSize(9);
+      doc.text('Tingkatan Level Literasi', 25, 123);
+      doc.text('Kriteria Capaian', 75, 123);
+      doc.text('Jumlah Siswa', 140, 123);
+      doc.text('Persentase', 165, 123);
+
+      const levelRows = [
+        ['Level 1: Pembaca Pemula', '1 - 3 Buku (0 - 200 Poin)', '6 Siswa', '4.7%'],
+        ['Level 2: Pembaca Aktif', '4 - 7 Buku (201 - 500 Poin)', '24 Siswa', '18.8%'],
+        ['Level 3: Pembaca Kritis', '8 - 12 Buku (501 - 900 Poin)', '52 Siswa', '40.6%'],
+        ['Level 4: Pembaca Kreatif', '13 - 18 Buku (901 - 1400 Poin)', '38 Siswa', '29.7%'],
+        ['Level 5: Ksatria Literasi Kasihan', '19+ Buku (> 1400 Poin)', '8 Siswa', '6.2%']
+      ];
+
+      let ly = 131;
+      doc.setFont('helvetica', 'normal');
+      levelRows.forEach(row => {
+        doc.text(row[0], 25, ly);
+        doc.text(row[1], 75, ly);
+        doc.text(row[2], 140, ly);
+        doc.text(row[3], 165, ly);
+        doc.line(20, ly + 2, 190, ly + 2);
+        ly += 7.5;
+      });
+
+      // 3. Siswa Teraktif & Duta Literasi
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text('III. TOP SISWA TERAKTIF & DUTA LITERASI SEKOLAH', 20, ly + 8);
+
+      const topRankRows = [
+        ['1', 'Anisa Rahma', 'Kelas 8A', '14 Buku', '5 Karya', '620 Poin', 'Duta Literasi Utama'],
+        ['2', 'Bagus Kurniawan', 'Kelas 8B', '9 Buku', '4 Karya', '380 Poin', 'Bintang Membaca'],
+        ['3', 'Aisyah Putri', 'Kelas 9A', '8 Buku', '5 Karya', '350 Poin', 'Bintang Resensi'],
+        ['4', 'Dimas Aditya', 'Kelas 8B', '5 Buku', '2 Karya', '150 Poin', 'Pembaca Aktif']
+      ];
+
+      doc.setFillColor(241, 245, 249);
+      doc.rect(20, ly + 12, 170, 7, 'F');
+      doc.setFontSize(9);
+      doc.text('No', 23, ly + 17);
+      doc.text('Nama Siswa', 35, ly + 17);
+      doc.text('Kelas', 80, ly + 17);
+      doc.text('Buku', 105, ly + 17);
+      doc.text('Karya', 125, ly + 17);
+      doc.text('Poin', 145, ly + 17);
+      doc.text('Predikat', 165, ly + 17);
+
+      let ry = ly + 24;
+      doc.setFont('helvetica', 'normal');
+      topRankRows.forEach(row => {
+        doc.text(row[0], 23, ry);
+        doc.text(row[1], 35, ry);
+        doc.text(row[2], 80, ry);
+        doc.text(row[3], 105, ry);
+        doc.text(row[4], 125, ry);
+        doc.text(row[5], 145, ry);
+        doc.text(row[6], 165, ry);
+        doc.line(20, ry + 2, 190, ry + 2);
+        ry += 7;
+      });
+
+      // Signature Kepala Sekolah
+      const sigY = Math.max(ry + 12, 235);
+      doc.text('Kasihan, Bantul, ' + new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }), 130, sigY);
+      doc.text('Kepala SMP Negeri 2 Kasihan,', 130, sigY + 6);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Erna Retnaningsih, S.Pd., M.Pd.', 130, sigY + 28);
+      doc.setFont('helvetica', 'normal');
+      doc.text('NIP. 197303261998022001', 130, sigY + 33);
+
+      doc.save('Laporan_Literasi_Sekolah_SMPN2Kasihan_2026.pdf');
+      showToast('Laporan Diunduh', 'Berkas PDF Laporan Eksekutif Literasi Sekolah berhasil disimpan.', 'success');
+      return;
+    } catch (e) {
+      console.error('PDF generation error:', e);
+      showToast('Ekspor Gagal', 'Gagal memproses berkas PDF: ' + e.message, 'error');
+    }
+  } else {
+    window.print();
+  }
 };
 
 function renderSekolahRankings() {
@@ -6426,8 +7855,8 @@ function initSekolahCharts() {
 // 16. EXPORT RAPOR LITERASI (PDF)
 // ==========================================
 
-window.exportRaporPDF = function() {
-  const user = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', kelas: '8B', points: 380, level: 'Pembaca' };
+window.exportRaporPDF = function(targetStudent) {
+  const user = targetStudent || window.appState.viewingStudent || window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', kelas: '8B', points: 380, level: 'Pembaca' };
   
   if (window.jspdf && window.jspdf.jsPDF) {
     try {
@@ -6454,30 +7883,31 @@ window.exportRaporPDF = function() {
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(11);
       doc.text(`Nama Lengkap   : ${user.name}`, 25, 58);
-      doc.text(`Kelas / Rombel : ${user.kelas || '8B'}`, 25, 65);
-      doc.text(`Total Poin     : ${user.points || 0} Poin Literasi`, 25, 72);
-      doc.text(`Pangkat        : ${user.level || 'Pembaca'}`, 25, 79);
+      doc.text(`NISN           : ${user.nisn || '0098231001'}`, 25, 65);
+      doc.text(`Kelas / Rombel : ${user.kelas || user.class || '8B'} (Wali: ${user.waliKelas || 'Ibu Zusma Nadya Izzati, S.Pd.'})`, 25, 72);
+      doc.text(`Total Poin     : ${user.points || 0} Poin Literasi`, 25, 79);
+      doc.text(`Pangkat        : ${user.level || 'Pembaca Kreatif'}`, 25, 86);
 
       // 5M Performance Summary Table
       doc.setFont('helvetica', 'bold');
-      doc.text('Rekapitulasi Capaian Alur 5M:', 25, 92);
+      doc.text('Rekapitulasi Capaian Alur 5M:', 25, 98);
 
       doc.setFillColor(245, 247, 250);
-      doc.rect(25, 96, 160, 8, 'F');
+      doc.rect(25, 102, 160, 8, 'F');
       doc.setFontSize(10);
-      doc.text('Tahapan 5M', 30, 101);
-      doc.text('Aktivitas Terpenuhi', 85, 101);
-      doc.text('Status Capaian', 150, 101);
+      doc.text('Tahapan 5M', 30, 107);
+      doc.text('Aktivitas Terpenuhi', 85, 107);
+      doc.text('Status Capaian', 150, 107);
 
       const items = [
-        ['M1: Membaca (Reading)', '6 Jurnal Bacaan Tuntas', 'Sangat Baik'],
-        ['M2: Menemukan (Discovering)', '3 Lembar Temuan & Kuis', 'Tuntas'],
-        ['M3: Menulis (Writing)', '2 Cerpen / Puisi Terbit', 'Sangat Baik'],
-        ['M4: Menceritakan (Storytelling)', '1 Video Book Talk', 'Tuntas'],
-        ['M5: Mengapresiasi (Appreciating)', '12 Komentar Positif', 'Aktif']
+        ['M1: Membaca (Reading)', `${user.m1_books || 8} Buku (${user.m1_duration || 350} Menit)`, 'Sangat Baik'],
+        ['M2: Menemukan (Discovering)', `${user.m2_findings || 12} Temuan Ide & Kuis (${user.m2_quizScore || 95})`, 'Tuntas'],
+        ['M3: Menulis (Writing)', `${user.m3_works || 5} Cerpen / Puisi / Resensi Terbit`, 'Sangat Baik'],
+        ['M4: Menceritakan (Storytelling)', `${user.m4_talks || 3} Video & Presentasi Cerita`, 'Tuntas'],
+        ['M5: Mengapresiasi (Appreciating)', `${user.m5_appreciations || 18} Respon Ulasan & Apresiasi`, 'Aktif']
       ];
 
-      let y = 110;
+      let y = 116;
       doc.setFont('helvetica', 'normal');
       items.forEach(row => {
         doc.text(row[0], 30, y);
@@ -6491,19 +7921,19 @@ window.exportRaporPDF = function() {
       doc.text('Kasihan, Bantul, ' + new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }), 130, y + 25);
       doc.text('Kepala SMP Negeri 2 Kasihan,', 130, y + 32);
       doc.setFont('helvetica', 'bold');
-      doc.text('Drs. Supriyanto, M.Pd.', 130, y + 55);
+      doc.text('Erna Retnaningsih, S.Pd., M.Pd.', 130, y + 55);
       doc.setFont('helvetica', 'normal');
-      doc.text('NIP. 19680512 199412 1 002', 130, y + 60);
+      doc.text('NIP. 197303261998022001', 130, y + 60);
 
       doc.save(`Rapor_Literasi_${user.name.replace(/\s+/g, '_')}.pdf`);
-      showToast('Rapor Diunduh', 'Berkas PDF Rapor Literasi berhasil disimpan.', 'success');
+      showToast('Rapor Diunduh', `Berkas PDF Rapor Literasi untuk ${user.name} berhasil disimpan.`, 'success');
       return;
     } catch (e) {
       console.warn('PDF export error:', e);
     }
   }
 
-  showToast('Cetak Rapor', 'Fitur cetak siap digunakan. Menyimpan versi digital...', 'info');
+  showToast('Cetak Rapor', `Fitur cetak siap digunakan untuk ${user.name}. Menyimpan versi digital...`, 'info');
 };
 
 // ==========================================
@@ -6795,9 +8225,9 @@ window.closeUserModal = function() {
 
 window.exportUsersCSV = function() {
   const users = window.appState.users || [];
-  let csv = 'ID,Nama Lengkap,Username / NISN,Role,Kelas / Jabatan,Total Poin\n';
+  let csv = '\uFEFFID,Nama Lengkap,Username / NISN,Role,Kelas / Jabatan,Total Poin,Level,Jumlah Buku,Jumlah Karya\n';
   users.forEach(u => {
-    csv += `"${u.id}","${u.name}","${u.username}","${u.role}","${u.kelas || '-'}","${u.points || 0}"\n`;
+    csv += `"${u.id}","${u.name}","${u.username}","${u.role}","${u.kelas || '-'}","${u.points || 0}","${u.level || 'Pembaca'}","${u.booksCount || 0}","${u.worksCount || 0}"\n`;
   });
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -6805,12 +8235,411 @@ window.exportUsersCSV = function() {
   a.href = url;
   a.download = `Data_Pengguna_LENTERA5M_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
-  showToast('Ekspor Berhasil', 'Data pengguna berhasil diunduh dalam format CSV.', 'success');
+  showToast('Ekspor CSV Berhasil', 'Data pengguna berhasil diunduh dalam format CSV.', 'success');
 };
 
-// --- TAB 2: BOOKS CATALOG & PDF MANAGEMENT ---
+window.exportUsersExcel = function() {
+  try {
+    const users = window.appState.users || [];
+    const wb = XLSX.utils.book_new();
+
+    const dataRows = [
+      ['No', 'ID Sistem', 'NISN / NIP / Username', 'Nama Lengkap', 'Peran', 'Kelas / Jabatan', 'Poin Literasi', 'Level Pembaca', 'Buku Dibaca', 'Karya Dibuat']
+    ];
+
+    users.forEach((u, idx) => {
+      dataRows.push([
+        idx + 1,
+        u.id,
+        u.username,
+        u.name,
+        u.role === 'admin' ? 'Administrator' : (u.role === 'guru' ? 'Guru' : (u.role === 'kepsek' ? 'Kepala Sekolah' : 'Siswa')),
+        u.kelas || '-',
+        u.points || 0,
+        u.level || 'Pembaca',
+        u.booksCount || 0,
+        u.worksCount || 0
+      ]);
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(dataRows);
+    ws['!cols'] = [
+      { wch: 5 }, { wch: 14 }, { wch: 22 }, { wch: 30 }, { wch: 14 }, { wch: 22 }, { wch: 14 }, { wch: 18 }, { wch: 12 }, { wch: 12 }
+    ];
+
+    XLSX.utils.book_append_sheet(wb, ws, 'Data Pengguna');
+    XLSX.writeFile(wb, `Data_Pengguna_LENTERA5M_${new Date().toISOString().slice(0, 10)}.xlsx`);
+    showToast('Ekspor Excel Berhasil', 'Data seluruh pengguna berhasil diunduh dalam format Excel (.xlsx).', 'success');
+  } catch (err) {
+    console.error('Export Excel error:', err);
+    window.exportUsersCSV();
+  }
+};
+
+window.downloadUserTemplateExcel = function() {
+  try {
+    const wb = XLSX.utils.book_new();
+
+    // Sheet 1: Template Data Pengguna
+    const templateData = [
+      ['NISN / NIP', 'Nama Lengkap', 'Peran (siswa/guru)', 'Kelas / Mata Pelajaran', 'Kata Sandi Default'],
+      ['0098234101', 'Aditya Pratama Putra', 'siswa', '7A', 'lentera123'],
+      ['0098234102', 'Dewi Sekar Kinanthi', 'siswa', '7A', 'lentera123'],
+      ['0087123901', 'Fajar Ramadhan Santoso', 'siswa', '8B', 'lentera123'],
+      ['0076123456', 'Nabila Zahra Syakira', 'siswa', '9C', 'lentera123'],
+      ['197805122005012003', 'Ratna Kusumawati, S.Pd.', 'guru', 'Bahasa Indonesia', 'guru123'],
+      ['198203152009021004', 'Bambang Triyono, M.Pd.', 'guru', 'IPA / Pembina Literasi', 'guru123']
+    ];
+
+    const wsData = XLSX.utils.aoa_to_sheet(templateData);
+    wsData['!cols'] = [
+      { wch: 22 }, { wch: 32 }, { wch: 20 }, { wch: 26 }, { wch: 20 }
+    ];
+    XLSX.utils.book_append_sheet(wb, wsData, 'Data Pengguna');
+
+    // Sheet 2: Petunjuk Pengisian
+    const instructions = [
+      ['Kolom', 'Kewajiban', 'Format & Keterangan', 'Contoh Nilai'],
+      ['NISN / NIP', 'Wajib', 'Nomor induk unik siswa (NISN) atau guru (NIP). Digunakan sebagai username login.', '0098234101 atau 197805122005012003'],
+      ['Nama Lengkap', 'Wajib', 'Nama lengkap beserta gelar (untuk guru).', 'Dewi Sekar Kinanthi atau Ratna Kusumawati, S.Pd.'],
+      ['Peran (siswa/guru)', 'Wajib', 'Isi dengan "siswa" atau "guru".', 'siswa atau guru'],
+      ['Kelas / Mata Pelajaran', 'Opsional', 'Kelas untuk siswa (misal: 7A, 8B, 9C) atau mata pelajaran/bidang untuk guru.', '7A atau Bahasa Indonesia'],
+      ['Kata Sandi Default', 'Opsional', 'Kata sandi awal untuk login pertama kali. Jika dikosongkan, otomatis diisi "lentera123".', 'lentera123']
+    ];
+
+    const wsGuide = XLSX.utils.aoa_to_sheet(instructions);
+    wsGuide['!cols'] = [
+      { wch: 22 }, { wch: 14 }, { wch: 60 }, { wch: 35 }
+    ];
+    XLSX.utils.book_append_sheet(wb, wsGuide, 'Petunjuk Pengisian');
+
+    XLSX.writeFile(wb, 'Template_Impor_Siswa_Guru_SMPN2Kasihan.xlsx');
+    showToast('Template Excel Diunduh', 'Berkas template "Template_Impor_Siswa_Guru_SMPN2Kasihan.xlsx" siap diisi.', 'success');
+  } catch (err) {
+    console.error('Download template error:', err);
+    window.downloadUserTemplateCSV();
+  }
+};
+
+window.downloadUserTemplateCSV = function() {
+  const csvContent = '\uFEFFNISN / NIP,Nama Lengkap,Peran (siswa/guru),Kelas / Mata Pelajaran,Kata Sandi Default\n' +
+    '0098234101,Aditya Pratama Putra,siswa,7A,lentera123\n' +
+    '0098234102,Dewi Sekar Kinanthi,siswa,7A,lentera123\n' +
+    '0087123901,Fajar Ramadhan Santoso,siswa,8B,lentera123\n' +
+    '0076123456,Nabila Zahra Syakira,siswa,9C,lentera123\n' +
+    '197805122005012003,"Ratna Kusumawati, S.Pd.",guru,Bahasa Indonesia,guru123\n' +
+    '198203152009021004,"Bambang Triyono, M.Pd.",guru,IPA / Pembina Literasi,guru123\n';
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Template_Impor_Siswa_Guru_SMPN2Kasihan.csv';
+  a.click();
+  showToast('Template CSV Diunduh', 'Template CSV berhasil diunduh.', 'success');
+};
+
+// --- MODAL IMPOR USER CONTROLLER ---
+window._stagedImportUsers = [];
+
+window.openImportUserModal = function() {
+  window._stagedImportUsers = [];
+  const fileInput = document.getElementById('input-import-user-file');
+  if (fileInput) fileInput.value = '';
+
+  const filenameEl = document.getElementById('import-user-filename');
+  if (filenameEl) {
+    filenameEl.textContent = '';
+    filenameEl.classList.add('hidden');
+  }
+
+  const previewContainer = document.getElementById('container-import-user-preview');
+  if (previewContainer) previewContainer.classList.add('hidden');
+
+  const btnConfirm = document.getElementById('btn-confirm-import-users');
+  if (btnConfirm) btnConfirm.disabled = true;
+
+  const modal = document.getElementById('modal-import-users');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeImportUserModal = function() {
+  const modal = document.getElementById('modal-import-users');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+  window._stagedImportUsers = [];
+};
+
+window.handleUserImportFile = function(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  const filenameEl = document.getElementById('import-user-filename');
+  if (filenameEl) {
+    filenameEl.textContent = `Berkas dipilih: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+    filenameEl.classList.remove('hidden');
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const data = new Uint8Array(evt.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+
+      if (!rows || rows.length < 2) {
+        showToast('Berkas Kosong', 'Berkas Excel tidak memiliki baris data.', 'error');
+        return;
+      }
+
+      // Find header row
+      let headerRowIdx = -1;
+      let colNisn = -1;
+      let colName = -1;
+      let colRole = -1;
+      let colClass = -1;
+      let colPass = -1;
+
+      for (let i = 0; i < Math.min(rows.length, 5); i++) {
+        const row = rows[i].map(cell => String(cell || '').toLowerCase().trim());
+        const nIdx = row.findIndex(c => c.includes('nisn') || c.includes('nip') || c.includes('username') || c.includes('induk'));
+        const nameIdx = row.findIndex(c => c.includes('nama') || c.includes('name'));
+        if (nIdx !== -1 || nameIdx !== -1) {
+          headerRowIdx = i;
+          colNisn = nIdx !== -1 ? nIdx : 0;
+          colName = nameIdx !== -1 ? nameIdx : 1;
+          colRole = row.findIndex(c => c.includes('peran') || c.includes('role') || c.includes('status'));
+          colClass = row.findIndex(c => c.includes('kelas') || c.includes('mapel') || c.includes('pelajaran') || c.includes('rombel'));
+          colPass = row.findIndex(c => c.includes('sandi') || c.includes('pass'));
+          break;
+        }
+      }
+
+      if (headerRowIdx === -1) {
+        headerRowIdx = 0;
+        colNisn = 0;
+        colName = 1;
+        colRole = 2;
+        colClass = 3;
+        colPass = 4;
+      }
+
+      const parsedUsers = [];
+      let countSiswa = 0;
+      let countGuru = 0;
+
+      for (let r = headerRowIdx + 1; r < rows.length; r++) {
+        const row = rows[r];
+        if (!row || row.every(cell => !cell || String(cell).trim() === '')) continue;
+
+        let rawNisn = String(row[colNisn] ?? '').trim();
+        let rawName = String(row[colName] ?? '').trim();
+        let rawRole = colRole !== -1 ? String(row[colRole] ?? '').trim().toLowerCase() : '';
+        let rawClass = colClass !== -1 ? String(row[colClass] ?? '').trim() : '';
+        let rawPass = colPass !== -1 ? String(row[colPass] ?? '').trim() : '';
+
+        if (!rawName && !rawNisn) continue;
+
+        let role = 'siswa';
+        if (rawRole.includes('guru') || rawRole.includes('pengajar') || rawRole.includes('pendidik') || rawRole.includes('teacher')) {
+          role = 'guru';
+        }
+
+        if (role === 'guru') countGuru++;
+        else countSiswa++;
+
+        const username = rawNisn || `user_${Date.now()}_${r}`;
+        const name = rawName || `Pengguna ${username}`;
+        const password = rawPass || (role === 'guru' ? 'guru123' : 'lentera123');
+
+        parsedUsers.push({
+          id: `u-import-${Date.now()}-${r}`,
+          name,
+          username,
+          password,
+          role,
+          kelas: rawClass || (role === 'guru' ? 'Tenaga Pendidik' : 'Siswa Kasihan'),
+          avatar: role === 'guru'
+            ? 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100'
+            : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100',
+          points: role === 'guru' ? 500 : 100,
+          streak: 1,
+          booksCount: 0,
+          worksCount: 0,
+          level: role === 'guru' ? 'Pendidik Literat' : 'Pembaca Pemula',
+          badges: role === 'guru' ? ['Guru Penggerak Literasi'] : ['Anggota Baru']
+        });
+      }
+
+      window._stagedImportUsers = parsedUsers;
+
+      // Update counters
+      const statTotal = document.getElementById('stat-import-total');
+      const statSiswa = document.getElementById('stat-import-siswa');
+      const statGuru = document.getElementById('stat-import-guru');
+      const statValid = document.getElementById('stat-import-valid');
+      if (statTotal) statTotal.textContent = parsedUsers.length;
+      if (statSiswa) statSiswa.textContent = countSiswa;
+      if (statGuru) statGuru.textContent = countGuru;
+      if (statValid) statValid.textContent = parsedUsers.length;
+
+      // Render Preview Table
+      const previewTbody = document.getElementById('table-import-users-preview');
+      if (previewTbody) {
+        const previewRows = parsedUsers.slice(0, 8);
+        previewTbody.innerHTML = previewRows.map(u => `
+          <tr class="hover:bg-slate-50">
+            <td class="py-2 px-3">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${u.role === 'guru' ? 'bg-purple-100 text-purple-800' : 'bg-sky-100 text-sky-800'}">
+                ${u.role === 'guru' ? 'Guru' : 'Siswa'}
+              </span>
+            </td>
+            <td class="py-2 px-3 font-mono font-bold text-slate-800">${u.username}</td>
+            <td class="py-2 px-3 font-semibold text-slate-900">${u.name}</td>
+            <td class="py-2 px-3 text-slate-600">${u.kelas}</td>
+            <td class="py-2 px-3 font-mono text-slate-500">${u.password}</td>
+          </tr>
+        `).join('');
+      }
+
+      const previewContainer = document.getElementById('container-import-user-preview');
+      if (previewContainer) previewContainer.classList.remove('hidden');
+
+      const btnConfirm = document.getElementById('btn-confirm-import-users');
+      if (btnConfirm) btnConfirm.disabled = parsedUsers.length === 0;
+
+      showToast('Berkas Terbaca', `Ditemukan ${parsedUsers.length} data calon pengguna (${countSiswa} siswa, ${countGuru} guru).`, 'info');
+    } catch (err) {
+      console.error('Error parsing Excel:', err);
+      showToast('Gagal Membaca', 'Format berkas Excel tidak didukung atau rusak.', 'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
+};
+
+window.processUserImport = function() {
+  if (!window._stagedImportUsers || window._stagedImportUsers.length === 0) {
+    showToast('Peringatan', 'Tidak ada data pengguna yang siap diimpor.', 'warning');
+    return;
+  }
+
+  let addedCount = 0;
+  let updatedCount = 0;
+
+  window._stagedImportUsers.forEach(staged => {
+    const existingIdx = window.appState.users.findIndex(u => 
+      u.username.toLowerCase() === staged.username.toLowerCase()
+    );
+
+    if (existingIdx !== -1) {
+      // Update existing user without resetting points
+      window.appState.users[existingIdx].name = staged.name;
+      window.appState.users[existingIdx].role = staged.role;
+      window.appState.users[existingIdx].kelas = staged.kelas;
+      if (staged.password && staged.password !== 'lentera123') {
+        window.appState.users[existingIdx].password = staged.password;
+      }
+      updatedCount++;
+    } else {
+      window.appState.users.push(staged);
+      addedCount++;
+    }
+  });
+
+  setStorage(STORAGE_KEYS.USERS, window.appState.users);
+  closeImportUserModal();
+  renderAdminUsersTable();
+
+  const statUsers = document.getElementById('admin-stat-users');
+  if (statUsers) statUsers.textContent = window.appState.users.length;
+
+  showToast('Impor Selesai', `Berhasil memproses ${window._stagedImportUsers.length} pengguna: ${addedCount} baru ditambahkan, ${updatedCount} data diperbarui.`, 'success');
+};
+
+// --- TAB 2: LITERACY CATALOG & MEDIA MANAGEMENT ---
+window._activeMaterialType = 'ebook';
 window._activePdfSourceMode = 'upload';
+window._activeImageSourceMode = 'upload';
 window._uploadedPdfData = null;
+window._uploadedImageData = null;
+
+// Helper: YouTube & Drive Embedder
+function getEmbedVideoUrl(url) {
+  if (!url) return '';
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+  if (ytMatch && ytMatch[1]) {
+    return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0`;
+  }
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (driveMatch && driveMatch[1]) {
+    return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+  }
+  return url;
+}
+
+function getYoutubeThumbnailUrl(url) {
+  if (!url) return '';
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+  if (ytMatch && ytMatch[1]) {
+    return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+  }
+  return '';
+}
+
+window.switchMaterialType = function(type) {
+  window._activeMaterialType = type;
+  const hiddenInput = document.getElementById('manage-book-material-type');
+  if (hiddenInput) hiddenInput.value = type;
+
+  // Switch tabs styling
+  const tabEbook = document.getElementById('tab-type-ebook');
+  const tabVideo = document.getElementById('tab-type-video');
+  const tabGambar = document.getElementById('tab-type-gambar');
+
+  const activeEbookClass = 'flex-1 py-2 rounded-xl font-extrabold text-xs transition flex items-center justify-center gap-1.5 shadow-2xs bg-[#082e54] text-white';
+  const activeVideoClass = 'flex-1 py-2 rounded-xl font-extrabold text-xs transition flex items-center justify-center gap-1.5 shadow-2xs bg-rose-600 text-white';
+  const activeGambarClass = 'flex-1 py-2 rounded-xl font-extrabold text-xs transition flex items-center justify-center gap-1.5 shadow-2xs bg-[#00695c] text-white';
+  const inactiveClass = 'flex-1 py-2 rounded-xl font-semibold text-xs transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60';
+
+  if (tabEbook) tabEbook.className = type === 'ebook' ? activeEbookClass : inactiveClass;
+  if (tabVideo) tabVideo.className = type === 'video' ? activeVideoClass : inactiveClass;
+  if (tabGambar) tabGambar.className = type === 'gambar' ? activeGambarClass : inactiveClass;
+
+  // Toggle container visibility
+  const cEbook = document.getElementById('container-material-ebook');
+  const cVideo = document.getElementById('container-material-video');
+  const cGambar = document.getElementById('container-material-gambar');
+
+  if (cEbook) {
+    if (type === 'ebook') cEbook.classList.remove('hidden');
+    else cEbook.classList.add('hidden');
+  }
+  if (cVideo) {
+    if (type === 'video') cVideo.classList.remove('hidden');
+    else cVideo.classList.add('hidden');
+  }
+  if (cGambar) {
+    if (type === 'gambar') cGambar.classList.remove('hidden');
+    else cGambar.classList.add('hidden');
+  }
+
+  // Auto set ID prefix if creating new item
+  const idInput = document.getElementById('manage-book-id');
+  const isEditing = idInput && idInput.hasAttribute('data-editing');
+  if (idInput && !isEditing) {
+    const nextNum = String((window.appState.books || []).length + 1).padStart(3, '0');
+    if (type === 'video') idInput.value = `VID-${nextNum}`;
+    else if (type === 'gambar') idInput.value = `IMG-${nextNum}`;
+    else idInput.value = `BK-${nextNum}`;
+  }
+};
 
 window.switchPdfSourceMode = function(mode) {
   window._activePdfSourceMode = mode;
@@ -6820,15 +8649,135 @@ window.switchPdfSourceMode = function(mode) {
   const containerLink = document.getElementById('container-pdf-link');
 
   if (mode === 'upload') {
-    if (tabUpload) tabUpload.className = 'py-1.5 rounded-lg font-bold text-xs bg-sky-600 text-white transition';
-    if (tabLink) tabLink.className = 'py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition';
+    if (tabUpload) tabUpload.className = 'py-1.5 rounded-lg font-bold text-xs bg-sky-600 text-white transition shadow-2xs';
+    if (tabLink) tabLink.className = 'py-1.5 rounded-lg font-semibold text-xs text-slate-600 hover:text-slate-900 transition';
     if (containerUpload) containerUpload.classList.remove('hidden');
     if (containerLink) containerLink.classList.add('hidden');
   } else {
-    if (tabUpload) tabUpload.className = 'py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition';
-    if (tabLink) tabLink.className = 'py-1.5 rounded-lg font-bold text-xs bg-sky-600 text-white transition';
+    if (tabUpload) tabUpload.className = 'py-1.5 rounded-lg font-semibold text-xs text-slate-600 hover:text-slate-900 transition';
+    if (tabLink) tabLink.className = 'py-1.5 rounded-lg font-bold text-xs bg-sky-600 text-white transition shadow-2xs';
     if (containerUpload) containerUpload.classList.add('hidden');
     if (containerLink) containerLink.classList.remove('hidden');
+  }
+};
+
+window.switchImageSourceMode = function(mode) {
+  window._activeImageSourceMode = mode;
+  const tabUpload = document.getElementById('tab-img-upload');
+  const tabLink = document.getElementById('tab-img-link');
+  const containerUpload = document.getElementById('container-img-upload');
+  const containerLink = document.getElementById('container-img-link');
+
+  if (mode === 'upload') {
+    if (tabUpload) tabUpload.className = 'py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white transition shadow-2xs';
+    if (tabLink) tabLink.className = 'py-1.5 rounded-lg font-semibold text-xs text-slate-600 hover:text-slate-900 transition';
+    if (containerUpload) containerUpload.classList.remove('hidden');
+    if (containerLink) containerLink.classList.add('hidden');
+  } else {
+    if (tabUpload) tabUpload.className = 'py-1.5 rounded-lg font-semibold text-xs text-slate-600 hover:text-slate-900 transition';
+    if (tabLink) tabLink.className = 'py-1.5 rounded-lg font-bold text-xs bg-emerald-600 text-white transition shadow-2xs';
+    if (containerUpload) containerUpload.classList.add('hidden');
+    if (containerLink) containerLink.classList.remove('hidden');
+  }
+};
+
+window.checkAndFetchYoutubeThumbnail = function() {
+  const urlInput = document.getElementById('manage-book-video-url');
+  const url = (urlInput?.value || '').trim();
+  if (!url) {
+    showToast('Peringatan', 'Masukkan link URL video YouTube terlebih dahulu.', 'warning');
+    return;
+  }
+
+  const thumbUrl = getYoutubeThumbnailUrl(url);
+  const embedUrl = getEmbedVideoUrl(url);
+
+  if (thumbUrl) {
+    const coverInput = document.getElementById('manage-book-cover');
+    if (coverInput) coverInput.value = thumbUrl;
+
+    const iframe = document.getElementById('video-preview-iframe');
+    const previewBox = document.getElementById('video-live-preview-box');
+    if (iframe) iframe.src = embedUrl;
+    if (previewBox) previewBox.classList.remove('hidden');
+
+    showToast('Cover YouTube Terpasang', 'Berhasil mendeteksi video YouTube dan menetapkan thumbnail cover otomatis.', 'success');
+  } else {
+    showToast('Link Bukan YouTube', 'Tautan tetap disimpan sebagai tautan video pembelajaran.', 'info');
+  }
+};
+
+window.previewVideoUrl = function() {
+  const url = document.getElementById('manage-book-video-url')?.value.trim();
+  const embed = getEmbedVideoUrl(url);
+  const iframe = document.getElementById('video-preview-iframe');
+  const box = document.getElementById('video-live-preview-box');
+
+  if (embed && (embed.includes('youtube.com') || embed.includes('drive.google.com'))) {
+    if (iframe) iframe.src = embed;
+    if (box) box.classList.remove('hidden');
+  }
+};
+
+window.previewImageUrl = function() {
+  const url = document.getElementById('manage-book-image-url')?.value.trim();
+  const img = document.getElementById('img-live-preview');
+  const box = document.getElementById('img-live-preview-box');
+  const cover = document.getElementById('manage-book-cover');
+
+  if (url) {
+    if (img) img.src = url;
+    if (box) box.classList.remove('hidden');
+    if (cover && !cover.value.trim()) cover.value = url;
+  }
+};
+
+window.handleBookImageFileChange = function(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const dataUrl = evt.target.result;
+    window._uploadedImageData = {
+      name: file.name,
+      size: `${(file.size / 1024).toFixed(1)} KB`,
+      url: dataUrl
+    };
+
+    const nameEl = document.getElementById('img-file-preview-name');
+    const badge = document.getElementById('img-file-preview-badge');
+    const previewImg = document.getElementById('img-live-preview');
+    const previewBox = document.getElementById('img-live-preview-box');
+    const coverInput = document.getElementById('manage-book-cover');
+
+    if (nameEl) nameEl.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+    if (badge) {
+      badge.classList.remove('hidden');
+      badge.classList.add('flex');
+    }
+    if (previewImg) previewImg.src = dataUrl;
+    if (previewBox) previewBox.classList.remove('hidden');
+    if (coverInput) coverInput.value = dataUrl;
+
+    const titleInput = document.getElementById('manage-book-title');
+    if (titleInput && !titleInput.value.trim()) {
+      titleInput.value = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+    }
+
+    showToast('Gambar Terpilih', `Berkas "${file.name}" siap disimpan ke galeri literasi.`, 'success');
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearSelectedImageFile = function() {
+  window._uploadedImageData = null;
+  const fileInput = document.getElementById('manage-book-img-file');
+  if (fileInput) fileInput.value = '';
+  const badge = document.getElementById('img-file-preview-badge');
+  if (badge) {
+    badge.classList.add('hidden');
+    badge.classList.remove('flex');
   }
 };
 
@@ -6896,12 +8845,19 @@ window.renderAdminBooksTable = function() {
   if (!tbody) return;
 
   const categoryFilter = window.appState.adminFilters?.bookCategory || 'semua';
+  const materialTypeFilter = window.appState.adminFilters?.bookMaterialType || 'semua';
   const searchQuery = (document.getElementById('admin-search-books')?.value || '').toLowerCase().trim();
 
   let books = window.appState.books || [];
-  if (categoryFilter !== 'semua') {
-    books = books.filter(b => b.category === categoryFilter);
+
+  if (materialTypeFilter !== 'semua') {
+    books = books.filter(b => (b.materialType || 'ebook') === materialTypeFilter);
   }
+
+  if (categoryFilter !== 'semua') {
+    books = books.filter(b => b.category === categoryFilter || (categoryFilter === 'jogja' && (b.category === 'kearifan_lokal' || b.category === 'jogja')));
+  }
+
   if (searchQuery) {
     books = books.filter(b => 
       (b.title && b.title.toLowerCase().includes(searchQuery)) ||
@@ -6914,8 +8870,9 @@ window.renderAdminBooksTable = function() {
     tbody.innerHTML = `
       <tr>
         <td colspan="6" class="py-8 text-center text-slate-400">
-          <i class="fa-solid fa-book-open text-2xl mb-2"></i>
-          <p>Tidak ada data buku yang sesuai.</p>
+          <i class="fa-solid fa-folder-open text-3xl mb-2 text-slate-300"></i>
+          <p class="font-bold text-slate-600">Tidak ada bahan literasi yang sesuai.</p>
+          <p class="text-xs text-slate-400 mt-1">Coba sesuaikan filter tipe bahan, kategori, atau tambahkan bahan baru.</p>
         </td>
       </tr>
     `;
@@ -6923,50 +8880,94 @@ window.renderAdminBooksTable = function() {
   }
 
   tbody.innerHTML = books.map(b => {
-    let pdfBadge = '';
-    if (b.pdfSourceType === 'upload') {
-      pdfBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1 w-fit shadow-xs"><i class="fa-solid fa-file-pdf text-red-500"></i> PDF Upload</span>`;
-    } else if (b.pdfSourceType === 'link') {
-      pdfBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800 flex items-center gap-1 w-fit shadow-xs"><i class="fa-solid fa-link text-sky-600"></i> Link PDF</span>`;
-    } else if (b.id === 'BK-SOP' || b.category === 'sarpras') {
-      pdfBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1 w-fit shadow-xs"><i class="fa-solid fa-shield-halved text-amber-600"></i> SOP Resmi</span>`;
+    const isVideo = b.materialType === 'video';
+    const isImage = b.materialType === 'gambar';
+    const isEbook = !isVideo && !isImage;
+
+    let typeBadge = '';
+    let mediaMeta = '';
+    let linkBadge = '';
+    let playActionBtn = '';
+
+    if (isVideo) {
+      typeBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-circle-play text-rose-500"></i> Video Literasi</span>`;
+      mediaMeta = `${b.duration || 'Video'} • ${b.creator || b.author || 'Kreator'}`;
+      linkBadge = b.videoUrl
+        ? `<a href="${b.videoUrl}" target="_blank" class="text-rose-600 hover:text-rose-800 hover:underline flex items-center gap-1 font-semibold text-xs truncate max-w-[170px]" title="${b.videoUrl}"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> ${b.videoUrl.includes('youtube') ? 'Tautan YouTube' : 'Link Video'}</a>`
+        : `<span class="text-slate-400 text-xs">-</span>`;
+      playActionBtn = `
+        <button onclick="openVideoPlayerModal('${b.id}')" class="px-2.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-2xs" title="Tonton Video Pembelajaran">
+          <i class="fa-solid fa-play text-amber-300 text-[10px]"></i> Tonton
+        </button>
+      `;
+    } else if (isImage) {
+      typeBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-image text-emerald-500"></i> Gambar / Infografis</span>`;
+      mediaMeta = `1 Lembar Visual`;
+      const imgLink = b.imageUrl || b.link || b.cover;
+      linkBadge = imgLink
+        ? `<a href="${imgLink}" target="_blank" class="text-emerald-700 hover:text-emerald-900 hover:underline flex items-center gap-1 font-semibold text-xs truncate max-w-[170px]" title="Buka Gambar"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> ${imgLink.startsWith('data:') ? 'Unggahan Lokal' : 'Link Gambar'}</a>`
+        : `<span class="text-slate-400 text-xs">-</span>`;
+      playActionBtn = `
+        <button onclick="openImageViewerModal('${b.id}')" class="px-2.5 py-1.5 bg-[#00695c] hover:bg-[#004d40] text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-2xs" title="Lihat Gambar Infografis">
+          <i class="fa-solid fa-magnifying-glass-plus text-white text-[10px]"></i> Lihat
+        </button>
+      `;
     } else {
-      pdfBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 flex items-center gap-1 w-fit"><i class="fa-solid fa-file-lines text-indigo-500"></i> PDF Buku</span>`;
+      typeBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-sky-50 text-sky-700 border border-sky-200 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-book text-sky-500"></i> E-Book</span>`;
+      mediaMeta = `${b.pages || 100} Halaman`;
+      if (b.pdfSourceType === 'upload') {
+        linkBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-file-pdf text-red-500"></i> PDF Upload</span>`;
+      } else if (b.pdfSourceType === 'link' && b.pdfUrl) {
+        linkBadge = `<a href="${b.pdfUrl}" target="_blank" class="text-sky-600 hover:underline flex items-center gap-1 font-semibold text-xs truncate max-w-[170px]"><i class="fa-solid fa-link text-sky-500"></i> Link PDF</a>`;
+      } else if (b.id === 'BK-SOP' || b.category === 'sarpras') {
+        linkBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-shield-halved text-amber-600"></i> SOP Resmi</span>`;
+      } else {
+        linkBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 flex items-center gap-1 w-fit"><i class="fa-solid fa-file-lines text-slate-400"></i> Standar</span>`;
+      }
+      playActionBtn = `
+        <button onclick="selectActiveBook('${b.id}')" class="px-2.5 py-1.5 bg-[#082e54] hover:bg-sky-900 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-2xs" title="Buka dan baca dokumen PDF">
+          <i class="fa-solid fa-book-open text-amber-400 text-[10px]"></i> Baca
+        </button>
+      `;
     }
 
     return `
       <tr class="hover:bg-slate-50/80 transition">
         <td class="py-3 px-3">
           <div class="flex items-center gap-3">
-            <img src="${b.cover || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=120'}" class="w-10 h-14 object-cover rounded-lg shadow-xs border border-slate-200 shrink-0" />
-            <div>
+            <div class="relative shrink-0">
+              <img src="${b.cover || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=120'}" class="w-10 h-14 object-cover rounded-lg shadow-xs border border-slate-200" />
+              ${isVideo ? '<span class="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-rose-600 text-white flex items-center justify-center text-[8px] shadow-xs"><i class="fa-solid fa-play ml-0.5"></i></span>' : ''}
+              ${isImage ? '<span class="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[8px] shadow-xs"><i class="fa-solid fa-image"></i></span>' : ''}
+            </div>
+            <div class="min-w-0">
               <span class="font-bold text-slate-800 block text-xs sm:text-sm line-clamp-1">${b.title}</span>
-              <span class="text-[11px] text-slate-500">${b.author || 'Penulis Tidak Diketahui'}</span>
+              <span class="text-[11px] text-slate-500 truncate block">${b.author || 'Tim Literasi SMPN 2 Kasihan'}</span>
             </div>
           </div>
         </td>
-        <td class="py-3 px-3 font-mono font-bold text-sky-700 text-xs">${b.id}</td>
+        <td class="py-3 px-3 font-mono font-bold text-sky-800 text-xs">${b.id}</td>
         <td class="py-3 px-3">
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${b.category === 'sarpras' ? 'bg-sky-100 text-sky-800' : 'bg-slate-100 text-slate-700'}">
+          ${typeBadge}
+        </td>
+        <td class="py-3 px-3">
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${b.category === 'sarpras' ? 'bg-amber-100 text-amber-900' : (b.category === 'kearifan_lokal' || b.category === 'jogja' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-700')}">
             ${b.categoryLabel || b.category}
           </span>
         </td>
-        <td class="py-3 px-3 text-slate-600 font-medium">${b.pages || 0} Hal</td>
         <td class="py-3 px-3">
-          ${pdfBadge}
+          ${linkBadge}
         </td>
         <td class="py-3 px-3 text-right">
           <div class="flex items-center justify-end gap-1.5">
-            <button onclick="selectActiveBook('${b.id}')" class="px-2.5 py-1.5 bg-[#082e54] hover:bg-sky-900 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-xs" title="Buka dan baca dokumen PDF di M1">
-              <i class="fa-solid fa-book-open text-amber-400"></i> Baca
-            </button>
+            ${playActionBtn}
             <button onclick="openBookQrModal('${b.id}')" class="p-1.5 hover:bg-sky-50 text-sky-600 rounded-lg text-xs" title="Cetak / Tampilkan QR Code Buku">
               <i class="fa-solid fa-qrcode"></i>
             </button>
-            <button onclick="editBookModal('${b.id}')" class="p-1.5 hover:bg-slate-200 text-slate-600 rounded-lg text-xs" title="Edit Buku">
+            <button onclick="editBookModal('${b.id}')" class="p-1.5 hover:bg-slate-200 text-slate-600 rounded-lg text-xs" title="Edit Bahan Literasi">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button onclick="deleteBook('${b.id}')" class="p-1.5 hover:bg-red-50 text-red-600 rounded-lg text-xs" title="Hapus Buku">
+            <button onclick="deleteBook('${b.id}')" class="p-1.5 hover:bg-red-50 text-red-600 rounded-lg text-xs" title="Hapus Bahan">
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
@@ -6974,6 +8975,25 @@ window.renderAdminBooksTable = function() {
       </tr>
     `;
   }).join('');
+};
+
+window.filterAdminBooksType = function(type) {
+  if (!window.appState.adminFilters) window.appState.adminFilters = {};
+  window.appState.adminFilters.bookMaterialType = type;
+
+  const types = ['semua', 'ebook', 'video', 'gambar'];
+  types.forEach(t => {
+    const btn = document.getElementById(`btn-filter-type-${t}`);
+    if (btn) {
+      if (t === type) {
+        btn.className = 'px-3 py-1 rounded-lg text-xs font-bold bg-[#082e54] text-white shadow-2xs';
+      } else {
+        btn.className = 'px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200';
+      }
+    }
+  });
+
+  window.renderAdminBooksTable();
 };
 
 window.filterAdminBooks = function(cat) {
@@ -6985,7 +9005,7 @@ window.filterAdminBooks = function(cat) {
     const btn = document.getElementById(`btn-filter-book-${c}`);
     if (btn) {
       if (c === cat) {
-        btn.className = 'px-3 py-1 rounded-lg text-xs font-bold bg-[#082e54] text-white';
+        btn.className = 'px-3 py-1 rounded-lg text-xs font-bold bg-[#082e54] text-white shadow-2xs';
       } else {
         btn.className = 'px-3 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600 hover:bg-slate-200';
       }
@@ -6995,15 +9015,26 @@ window.filterAdminBooks = function(cat) {
   window.renderAdminBooksTable();
 };
 
-window.openAddBookModal = function() {
+window.openAddBookModal = function(initialType = 'ebook') {
   document.getElementById('form-manage-book')?.reset();
   window.clearSelectedPdfFile();
-  window.switchPdfSourceMode('upload');
+  window.clearSelectedImageFile();
 
   const idInput = document.getElementById('manage-book-id');
+  if (idInput) idInput.removeAttribute('data-editing');
+
   const title = document.getElementById('modal-book-title');
-  if (idInput) idInput.value = `BK-${String(window.appState.books.length + 1).padStart(3, '0')}`;
-  if (title) title.innerHTML = '<i class="fa-solid fa-book-medical text-sky-600 mr-1.5"></i> Tambah Buku Baru & Berkas PDF';
+  if (title) title.innerHTML = '<i class="fa-solid fa-plus text-sky-600 mr-1.5"></i> Tambah Bahan Literasi Digital';
+
+  // Hide previews
+  const videoBox = document.getElementById('video-live-preview-box');
+  if (videoBox) videoBox.classList.add('hidden');
+  const imgBox = document.getElementById('img-live-preview-box');
+  if (imgBox) imgBox.classList.add('hidden');
+
+  window.switchMaterialType(initialType);
+  window.switchPdfSourceMode('upload');
+  window.switchImageSourceMode('upload');
 
   const modal = document.getElementById('modal-book-form');
   if (modal) {
@@ -7017,6 +9048,7 @@ window.editBookModal = function(bookId) {
   if (!b) return;
 
   window.clearSelectedPdfFile();
+  window.clearSelectedImageFile();
 
   const idInput = document.getElementById('manage-book-id');
   const titleInput = document.getElementById('manage-book-title');
@@ -7025,39 +9057,59 @@ window.editBookModal = function(bookId) {
   const pagesInput = document.getElementById('manage-book-pages');
   const coverInput = document.getElementById('manage-book-cover');
   const synopsisInput = document.getElementById('manage-book-synopsis');
-  const linkInput = document.getElementById('manage-book-pdf-url');
-  const title = document.getElementById('modal-book-title');
+  const pdfLinkInput = document.getElementById('manage-book-pdf-url');
+  const videoUrlInput = document.getElementById('manage-book-video-url');
+  const durationInput = document.getElementById('manage-book-duration');
+  const creatorInput = document.getElementById('manage-book-creator');
+  const imgUrlInput = document.getElementById('manage-book-image-url');
+  const modalTitle = document.getElementById('modal-book-title');
 
-  if (idInput) idInput.value = b.id;
-  if (titleInput) titleInput.value = b.title;
+  if (idInput) {
+    idInput.value = b.id;
+    idInput.setAttribute('data-editing', 'true');
+  }
+  if (titleInput) titleInput.value = b.title || '';
   if (authorInput) authorInput.value = b.author || '';
   if (catInput) catInput.value = b.category || 'fiksi';
-  if (pagesInput) pagesInput.value = b.pages || 100;
   if (coverInput) coverInput.value = b.cover || '';
   if (synopsisInput) synopsisInput.value = b.synopsis || '';
-  if (title) title.innerHTML = `<i class="fa-solid fa-pen-to-square text-sky-600 mr-1.5"></i> Edit Buku: ${b.title}`;
+  if (modalTitle) modalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square text-sky-600 mr-1.5"></i> Edit Bahan: ${b.title}`;
 
-  if (b.pdfSourceType === 'link' && b.pdfUrl) {
-    window.switchPdfSourceMode('link');
-    if (linkInput) linkInput.value = b.pdfUrl;
-  } else if (b.pdfSourceType === 'upload' && b.pdfUrl) {
-    window.switchPdfSourceMode('upload');
-    window._uploadedPdfData = {
-      name: b.pdfFileName || `${b.title}.pdf`,
-      size: b.pdfSize || 'Tersimpan',
-      url: b.pdfUrl
-    };
-    const badge = document.getElementById('pdf-file-preview-badge');
-    const nameEl = document.getElementById('pdf-file-preview-name');
-    const sizeEl = document.getElementById('pdf-file-preview-size');
-    if (nameEl) nameEl.textContent = b.pdfFileName || `${b.title}.pdf`;
-    if (sizeEl) sizeEl.textContent = `(${b.pdfSize || 'Tersimpan'})`;
-    if (badge) {
-      badge.classList.remove('hidden');
-      badge.classList.add('flex');
-    }
+  const matType = b.materialType || (b.videoUrl ? 'video' : (b.imageUrl ? 'gambar' : 'ebook'));
+  window.switchMaterialType(matType);
+
+  if (matType === 'video') {
+    if (videoUrlInput) videoUrlInput.value = b.videoUrl || b.link || '';
+    if (durationInput) durationInput.value = b.duration || '';
+    if (creatorInput) creatorInput.value = b.creator || b.author || '';
+    window.previewVideoUrl();
+  } else if (matType === 'gambar') {
+    if (imgUrlInput) imgUrlInput.value = b.imageUrl || b.link || '';
+    window.previewImageUrl();
   } else {
-    window.switchPdfSourceMode('upload');
+    if (pagesInput) pagesInput.value = b.pages || 100;
+    if (b.pdfSourceType === 'link' && b.pdfUrl) {
+      window.switchPdfSourceMode('link');
+      if (pdfLinkInput) pdfLinkInput.value = b.pdfUrl;
+    } else if (b.pdfSourceType === 'upload' && b.pdfUrl) {
+      window.switchPdfSourceMode('upload');
+      window._uploadedPdfData = {
+        name: b.pdfFileName || `${b.title}.pdf`,
+        size: b.pdfSize || 'Tersimpan',
+        url: b.pdfUrl
+      };
+      const badge = document.getElementById('pdf-file-preview-badge');
+      const nameEl = document.getElementById('pdf-file-preview-name');
+      const sizeEl = document.getElementById('pdf-file-preview-size');
+      if (nameEl) nameEl.textContent = b.pdfFileName || `${b.title}.pdf`;
+      if (sizeEl) sizeEl.textContent = `(${b.pdfSize || 'Tersimpan'})`;
+      if (badge) {
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+      }
+    } else {
+      window.switchPdfSourceMode('upload');
+    }
   }
 
   const modal = document.getElementById('modal-book-form');
@@ -7069,91 +9121,152 @@ window.editBookModal = function(bookId) {
 
 window.handleSaveBook = function(e) {
   if (e) e.preventDefault();
+  const materialType = document.getElementById('manage-book-material-type')?.value || window._activeMaterialType || 'ebook';
   const id = document.getElementById('manage-book-id')?.value.trim();
   const title = document.getElementById('manage-book-title')?.value.trim();
   const author = document.getElementById('manage-book-author')?.value.trim();
-  const category = document.getElementById('manage-book-category')?.value;
-  const pages = parseInt(document.getElementById('manage-book-pages')?.value) || 120;
-  const cover = document.getElementById('manage-book-cover')?.value.trim() || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300';
+  const category = document.getElementById('manage-book-category')?.value || 'fiksi';
+  let cover = document.getElementById('manage-book-cover')?.value.trim();
   const synopsis = document.getElementById('manage-book-synopsis')?.value.trim();
-  const pdfUrlInput = document.getElementById('manage-book-pdf-url')?.value.trim();
 
   if (!id || !title) {
-    showToast('Data Kurang', 'Kode buku dan judul buku wajib diisi.', 'error');
+    showToast('Data Kurang', 'Kode identitas dan judul bahan literasi wajib diisi.', 'error');
     return;
   }
 
   const categoryLabels = {
     'sarpras': 'SARPRAS & SOP',
     'kearifan_lokal': 'Kearifan Kasihan & Budaya',
+    'jogja': 'Kearifan Kasihan & Budaya',
     'fiksi': 'Fiksi & Sastra',
     'nonfiksi': 'Non-Fiksi & Referensi',
-    'sains': 'Sains Populer & Teknologi',
+    'sains': 'Sains & Teknologi',
     'sejarah': 'Sejarah Nusantara'
   };
 
-  let pdfSourceType = 'default';
-  let pdfUrl = '';
-  let pdfFileName = `${title}.pdf`;
-  let pdfSize = '';
+  const categoryLabel = categoryLabels[category] || category.toUpperCase();
 
-  if (window._activePdfSourceMode === 'upload' && window._uploadedPdfData) {
-    pdfSourceType = 'upload';
-    pdfUrl = window._uploadedPdfData.url;
-    pdfFileName = window._uploadedPdfData.name;
-    pdfSize = window._uploadedPdfData.size;
-  } else if (window._activePdfSourceMode === 'link' && pdfUrlInput) {
-    pdfSourceType = 'link';
-    pdfUrl = pdfUrlInput;
-    pdfFileName = `${title}.pdf`;
-    pdfSize = 'Link Eksternal';
-  }
+  let bookPayload = {
+    id,
+    materialType,
+    title,
+    author: author || 'Tim Literasi SMPN 2 Kasihan',
+    category,
+    categoryLabel,
+    synopsis: synopsis || 'Bahan literasi terpilih LENTERA 5M SMP Negeri 2 Kasihan Bantul.',
+    rating: 5.0
+  };
 
-  const existingIdx = window.appState.books.findIndex(b => b.id === id);
-  if (existingIdx !== -1) {
-    const prev = window.appState.books[existingIdx];
-    window.appState.books[existingIdx] = {
-      ...prev,
-      title,
-      author,
-      category,
-      categoryLabel: categoryLabels[category] || category.toUpperCase(),
-      pages,
+  if (materialType === 'video') {
+    const videoUrl = document.getElementById('manage-book-video-url')?.value.trim();
+    const duration = document.getElementById('manage-book-duration')?.value.trim() || '15 Menit';
+    const creator = document.getElementById('manage-book-creator')?.value.trim() || author || 'Kreator Literasi';
+
+    if (!videoUrl) {
+      showToast('Link Video Wajib', 'Harap masukkan tautan link video YouTube atau Drive.', 'error');
+      return;
+    }
+
+    if (!cover) {
+      const ytThumb = getYoutubeThumbnailUrl(videoUrl);
+      cover = ytThumb || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=400';
+    }
+
+    bookPayload = {
+      ...bookPayload,
+      videoUrl,
+      link: videoUrl,
+      duration,
+      creator,
       cover,
-      synopsis,
-      pdfSourceType: pdfUrl ? pdfSourceType : (prev.pdfSourceType || 'default'),
-      pdfUrl: pdfUrl || prev.pdfUrl || '',
-      pdfFileName: pdfFileName || prev.pdfFileName || `${title}.pdf`,
-      pdfSize: pdfSize || prev.pdfSize || '',
-      hasPdf: true
+      pages: 1
     };
-    showToast('Buku Diperbarui', `Buku "${title}" beserta data PDF berhasil diperbarui.`, 'success');
+  } else if (materialType === 'gambar') {
+    let imageUrl = '';
+    let imageFileName = '';
+
+    if (window._activeImageSourceMode === 'upload' && window._uploadedImageData) {
+      imageUrl = window._uploadedImageData.url;
+      imageFileName = window._uploadedImageData.name;
+    } else {
+      imageUrl = document.getElementById('manage-book-image-url')?.value.trim();
+      imageFileName = `${title}.jpg`;
+    }
+
+    if (!imageUrl) {
+      showToast('Gambar Wajib', 'Harap unggah berkas gambar atau cantumkan link URL gambar/infografis.', 'error');
+      return;
+    }
+
+    if (!cover) cover = imageUrl;
+
+    bookPayload = {
+      ...bookPayload,
+      imageUrl,
+      link: imageUrl,
+      imageFileName,
+      cover,
+      pages: 1
+    };
   } else {
-    const newBook = {
-      id,
-      title,
-      author,
-      category,
-      categoryLabel: categoryLabels[category] || category.toUpperCase(),
+    // E-Book
+    const pages = parseInt(document.getElementById('manage-book-pages')?.value) || 100;
+    const pdfUrlInput = document.getElementById('manage-book-pdf-url')?.value.trim();
+
+    if (!cover) {
+      cover = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300';
+    }
+
+    let pdfSourceType = 'default';
+    let pdfUrl = '';
+    let pdfFileName = `${title}.pdf`;
+    let pdfSize = '';
+
+    if (window._activePdfSourceMode === 'upload' && window._uploadedPdfData) {
+      pdfSourceType = 'upload';
+      pdfUrl = window._uploadedPdfData.url;
+      pdfFileName = window._uploadedPdfData.name;
+      pdfSize = window._uploadedPdfData.size;
+    } else if (window._activePdfSourceMode === 'link' && pdfUrlInput) {
+      pdfSourceType = 'link';
+      pdfUrl = pdfUrlInput;
+      pdfFileName = `${title}.pdf`;
+      pdfSize = 'Link Eksternal';
+    }
+
+    bookPayload = {
+      ...bookPayload,
       pages,
       cover,
-      synopsis,
-      rating: 5.0,
       pdfSourceType,
       pdfUrl,
       pdfFileName,
       pdfSize,
       hasPdf: true
     };
-    window.appState.books.unshift(newBook);
-    showToast('Buku Ditambahkan', `Buku "${title}" berhasil ditambahkan ke katalog digital!`, 'success');
+  }
+
+  const existingIdx = window.appState.books.findIndex(b => b.id === id);
+  if (existingIdx !== -1) {
+    window.appState.books[existingIdx] = {
+      ...window.appState.books[existingIdx],
+      ...bookPayload
+    };
+    showToast('Bahan Diperbarui', `Bahan literasi "${title}" berhasil diperbarui.`, 'success');
+  } else {
+    window.appState.books.unshift(bookPayload);
+    showToast('Bahan Ditambahkan', `Bahan literasi "${title}" berhasil ditambahkan ke katalog sekolah!`, 'success');
   }
 
   setStorage(STORAGE_KEYS.BOOKS, window.appState.books);
   closeBookModal();
   renderAdminBooksTable();
 
-  // Update stats
+  // Sync student view catalog
+  if (typeof window.renderBooks === 'function') {
+    window.renderBooks();
+  }
+
   const statBooks = document.getElementById('admin-stat-books');
   if (statBooks) statBooks.textContent = window.appState.books.length;
 
@@ -7163,14 +9276,20 @@ window.handleSaveBook = function(e) {
 };
 
 window.deleteBook = function(bookId) {
-  if (!confirm(`Hapus buku dengan kode ${bookId}?`)) return;
+  if (!confirm(`Hapus bahan literasi dengan kode ${bookId}?`)) return;
 
   window.appState.books = window.appState.books.filter(b => b.id !== bookId);
   setStorage(STORAGE_KEYS.BOOKS, window.appState.books);
-  showToast('Buku Dihapus', 'Buku telah dihapus dari katalog.', 'info');
+  showToast('Bahan Dihapus', 'Bahan literasi telah dihapus dari katalog.', 'info');
   renderAdminBooksTable();
+
+  if (typeof window.renderBooks === 'function') {
+    window.renderBooks();
+  }
+
   const statBooks = document.getElementById('admin-stat-books');
   if (statBooks) statBooks.textContent = window.appState.books.length;
+
   if (typeof window.populateJournalBookSelect === 'function') {
     window.populateJournalBookSelect();
   }
@@ -7182,21 +9301,98 @@ window.closeBookModal = function() {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
   }
+  const idInput = document.getElementById('manage-book-id');
+  if (idInput) idInput.removeAttribute('data-editing');
   window.clearSelectedPdfFile();
+  window.clearSelectedImageFile();
 };
 
-window.renderAdminDashboard = function() {
-  const statBooks = document.getElementById('admin-stat-books');
-  const statUsers = document.getElementById('admin-stat-users');
-  const statJournals = document.getElementById('admin-stat-journals');
-  const statWorks = document.getElementById('admin-stat-works');
+// --- IN-APP VIDEO & IMAGE VIEWERS ---
+window._activeModalMedia = null;
 
-  if (statBooks) statBooks.textContent = (window.appState.books || []).length;
-  if (statUsers) statUsers.textContent = (window.appState.users || []).length;
-  if (statJournals) statJournals.textContent = (window.appState.journals || []).length;
-  if (statWorks) statWorks.textContent = (window.appState.works || []).length;
+window.openVideoPlayerModal = function(bookId) {
+  const b = (window.appState.books || []).find(x => x.id === bookId);
+  if (!b) return;
 
-  window.switchAdminTab(window.appState.adminTab || 'books');
+  window._activeModalMedia = b;
+
+  const modal = document.getElementById('modal-video-player');
+  const titleEl = document.getElementById('video-modal-title');
+  const authorEl = document.getElementById('video-modal-author');
+  const synopsisEl = document.getElementById('video-modal-synopsis');
+  const iframe = document.getElementById('video-modal-iframe');
+  const extLink = document.getElementById('video-modal-external-link');
+
+  if (titleEl) titleEl.textContent = b.title;
+  if (authorEl) authorEl.textContent = `Kreator / Pemateri: ${b.creator || b.author} • Durasi: ${b.duration || '15 Menit'}`;
+  if (synopsisEl) synopsisEl.textContent = b.synopsis || 'Tonton video pembelajaran literasi ini secara fokus.';
+
+  const embedUrl = getEmbedVideoUrl(b.videoUrl || b.link || '');
+  if (iframe) iframe.src = embedUrl;
+
+  if (extLink) {
+    extLink.href = b.videoUrl || b.link || '#';
+  }
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeVideoPlayerModal = function() {
+  const modal = document.getElementById('modal-video-player');
+  const iframe = document.getElementById('video-modal-iframe');
+  if (iframe) iframe.src = ''; // Stops audio immediately
+
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openImageViewerModal = function(bookId) {
+  const b = (window.appState.books || []).find(x => x.id === bookId);
+  if (!b) return;
+
+  window._activeModalMedia = b;
+
+  const modal = document.getElementById('modal-image-viewer');
+  const titleEl = document.getElementById('image-modal-title');
+  const authorEl = document.getElementById('image-modal-author');
+  const synopsisEl = document.getElementById('image-modal-synopsis');
+  const imgEl = document.getElementById('image-modal-img');
+  const extLink = document.getElementById('image-modal-external-link');
+
+  if (titleEl) titleEl.textContent = b.title;
+  if (authorEl) authorEl.textContent = `Sumber / Penyusun: ${b.author}`;
+  if (synopsisEl) synopsisEl.textContent = b.synopsis || 'Pelajari infografis visual ini untuk memperdalam pemahaman literasi.';
+
+  const imgSource = b.imageUrl || b.link || b.cover;
+  if (imgEl) imgEl.src = imgSource;
+  if (extLink) extLink.href = imgSource;
+
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+};
+
+window.closeImageViewerModal = function() {
+  const modal = document.getElementById('modal-image-viewer');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.openJournalForCurrentMedia = function() {
+  const media = window._activeModalMedia;
+  if (media) {
+    window.closeVideoPlayerModal();
+    window.closeImageViewerModal();
+    window.openJournalForBook(media.title, media.materialType);
+  }
 };
 
 window.openBookQrModal = function(bookId) {
