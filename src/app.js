@@ -281,18 +281,17 @@ const COVER_SOP = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/sv
 
 const DEFAULT_BOOKS = [
   {
-    id: 'BK-SOP',
+    id: 'BK-001',
     materialType: 'ebook',
-    title: 'Pelayanan Sekolah Aman dan Nyaman',
-    author: 'Tim Sarpras SMPN 2 Kasihan',
-    category: 'sarpras',
-    categoryLabel: 'SARPRAS & SOP',
-    pages: 2,
-    cover: COVER_SOP,
-    synopsis: 'Standar Operasional Prosedur (SOP) Pelayanan Sekolah Aman dan Nyaman SMP Negeri 2 Kasihan Bantul Tahun Ajaran 2026/2027.',
-    rating: 5.0,
-    pdfFileName: 'Pelayanan Sekolah Aman dan Nyaman.pdf',
-    pdfSourceType: 'default',
+    title: 'Laskar Pelangi',
+    author: 'Andrea Hirata',
+    category: 'fiksi',
+    categoryLabel: 'Fiksi Pendidikan',
+    pages: 534,
+    cover: COVER_LASKAR,
+    synopsis: 'Perjuangan sepuluh anak di Belitung dalam menuntut ilmu di tengah keterbatasan fasilitas sekolah.',
+    rating: 4.8,
+    pdfFileName: 'Laskar Pelangi.pdf',
     hasPdf: true
   },
   {
@@ -344,28 +343,14 @@ const DEFAULT_BOOKS = [
     materialType: 'gambar',
     title: 'Poster Anatomi Gerakan Literasi Sekolah 5M',
     author: 'Tim Literasi SMPN 2 Kasihan',
-    category: 'sarpras',
-    categoryLabel: 'Poster GLS',
+    category: 'nonfiksi',
+    categoryLabel: 'Panduan GLS 5M',
     imageUrl: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&auto=format&fit=crop&q=80',
     link: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&auto=format&fit=crop&q=80',
     cover: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=80',
     pages: 1,
     synopsis: 'Panduan visual 5M: Membaca cerdas, Memahami mendalam, Merangkum esensi, Menulis karya, dan Membagikan inspirasi.',
     rating: 5.0
-  },
-  {
-    id: 'BK-001',
-    materialType: 'ebook',
-    title: 'Laskar Pelangi',
-    author: 'Andrea Hirata',
-    category: 'fiksi',
-    categoryLabel: 'Fiksi Pendidikan',
-    pages: 534,
-    cover: COVER_LASKAR,
-    synopsis: 'Perjuangan sepuluh anak di Belitung dalam menuntut ilmu di tengah keterbatasan fasilitas sekolah.',
-    rating: 4.8,
-    pdfFileName: 'Laskar Pelangi.pdf',
-    hasPdf: true
   },
   {
     id: 'BK-002',
@@ -895,11 +880,18 @@ window.appState = {
   })(),
   books: (function() {
     let saved = getStorage(STORAGE_KEYS.BOOKS, null);
-    if (!saved || !Array.isArray(saved) || !saved.find(b => b.title === 'Laut Bercerita') || !saved.find(b => b.id === 'BK-SOP')) {
+    if (!saved || !Array.isArray(saved) || !saved.find(b => b.title === 'Laut Bercerita')) {
       saved = DEFAULT_BOOKS;
       setStorage(STORAGE_KEYS.BOOKS, saved);
     } else {
       let modified = false;
+      // Filter out any leftover SOP sarpras materials
+      const beforeLen = saved.length;
+      saved = saved.filter(b => b.id !== 'BK-SOP' && b.category !== 'sarpras');
+      if (saved.length !== beforeLen) {
+        modified = true;
+      }
+
       saved = saved.map(b => {
         if (!b.materialType) {
           b.materialType = b.videoUrl ? 'video' : (b.imageUrl ? 'gambar' : 'ebook');
@@ -945,7 +937,14 @@ window.appState = {
     }
     return saved;
   })(),
-  activeBook: getStorage(STORAGE_KEYS.ACTIVE_BOOK, DEFAULT_BOOKS[0]),
+  activeBook: (function() {
+    let saved = getStorage(STORAGE_KEYS.ACTIVE_BOOK, null);
+    if (!saved || saved.id === 'BK-SOP' || saved.category === 'sarpras') {
+      saved = DEFAULT_BOOKS[0];
+      setStorage(STORAGE_KEYS.ACTIVE_BOOK, saved);
+    }
+    return saved;
+  })(),
   quizQuestions: getStorage(STORAGE_KEYS.QUIZ_QUESTIONS, QUIZ_QUESTIONS),
   settings: getStorage(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS),
   currentView: 'login',
@@ -964,9 +963,9 @@ window.appState = {
     workSearch: ''
   },
   pdfReader: {
-    activeBookId: 'BK-SOP',
+    activeBookId: 'BK-001',
     currentPage: 1,
-    totalPages: 2,
+    totalPages: 4,
     zoom: 100,
     rotation: 0,
     annotated: false,
@@ -1144,6 +1143,24 @@ function updateBerandaStats() {
   const user = window.appState.currentUser;
   if (!user) return;
 
+  const siswaSurface = document.getElementById('dashboard-siswa-surface');
+  const kepsekSurface = document.getElementById('dashboard-kepsek-admin-surface');
+
+  if (user.role === 'kepsek' || user.role === 'admin') {
+    if (siswaSurface) siswaSurface.classList.add('hidden');
+    if (kepsekSurface) kepsekSurface.classList.remove('hidden');
+    if (typeof window.updateKepsekDashboardStats === 'function') {
+      window.updateKepsekDashboardStats();
+    }
+    if (typeof window.switchKepsekTab === 'function') {
+      window.switchKepsekTab(window._kepsekActiveTab || 'ringkasan');
+    }
+    return;
+  } else {
+    if (siswaSurface) siswaSurface.classList.remove('hidden');
+    if (kepsekSurface) kepsekSurface.classList.add('hidden');
+  }
+
   const homeUserName = document.getElementById('home-user-name');
   if (homeUserName) homeUserName.textContent = user.name;
 
@@ -1252,6 +1269,17 @@ window.switchPhoneTab = function(tabName) {
   if (typeof window.updateStudentBottomNav === 'function') {
     window.updateStudentBottomNav(tabName);
   }
+
+  // Trigger catalog or active reading material sync
+  if (tabName === 'buku') {
+    if (typeof window.renderPhoneBooksCatalog === 'function') {
+      window.renderPhoneBooksCatalog();
+    }
+  } else if (tabName === 'beranda') {
+    if (typeof window.syncStudentActiveBook === 'function') {
+      window.syncStudentActiveBook();
+    }
+  }
 };
 
 // ==========================================
@@ -1298,12 +1326,27 @@ window.updateStudentBottomNav = function(activeKey) {
     }
   }
 
+  const curUser = window.appState?.currentUser;
+  const isExec = curUser && (curUser.role === 'kepsek' || curUser.role === 'admin');
+
   const items = ['beranda', 'buku', 'tantangan', 'notifikasi', 'profil'];
   items.forEach(item => {
     const btn = document.getElementById(`sbn-btn-${item}`);
     if (!btn) return;
     const icon = btn.querySelector('i');
     const span = btn.querySelector('span:not(#sbn-notif-dot)');
+
+    if (isExec) {
+      if (item === 'buku' && span) span.textContent = 'Supervisi';
+      if (item === 'tantangan' && span) span.textContent = 'Karya';
+      if (item === 'notifikasi' && span) span.textContent = 'Laporan';
+      if (item === 'profil' && span) span.textContent = curUser.role === 'admin' ? 'Admin' : 'Statistik';
+    } else {
+      if (item === 'buku' && span) span.textContent = 'Buku';
+      if (item === 'tantangan' && span) span.textContent = 'Tantangan';
+      if (item === 'notifikasi' && span) span.textContent = 'Notifikasi';
+      if (item === 'profil' && span) span.textContent = 'Profil';
+    }
 
     if (item === activeTab) {
       btn.classList.add('text-[#00695c]');
@@ -1332,6 +1375,32 @@ window.updateStudentBottomNav = function(activeKey) {
 };
 
 window.handleStudentBottomNav = function(target) {
+  const curUser = window.appState?.currentUser;
+  if (curUser && (curUser.role === 'kepsek' || curUser.role === 'admin')) {
+    if (target === 'beranda') {
+      navigateTo('beranda');
+      if (typeof window.switchKepsekTab === 'function') window.switchKepsekTab('ringkasan');
+    } else if (target === 'buku') {
+      navigateTo('beranda');
+      if (typeof window.switchKepsekTab === 'function') window.switchKepsekTab('supervisi');
+    } else if (target === 'tantangan') {
+      navigateTo('beranda');
+      if (typeof window.switchKepsekTab === 'function') window.switchKepsekTab('karya');
+    } else if (target === 'notifikasi') {
+      navigateTo('beranda');
+      if (typeof window.switchKepsekTab === 'function') window.switchKepsekTab('laporan');
+    } else if (target === 'profil') {
+      if (curUser.role === 'admin') {
+        navigateTo('admin');
+      } else {
+        navigateTo('beranda');
+        if (typeof window.switchKepsekTab === 'function') window.switchKepsekTab('statistik');
+      }
+    }
+    window.updateStudentBottomNav(target);
+    return;
+  }
+
   if (target === 'beranda') {
     navigateTo('beranda');
     if (typeof window.switchPhoneTab === 'function') {
@@ -1371,6 +1440,12 @@ export function navigateTo(targetView) {
     targetView = 'portofolio';
   }
 
+  const curUser = window.appState?.currentUser;
+  if (targetView === 'sekolah' && curUser && (curUser.role === 'kepsek' || curUser.role === 'admin')) {
+    targetView = 'beranda';
+    window._kepsekActiveTab = 'supervisi';
+  }
+
   // Guard: If not logged in and target is not login, force login
   if (!window.appState.currentUser && targetView !== 'login') {
     targetView = 'login';
@@ -1407,15 +1482,10 @@ export function navigateTo(targetView) {
       // Fullscreen edge-to-edge layout for login on any device
       mainContent.className = 'w-full min-h-screen p-0 m-0';
     }
-  } else if (targetView === 'm1' || targetView === 'm4' || targetView === 'm5' || targetView === 'portofolio') {
-    // Full screen responsive layout for M1 Membaca, M4 Menceritakan, M5 Mengapresiasi & Portofolio on smartphone and laptop
-    if (window.innerWidth < 768) {
-      if (mainHeader) mainHeader.classList.add('hidden');
-      if (mobileNav) mobileNav.classList.add('hidden');
-    } else {
-      if (mainHeader) mainHeader.classList.remove('hidden');
-      if (mobileNav) mobileNav.classList.add('hidden');
-    }
+  } else if (targetView === 'm1' || targetView === 'm2' || targetView === 'm3' || targetView === 'm4' || targetView === 'm5' || targetView === 'portofolio') {
+    // Full screen responsive layout for M1-M5 & Portofolio positioned right at top, flush with header bar
+    if (mainHeader) mainHeader.classList.remove('hidden');
+    if (mobileNav) mobileNav.classList.add('hidden');
     if (mainContent) {
       mainContent.className = 'w-full min-h-screen p-0 m-0 pb-20';
     }
@@ -1425,16 +1495,7 @@ export function navigateTo(targetView) {
     const isSiswaBeranda = window.appState.currentUser?.role === 'siswa' && targetView === 'beranda';
     if (mainHeader) mainHeader.classList.remove('hidden');
     if (mainContent) {
-      if (isMView) {
-        // Halaman M2-M5: Tampilan responsif layar penuh laptop dan smartphone
-        if (targetView === 'm2' || targetView === 'm3') {
-          mainContent.className = 'flex-1 w-full p-0 sm:p-2 lg:p-6 xl:p-8 pb-24 md:pb-8';
-        } else {
-          mainContent.className = 'flex-1 w-full pt-2.5 px-3 sm:px-5 lg:px-8 xl:px-10 pb-24 md:pb-8';
-        }
-      } else {
-        mainContent.className = 'flex-1 w-full p-3 sm:p-5 lg:p-8 xl:p-10 pb-24 md:pb-8';
-      }
+      mainContent.className = 'flex-1 w-full p-3 sm:p-5 lg:p-8 xl:p-10 pb-24 md:pb-8';
     }
     if (mobileNav) {
       if (isSiswaBeranda) {
@@ -1525,6 +1586,12 @@ function onViewActivated(view) {
   switch (view) {
     case 'beranda':
       updateBerandaStats();
+      if (typeof window.syncStudentActiveBook === 'function') {
+        window.syncStudentActiveBook();
+      }
+      if (typeof window.renderPhoneBooksCatalog === 'function') {
+        window.renderPhoneBooksCatalog();
+      }
       break;
     case 'm1':
       if (typeof window.populateJournalBookSelect === 'function') {
@@ -1942,9 +2009,96 @@ window.openJournalForBook = function(bookTitle, mediaType = 'ebook') {
   showToast('Siap Menulis Jurnal', `Bahan ${label} "${bookTitle}" dipilih untuk jurnal refleksi literasi.`, 'info');
 };
 
+window.syncStudentActiveBook = function() {
+  const b = window.appState.activeBook || window.appState.books.find(x => x.id === 'BK-001') || window.appState.books[0];
+  if (!b) return;
+
+  const card = document.getElementById('student-current-read-card');
+  const coverImg = document.getElementById('student-active-cover-img');
+  const titleEl = document.getElementById('student-active-title');
+  const authorEl = document.getElementById('student-active-author');
+  const badgeEl = document.getElementById('student-active-type-badge');
+  const ratingEl = document.getElementById('student-active-rating');
+  const progressBar = document.getElementById('student-active-progress-bar');
+  const progressText = document.getElementById('student-active-progress-text');
+  const readBtn = document.getElementById('student-active-read-btn');
+
+  if (titleEl) titleEl.textContent = b.title;
+  if (authorEl) authorEl.textContent = `${b.author || b.creator || 'SMPN 2 Kasihan'} • ${b.categoryLabel || b.category}`;
+  if (ratingEl) ratingEl.innerHTML = `<i class="fa-solid fa-star text-[9px]"></i> ${b.rating || 4.8}`;
+
+  if (coverImg && (b.cover || b.imageUrl)) {
+    coverImg.src = b.cover || b.imageUrl;
+    coverImg.alt = b.title;
+  }
+
+  // Type badge & Action button styling
+  if (b.materialType === 'video') {
+    if (badgeEl) {
+      badgeEl.className = 'px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1';
+      badgeEl.innerHTML = '<i class="fa-solid fa-play text-[8px]"></i> Video Literasi';
+    }
+    if (readBtn) {
+      readBtn.className = 'bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold py-1.5 px-3 rounded-lg shadow-2xs transition active:scale-95 flex items-center gap-1.5';
+      readBtn.innerHTML = '<i class="fa-solid fa-play text-[9px]"></i> Lanjutkan Tonton';
+    }
+    const dur = b.duration || '15 Menit';
+    if (progressText) progressText.textContent = `Durasi ${dur} (Sedang Dipelajari)`;
+    if (progressBar) progressBar.style.width = '65%';
+  } else if (b.materialType === 'gambar') {
+    if (badgeEl) {
+      badgeEl.className = 'px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1';
+      badgeEl.innerHTML = '<i class="fa-solid fa-image text-[8px]"></i> Infografis Edukatif';
+    }
+    if (readBtn) {
+      readBtn.className = 'bg-[#00695c] hover:bg-[#004d40] text-white text-[11px] font-bold py-1.5 px-3 rounded-lg shadow-2xs transition active:scale-95 flex items-center gap-1.5';
+      readBtn.innerHTML = '<i class="fa-solid fa-image text-[9px]"></i> Lanjutkan Baca';
+    }
+    if (progressText) progressText.textContent = 'Materi Visual Infografis (100%)';
+    if (progressBar) progressBar.style.width = '100%';
+  } else {
+    // E-Book PDF
+    if (badgeEl) {
+      badgeEl.className = 'px-2 py-0.5 rounded-md text-[9px] font-black uppercase bg-sky-50 text-sky-700 border border-sky-200 flex items-center gap-1';
+      badgeEl.innerHTML = '<i class="fa-solid fa-file-pdf text-red-500"></i> E-Book PDF';
+    }
+    if (readBtn) {
+      readBtn.className = 'bg-[#0284c7] hover:bg-[#0369a1] text-white text-[11px] font-bold py-1.5 px-3 rounded-lg shadow-2xs transition active:scale-95 flex items-center gap-1.5';
+      readBtn.innerHTML = '<i class="fa-solid fa-book-open"></i> Lanjutkan Baca';
+    }
+    const curPage = b.currentPage || (b.id === 'BK-001' ? 120 : 1);
+    const totPages = b.pages || 100;
+    const pct = Math.min(100, Math.round((curPage / totPages) * 100));
+    if (progressText) progressText.textContent = `Halaman ${curPage} / ${totPages} (${pct}%)`;
+    if (progressBar) progressBar.style.width = `${pct}%`;
+  }
+
+  // Also sync laptop headers
+  if (typeof window.syncM1LaptopActiveBook === 'function') {
+    window.syncM1LaptopActiveBook();
+  }
+};
+
+window.openActiveReadingMaterial = function() {
+  const b = window.appState.activeBook || window.appState.books.find(x => x.id === 'BK-001') || window.appState.books[0];
+  if (!b) return;
+
+  if (b.materialType === 'video') {
+    window.openVideoPlayerModal(b.id);
+  } else if (b.materialType === 'gambar') {
+    window.openImageViewerModal(b.id);
+  } else {
+    window.openBookPdfReader(b.id);
+  }
+};
+
 window.selectActiveBook = function(bookId) {
   const b = window.appState.books.find(x => x.id === bookId);
   if (!b) return;
+
+  window.appState.activeBook = b;
+  setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
+  window.syncStudentActiveBook();
 
   if (b.materialType === 'video') {
     window.openVideoPlayerModal(bookId);
@@ -1955,9 +2109,6 @@ window.selectActiveBook = function(bookId) {
     window.openImageViewerModal(bookId);
     return;
   }
-
-  window.appState.activeBook = b;
-  setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
 
   const homeCover = document.getElementById('active-book-cover');
   const homeTitle = document.getElementById('active-book-title');
@@ -1975,15 +2126,9 @@ window.selectActiveBook = function(bookId) {
     window.syncM1LaptopActiveBook();
   }
 
-  if (window.appState.currentView !== 'm1') {
-    navigateTo('m1');
-  }
-
   if (typeof window.openBookPdfReader === 'function') {
     window.openBookPdfReader(b.id);
   }
-
-  showToast('Membuka E-Book PDF', `Membuka "${b.title}" di penampil dokumen PDF aplikasi.`, 'info');
 };
 
 window.syncM1LaptopActiveBook = function() {
@@ -2001,15 +2146,69 @@ window.syncM1LaptopActiveBook = function() {
 // 8B. IN-APP PDF READER CONTROLLER
 // ==========================================
 
+window.closeBookPdfReader = function() {
+  const modal = document.getElementById('modal-pdf-reader');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+};
+
+window.savePdfReadingProgressAndClose = function() {
+  const readerState = window.appState?.pdfReader;
+  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-001')) || window.appState.activeBook;
+  if (b) {
+    b.currentPage = Math.min(b.pages || 534, (b.currentPage || 1) + 15);
+    window.appState.activeBook = b;
+    setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
+  }
+  if (typeof addPoints === 'function') {
+    addPoints(15, 'Membaca E-Book PDF Literasi');
+  }
+  window.syncStudentActiveBook();
+  window.closeBookPdfReader();
+  showToast('Progres Tersimpan (+15 Poin)', `Selamat! Anda telah memperbarui progres membaca "${b?.title || 'E-Book'}".`, 'success');
+};
+
+window.openJournalFromPdfReader = function() {
+  const readerState = window.appState?.pdfReader;
+  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-001')) || window.appState.activeBook;
+  window.closeBookPdfReader();
+  if (b) {
+    window.openJournalForBook(b.title, b.materialType || 'ebook');
+  }
+};
+
+window.openM2FromPdfReader = function() {
+  const readerState = window.appState?.pdfReader;
+  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-001')) || window.appState.activeBook;
+  window.closeBookPdfReader();
+  navigateTo('m2');
+  if (b && window.appState.m2Data) {
+    window.appState.m2Data.bookId = b.id;
+    window.appState.m2Data.bookTitle = b.title;
+    window.appState.m2Data.author = b.author;
+    if (typeof window.updateM2Display === 'function') {
+      window.updateM2Display();
+    }
+  }
+  showToast('Siap Menemukan Intisari', `Menjelajah kosakata & ide pokok dari "${b?.title}".`, 'info');
+};
+
 window.openBookPdfReader = function(bookId) {
   const b = window.appState.books.find(x => x.id === bookId) || window.appState.books[0];
   if (!b) return;
+
+  // Set active book
+  window.appState.activeBook = b;
+  setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
+  window.syncStudentActiveBook();
 
   if (!window.appState.pdfReader) {
     window.appState.pdfReader = {
       activeBookId: b.id,
       currentPage: 1,
-      totalPages: 2,
+      totalPages: 4,
       zoom: 100,
       rotation: 0,
       annotated: false,
@@ -2022,13 +2221,19 @@ window.openBookPdfReader = function(bookId) {
   const readerState = window.appState.pdfReader;
   readerState.activeBookId = b.id;
   readerState.currentPage = 1;
-  readerState.totalPages = (b.id === 'BK-SOP' || b.pages === 2) ? 2 : Math.min(b.pages || 2, 4);
+  readerState.totalPages = (b.id === 'BK-SOP' || b.pages === 2) ? 2 : Math.min(b.pages || 4, 4);
   readerState.zoom = 100;
   readerState.rotation = 0;
   readerState.annotated = false;
   readerState.collapsed = false;
 
-  // Update UI Elements
+  // Show Modal
+  const modal = document.getElementById('modal-pdf-reader');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
   const container = document.getElementById('m1-pdf-reader-container');
   const mainCard = document.getElementById('pdf-reader-main-card');
   const titleEl = document.getElementById('pdf-reader-book-title');
@@ -2046,12 +2251,8 @@ window.openBookPdfReader = function(bookId) {
 
   if (titleEl) titleEl.textContent = b.title;
   if (categoryEl) {
-    categoryEl.textContent = b.categoryLabel || b.category.toUpperCase();
-    if (b.category === 'sarpras') {
-      categoryEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-sky-100 text-sky-800 tracking-wider';
-    } else {
-      categoryEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-indigo-100 text-indigo-800 tracking-wider';
-    }
+    categoryEl.textContent = b.categoryLabel || (b.category ? b.category.toUpperCase() : 'E-BOOK PDF');
+    categoryEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-indigo-100 text-indigo-800 tracking-wider';
   }
   if (subtitleEl) subtitleEl.textContent = `${b.title} • ${b.author || 'SMP Negeri 2 Kasihan'}`;
   if (filenameEl) filenameEl.textContent = b.pdfFileName || `${b.title}.pdf`;
@@ -2066,14 +2267,12 @@ window.openBookPdfReader = function(bookId) {
   window.renderPdfThumbnails();
   window.renderPdfDocument();
 
-  if (!container) {
-    if (b.pdfUrl && (b.pdfSourceType === 'upload' || b.pdfSourceType === 'link')) {
-      window.open(b.pdfUrl, '_blank');
-      showToast('Membaca PDF', `Membuka "${b.title}.pdf" pada peramban.`, 'info');
-    } else {
-      showToast('Buku Dipilih', `Sedang membaca "${b.title}". Buka Timer untuk fokus membaca atau Jurnal untuk mencatat progres.`, 'info');
-    }
+  // Re-render phone books catalog to reflect active status
+  if (typeof window.renderPhoneBooksCatalog === 'function') {
+    window.renderPhoneBooksCatalog();
   }
+
+  showToast('Membuka E-Book PDF', `Dokumen "${b.title}" dibuka di penampil PDF aplikasi.`, 'info');
 };
 
 window.renderPdfThumbnails = function() {
@@ -2337,43 +2536,331 @@ window.renderPdfDocument = function() {
     return;
   }
 
-  // Generic book document for literature books
+  // Specially tailored content for famous books
+  let chapterTitle = `Bab ${page}: Eksplorasi Pengetahuan`;
+  let chapterBody = '';
+  let chapterQuote = '"Buku adalah lentera yang tak pernah padam. Siapa yang membacanya dengan sungguh-sungguh, akan menemukan jalan terang menuju masa depan."';
+
+  if (b.id === 'BK-001') {
+    // Laskar Pelangi by Andrea Hirata
+    const lpData = [
+      {
+        title: 'Bab 1: Sepuluh Murid Baru di Belitong',
+        quote: '"Hiduplah untuk memberi sebanyak-banyaknya, bukan untuk menerima sebanyak-banyaknya."',
+        text: `Pagi itu, waktu aku masih kecil, aku duduk di bangku panjang di depan sebuah kelas. Sebatang pohon filicium tua yang rindang meneduhiku dari sengatan matahari pagi Pulau Belitong. Ayahku duduk di sampingku, memeluk pundakku dengan jemari tangannya yang kasar karena bertahun-tahun bekerja di tambang timah. Suasana begitu tegang menunggu seorang murid lagi agar sekolah SD Muhammadiyah Gantong yang reyot ini tidak ditutup oleh pengawas sekolah. Tepat ketika harapan hampir sirna, Harun dan ibunya melangkah tergesa menyeberangi lapangan rumput, menyelamatkan impian kami semua.`
+      },
+      {
+        title: 'Bab 2: Perjuangan Lintang Menembus Rawa',
+        quote: '"Jangan pernah menyerah pada jarak, karena ilmu tidak pernah meminta upeti selain keteguhan hati."',
+        text: `Lintang adalah anak seorang nelayan miskin yang mengayuh sepeda bututnya sejauh empat puluh kilometer setiap hari pulang-pergi melintasi rawa buaya demi bisa sampai di kelas Bu Mus. Rantainya putus berkali-kali, ban sepedanya tanpa angin diganjal sabut kelapa, namun matanya selalu berbinar tajam ketika melihat papan tulis. Di dalam otaknya yang cemerlang, angka-angka matematika dan rumus fisika bukan beban hafalan, melainkan simfoni keajaiban semesta yang sangat mempesona.`
+      },
+      {
+        title: 'Bab 3: Mahar dan Seni Kehidupan',
+        quote: '"Imajinasi adalah sayap yang menerbangkan manusia melintasi keterbatasan duniawi."',
+        text: `Mahar duduk di sudut kelas dengan radio transistor tuanya yang selalu menyiarkan sandiwara dan musik tradisional Melayu. Dengan modal kaleng bekas, daun kelapa kering, dan buah belimbing wuluh, ia menyulap karnaval tujuh belas Agustus menjadi panggung magis tari suku Afrika yang memukau seluruh kota. Keterbatasan sarana tak pernah membatasi keluasan imajinasinya.`
+      },
+      {
+        title: 'Bab 4: Kemenangan Lomba Cerdas Cermat',
+        quote: '"Kemenangan sejati bukan saat mengalahkan orang lain, melainkan saat melampaui rasa takut diri sendiri."',
+        text: `Ketika kami berdiri di aula gedung pertemuan menghadapi tim unggulan dari sekolah PN Timah yang megah, lututku gemetar. Namun Lintang berdiri tegak. Ketika soal tantangan deret hitung dan fisika tingkat tinggi dibacakan juri, jemari Lintang bergerak cepat menuliskan jawaban dengan pensil pendeknya. Jawaban itu tepat dan akurat, membuat dewan juri terpana dan seluruh hadirin berdiri memberikan tepuk tangan meriah untuk anak-anak laskar pelangi.`
+      }
+    ];
+    const item = lpData[page - 1] || lpData[0];
+    chapterTitle = item.title;
+    chapterQuote = item.quote;
+    chapterBody = item.text;
+  } else if (b.id === 'BK-006' || b.category === 'jogja' || b.category === 'kearifan_lokal') {
+    // Babad Tanah Jawi
+    const btjData = [
+      {
+        title: 'Bab 1: Asal Usul Tanah Mataram & Alas Mentaok',
+        quote: '"Sapa tekun golek ilmu, bakal nemu kamulyan kang sejati."',
+        text: `Kisah babad ini mengisahkan awal mula pembukaan hutan Mentaok oleh Ki Ageng Pamanahan dan putranya, Danang Sutawijaya (Panembahan Senopati). Di bawah rimbunnya pepohonan purba Yogyakarta, para sesepuh menanamkan nilai luhur kerja keras, keteguhan batin, dan keharmonisan hidup bersama alam semesta yang menjadi landasan berdirinya peradaban Mataram Islam yang agung.`
+      },
+      {
+        title: 'Bab 2: Kebijaksanaan Sultan Agung Hanyakrakusuma',
+        quote: '"Penyatuan budi pekerti dan ilmu pengetahuan melahirkan peradaban yang bermartabat."',
+        text: `Sultan Agung dikenal sebagai penguasa yang visioner, mengintegrasikan sistem penanggalan Saka dengan Hijriah serta memperkaya khazanah kesusastraan dan filsafat Jawa. Beliau menekankan bahwa kepemimpinan sejati berakar pada keadilan dan pengayoman kepada rakyat jelata (kawula alit).`
+      },
+      {
+        title: 'Bab 3: Filosofi Hamemayu Hayuning Bawana',
+        quote: '"Menjaga kelestarian semesta adalah bakti tertinggi manusia kepada Sang Pencipta."',
+        text: `Ajaran adiluhung Yogyakarta Hamemayu Hayuning Bawana mengajak setiap generasi untuk memelihara kedamaian, keseimbangan sosial, dan kelestarian ekologi. Nilai inilah yang diterapkan di lingkungan SMP Negeri 2 Kasihan melalui budaya ramah lingkungan, sopan santun 5S, dan saling menghormati antarsesama warga sekolah.`
+      },
+      {
+        title: 'Bab 4: Sentra Kriya Gerabah Kasongan Kasihan Bantul',
+        quote: '"Dari tanah liat sederhana di tangan perajin tekun, lahirlah mahakarya yang mendunia."',
+        text: `Di kawasan Bangunjiwo dan Kasongan Kasihan Bantul, tanah lempung diolah menjadi karya seni kriya gerabah yang sarat makna filosofis. Patung Loro Blonyo melambangkan keharmonisan keluarga, sementara kendi dan tempayan mencerminkan kemurnian air kehidupan yang menyegarkan dahaga pengetahuan.`
+      }
+    ];
+    const item = btjData[page - 1] || btjData[0];
+    chapterTitle = item.title;
+    chapterQuote = item.quote;
+    chapterBody = item.text;
+  } else if (b.id === 'BK-007') {
+    // Negeri 5 Menara by A. Fuadi
+    const n5mData = [
+      {
+        title: 'Bab 1: Mantra Man Jadda Wajada di Bawah Menara',
+        quote: '"Man jadda wajada — Siapa yang bersungguh-sungguh, dia akan berhasil."',
+        text: `Di bawah bayang-bayang menara masjid Pondok Madani, Ustaz Salman mengacungkan sebilah parang tumpul ke hadapan kami. Beliau menebaskan parang itu berkali-kali ke sebatang kayu keras hingga akhirnya kayu itu terbelah dua. 'Bukan karena parangnya tajam,' serunya lantang, 'melainkan karena kesungguhan yang tak pernah berhenti!' Kalimat itu menghunjam dalam ke dalam dadaku.`
+      },
+      {
+        title: 'Bab 2: Enam Sahabat & Peta Impian Dunia',
+        quote: '"Gantungkan cita-citamu setinggi langit, dan biarkan doa merajut sayapnya."',
+        text: `Setiap sore menjelang magrib, kami berenam berkumpul di dekat menara sambil memandang gumpalan awan di langit senja. Alif melihat awan berbentuk benua Amerika, Atang melihat London, Dulmajid melihat tanah Arab, dan Baso melihat Kairo. Keterbatasan kami hari ini bukan alasan untuk tidak bermimpi menaklukkan dunia dengan bekal ilmu dan integritas.`
+      }
+    ];
+    const item = n5mData[page - 1] || n5mData[0];
+    chapterTitle = item.title;
+    chapterQuote = item.quote;
+    chapterBody = item.text;
+  } else {
+    chapterBody = `${b.synopsis || 'Buku pilihan literasi SMP Negeri 2 Kasihan.'} Melalui pembacaan yang tekun, kita diajak merenungkan betapa pentingnya mencatat intisari bacaan ke dalam jurnal harian pada alur 5M. Dari membaca, kita menemukan kosakata baru, menuliskan ulasan bermakna, serta menginspirasi sesama kawan di sekolah.`;
+  }
+
   viewport.innerHTML = `
     <div class="w-full max-w-3xl bg-white text-slate-900 rounded-sm shadow-2xl p-6 sm:p-10 border border-slate-300 font-serif transition-all duration-200 select-text" style="transform: scale(${zoom}) rotate(${rotation}deg); transform-origin: top center; min-height: 840px;">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200 text-xs font-sans text-slate-500 mb-6">
         <span class="font-bold text-slate-800 uppercase tracking-wider">${b.title}</span>
-        <span>${b.author} • Hal. ${page} / ${readerState.totalPages}</span>
+        <span>${b.author} • Halaman ${page} / ${readerState.totalPages}</span>
       </div>
 
       <div class="text-center my-6">
-        <span class="text-xs font-sans font-bold uppercase tracking-widest text-sky-600 block mb-1">Bab ${page}</span>
+        <span class="text-xs font-sans font-bold uppercase tracking-widest text-sky-600 block mb-1">BAGIAN BACAAN #${page}</span>
         <h2 class="text-xl font-black text-slate-900 font-sans">
-          ${page === 1 ? 'Awal Perjalanan Menemukan Cahaya' : 'Langkah Kecil Menggapai Cita-Cita'}
+          ${chapterTitle}
         </h2>
         <div class="w-12 h-1 bg-sky-600 mx-auto mt-2"></div>
       </div>
 
       <div class="space-y-4 text-xs sm:text-sm text-slate-800 leading-relaxed text-justify">
         <p class="first-letter:text-3xl first-letter:font-bold first-letter:font-sans first-letter:float-left first-letter:mr-2 first-letter:text-[#082e54] ${isAnnotated ? 'bg-amber-100/90 p-1.5 rounded' : ''}">
-          ${b.synopsis} Cerita ini membimbing kita untuk memahami betapa tingginya nilai sebuah ketekunan dan kesetiaan pada ilmu pengetahuan. Setiap langkah perjuangan tokoh utama merefleksikan nilai luhur yang pantas diteladani oleh generasi muda.
+          ${chapterBody}
         </p>
-        <p>
-          Di tengah keterbatasan sarana, ada semangat yang tak pernah padam. Suara lonceng sekolah berdentang di kejauhan, mengabarkan bahwa pagi telah tiba membawa harapan baru untuk belajar, bertumbuh, dan mengukir prestasi.
-        </p>
-        <div class="p-3 bg-slate-50 rounded-xl border-l-4 border-sky-600 my-4 font-sans italic text-xs text-slate-700">
-          "Buku adalah lentera yang tak pernah padam di tengah pekatnya kebodohan. Siapa yang membacanya dengan sungguh-sungguh, akan menemukan jalan terang menuju masa depan."
+        <div class="p-3.5 bg-slate-50 rounded-xl border-l-4 border-sky-600 my-4 font-sans italic text-xs text-slate-700 leading-normal">
+          ${chapterQuote}
         </div>
         <p>
-          Melalui pembacaan yang cermat, kita diajak merenungkan betapa pentingnya mencatat intisari bacaan ke dalam jurnal harian pada alur 5M. Dari membaca, kita menemukan kosakata baru, menuliskan ulasan bermakna, serta menginspirasi sesama kawan di sekolah.
+          Setelah membaca halaman ini, manfaatkan tombol di bawah untuk <strong>Simpan Progres Baca</strong> guna menambah poin literasimu, atau klik <strong>Tulis Jurnal (M1)</strong> untuk mencatat refleksi dan kesan pribadimu terhadap bacaan ini.
         </p>
       </div>
 
-      <div class="mt-10 pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-sans text-slate-400">
-        <span>e-Perpustakaan SMP Negeri 2 Kasihan</span>
-        <span>Halaman ${page}</span>
+      <div class="mt-12 pt-3 border-t border-slate-200 flex items-center justify-between text-xs font-sans text-slate-400">
+        <span>e-Perpustakaan Digital SMP Negeri 2 Kasihan Bantul</span>
+        <span>Halaman ${page} dari ${readerState.totalPages}</span>
       </div>
     </div>
   `;
+};
+
+// ==========================================
+// 8C. STUDENT PHONE CATALOG CONTROLLERS
+// (Katalog Bahan Literasi Digital & e-Perpus)
+// ==========================================
+
+window._currentPhoneCatalogFilter = 'semua';
+window._currentPhoneCatalogSearch = '';
+
+window.filterPhoneBooks = function(cat, btnEl) {
+  window._currentPhoneCatalogFilter = cat;
+  const buttons = document.querySelectorAll('#phone-catalog-filter-pills .phone-filter-btn');
+  buttons.forEach(btn => {
+    btn.className = 'phone-filter-btn px-2.5 py-1 rounded-lg text-[11px] font-bold whitespace-nowrap bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 transition shrink-0 flex items-center gap-1';
+  });
+  if (btnEl) {
+    btnEl.className = 'phone-filter-btn px-2.5 py-1 rounded-lg text-[11px] font-extrabold whitespace-nowrap bg-[#082e54] text-white shadow-2xs transition shrink-0 flex items-center gap-1';
+  }
+  window.renderPhoneBooksCatalog();
+};
+
+window.handlePhoneBookSearch = function(query) {
+  window._currentPhoneCatalogSearch = (query || '').trim().toLowerCase();
+  const clearBtn = document.getElementById('btn-clear-phone-search');
+  if (clearBtn) {
+    if (window._currentPhoneCatalogSearch.length > 0) {
+      clearBtn.classList.remove('hidden');
+    } else {
+      clearBtn.classList.add('hidden');
+    }
+  }
+  window.renderPhoneBooksCatalog();
+};
+
+window.clearPhoneBookSearch = function() {
+  window._currentPhoneCatalogSearch = '';
+  const searchInput = document.getElementById('phone-book-search');
+  if (searchInput) searchInput.value = '';
+  const clearBtn = document.getElementById('btn-clear-phone-search');
+  if (clearBtn) clearBtn.classList.add('hidden');
+  window.renderPhoneBooksCatalog();
+};
+
+window.renderPhoneBooksCatalog = function() {
+  const container = document.getElementById('phone-books-grid');
+  const emptyState = document.getElementById('phone-books-empty');
+  if (!container) return;
+
+  const books = window.appState?.books || [];
+  const activeBookId = window.appState?.activeBook?.id || 'BK-001';
+  const filter = window._currentPhoneCatalogFilter || 'semua';
+  const search = window._currentPhoneCatalogSearch || '';
+
+  const filtered = books.filter(b => {
+    let matchesCategory = true;
+    if (filter === 'ebook') {
+      matchesCategory = (!b.materialType || b.materialType === 'ebook');
+    } else if (filter === 'video') {
+      matchesCategory = (b.materialType === 'video');
+    } else if (filter === 'gambar') {
+      matchesCategory = (b.materialType === 'gambar');
+    } else if (filter !== 'semua') {
+      matchesCategory = (b.category === filter || (filter === 'jogja' && (b.category === 'kearifan_lokal' || b.category === 'jogja')));
+    }
+
+    if (!matchesCategory) return false;
+
+    if (search) {
+      const titleMatch = (b.title || '').toLowerCase().includes(search);
+      const authorMatch = (b.author || b.creator || '').toLowerCase().includes(search);
+      const categoryMatch = (b.categoryLabel || b.category || '').toLowerCase().includes(search);
+      const synopsisMatch = (b.synopsis || '').toLowerCase().includes(search);
+      return titleMatch || authorMatch || categoryMatch || synopsisMatch;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    if (emptyState) emptyState.classList.remove('hidden');
+    return;
+  }
+
+  if (emptyState) emptyState.classList.add('hidden');
+
+  container.innerHTML = filtered.map(b => {
+    const isEbook = !b.materialType || b.materialType === 'ebook';
+    const isVideo = b.materialType === 'video';
+    const isGambar = b.materialType === 'gambar';
+    const isActive = (b.id === activeBookId);
+
+    let badgeHtml = '';
+    let readBtnHtml = '';
+    let metaInfo = '';
+
+    if (isEbook) {
+      badgeHtml = `<span class="px-1.5 py-0.5 rounded-sm bg-sky-100 text-sky-800 text-[9px] font-black uppercase flex items-center gap-1"><i class="fa-solid fa-file-pdf text-red-500"></i> PDF</span>`;
+      metaInfo = `${b.pages || 100} Hal`;
+      if (isActive) {
+        readBtnHtml = `
+          <button type="button" onclick="openBookPdfReader('${b.id}')" class="flex-1 py-1.5 px-3 bg-[#0284c7] hover:bg-[#0369a1] text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 shadow-2xs active:scale-95">
+            <i class="fa-solid fa-book-open-reader text-xs"></i> Lanjutkan Baca
+          </button>
+        `;
+      } else {
+        readBtnHtml = `
+          <button type="button" onclick="openBookPdfReader('${b.id}')" class="flex-1 py-1.5 px-3 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200/70 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 active:scale-95">
+            <i class="fa-solid fa-book-open text-sky-600 text-xs"></i> Baca
+          </button>
+        `;
+      }
+    } else if (isVideo) {
+      badgeHtml = `<span class="px-1.5 py-0.5 rounded-sm bg-rose-100 text-rose-800 text-[9px] font-black uppercase flex items-center gap-1"><i class="fa-solid fa-play text-[8px] text-rose-600"></i> Video</span>`;
+      metaInfo = `${b.duration || '15 Menit'}`;
+      if (isActive) {
+        readBtnHtml = `
+          <button type="button" onclick="openVideoPlayerModal('${b.id}')" class="flex-1 py-1.5 px-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 shadow-2xs active:scale-95">
+            <i class="fa-solid fa-play text-[9px]"></i> Lanjutkan Tonton
+          </button>
+        `;
+      } else {
+        readBtnHtml = `
+          <button type="button" onclick="openVideoPlayerModal('${b.id}')" class="flex-1 py-1.5 px-3 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200/70 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 active:scale-95">
+            <i class="fa-solid fa-play text-[9px] text-rose-600"></i> Tonton
+          </button>
+        `;
+      }
+    } else if (isGambar) {
+      badgeHtml = `<span class="px-1.5 py-0.5 rounded-sm bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase flex items-center gap-1"><i class="fa-solid fa-image text-[8px] text-emerald-600"></i> Infografis</span>`;
+      metaInfo = `Visual Edukatif`;
+      if (isActive) {
+        readBtnHtml = `
+          <button type="button" onclick="openImageViewerModal('${b.id}')" class="flex-1 py-1.5 px-3 bg-[#00695c] hover:bg-[#004d40] text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 shadow-2xs active:scale-95">
+            <i class="fa-solid fa-image text-[9px]"></i> Lanjutkan Baca
+          </button>
+        `;
+      } else {
+        readBtnHtml = `
+          <button type="button" onclick="openImageViewerModal('${b.id}')" class="flex-1 py-1.5 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/70 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 active:scale-95">
+            <i class="fa-solid fa-magnifying-glass-plus text-[9px] text-emerald-600"></i> Lihat
+          </button>
+        `;
+      }
+    }
+
+    const safeTitle = (b.title || '').replace(/'/g, "\\'");
+    const activeBorderClass = isActive ? 'border-sky-500 ring-2 ring-sky-200/60 bg-sky-50/20' : 'border-slate-200/90 bg-white';
+
+    return `
+      <div class="rounded-2xl p-3 border ${activeBorderClass} shadow-2xs flex gap-3 transition hover:shadow-xs">
+        <!-- Cover Thumbnail -->
+        <div class="w-16 h-22 sm:w-20 sm:h-26 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200/70 relative">
+          <img src="${b.cover || b.imageUrl || ''}" alt="${b.title}" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 300 420\\'%3E%3Crect width=\\'300\\' height=\\'420\\' fill=\\'%23172554\\'/><text x=\\'50%25\\' y=\\'50%25\\' text-anchor=\\'middle\\' fill=\\'white\\' font-size=\\'20\\'>Katalog</text%3E%3C/svg%3E'" />
+          ${isActive ? '<span class="absolute top-1 left-1 px-1.5 py-0.5 bg-emerald-500 text-white font-black text-[7.5px] rounded uppercase shadow-2xs">Aktif</span>' : ''}
+        </div>
+
+        <!-- Details -->
+        <div class="flex-1 min-w-0 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-1 mb-1">
+              <div class="flex items-center gap-1.5 overflow-hidden">
+                ${badgeHtml}
+                <span class="text-[9.5px] text-slate-500 font-medium truncate">${b.categoryLabel || b.category}</span>
+              </div>
+              <span class="text-amber-500 text-[10.5px] font-bold flex items-center gap-0.5 shrink-0">
+                <i class="fa-solid fa-star text-[9px]"></i> ${b.rating || 4.8}
+              </span>
+            </div>
+
+            <h5 class="font-bold text-xs sm:text-sm text-slate-900 leading-snug truncate">
+              ${b.title}
+            </h5>
+            <p class="text-[10.5px] text-slate-500 truncate mt-0.5">
+              ${b.author || b.creator || 'SMPN 2 Kasihan'} • <span class="font-mono text-slate-600">${metaInfo}</span>
+            </p>
+            <p class="text-[10px] text-slate-600 line-clamp-1 mt-1">
+              ${b.synopsis || 'Bahan literasi pilihan program pembiasaan 5M.'}
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2 mt-2">
+            ${readBtnHtml}
+            <button type="button" onclick="openJournalForBook('${safeTitle}', '${b.materialType || 'ebook'}')" class="py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition flex items-center gap-1 shrink-0 active:scale-95" title="Tulis Jurnal Refleksi">
+              <i class="fa-solid fa-pen-nib text-[10px] text-slate-500"></i>
+              <span>Jurnal</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.openJournalForBook = function(title, materialType) {
+  navigateTo('m1');
+  if (typeof window.switchM1Tab === 'function') {
+    window.switchM1Tab('jurnal');
+  }
+  const journalBookSelect = document.getElementById('jurnal-buku');
+  if (journalBookSelect) {
+    journalBookSelect.value = title;
+  }
+  const formEl = document.getElementById('form-jurnal') || document.getElementById('jurnal-section');
+  if (formEl) {
+    formEl.scrollIntoView({ behavior: 'smooth' });
+  }
+  showToast('Siap Mengisi Jurnal', `Refleksi literasi untuk "${title}" siap dicatat.`, 'info');
 };
 
 window.changePdfZoom = function(delta) {
@@ -2487,7 +2974,7 @@ window.togglePdfFullscreen = function() {
 
 window.openPdfInNewTab = function() {
   const readerState = window.appState?.pdfReader;
-  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-SOP')) || window.appState.books[0];
+  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-001')) || window.appState.books[0];
 
   if (b.pdfUrl) {
     window.open(b.pdfUrl, '_blank');
@@ -2525,7 +3012,7 @@ window.openPdfInNewTab = function() {
 
 window.downloadActivePdf = function() {
   const readerState = window.appState?.pdfReader;
-  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-SOP')) || window.appState.books[0];
+  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-001')) || window.appState.books[0];
 
   if (b.pdfUrl && b.pdfUrl.startsWith('data:application/pdf')) {
     const a = document.createElement('a');
@@ -2584,7 +3071,7 @@ window.downloadActivePdf = function() {
 
 window.summarizeActiveBookAI = function() {
   const readerState = window.appState?.pdfReader;
-  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-SOP')) || window.appState.books[0];
+  const b = window.appState.books.find(x => x.id === (readerState?.activeBookId || 'BK-001')) || window.appState.books[0];
 
   const summary = `
     <strong>Ringkasan Dokumen:</strong><br/>
@@ -3342,7 +3829,6 @@ window.updateM2Display = function() {
     else if (m2.bookId === 'BK-002') coverEl.src = COVER_BUMI;
     else if (m2.bookId === 'BK-003') coverEl.src = COVER_FIKSI;
     else if (m2.bookId === 'BK-004') coverEl.src = COVER_LAUT;
-    else if (m2.bookId === 'BK-SOP') coverEl.src = COVER_SOP;
   }
 };
 
@@ -3563,9 +4049,6 @@ window.handleM2BookSelectChange = function(bookId) {
   } else if (bookId === 'BK-002') {
     if (curInput) curInput.value = 85;
     if (totalInput) totalInput.value = 535;
-  } else if (bookId === 'BK-SOP') {
-    if (curInput) curInput.value = 2;
-    if (totalInput) totalInput.value = 2;
   } else {
     if (curInput) curInput.value = 50;
     if (totalInput) totalInput.value = 300;
@@ -3585,8 +4068,7 @@ window.saveM2BookProgress = function() {
     'BK-001': { title: 'Laskar Pelangi', author: 'Andrea Hirata' },
     'BK-002': { title: 'Bumi Manusia', author: 'Pramoedya A.T.' },
     'BK-003': { title: 'Fiksi', author: 'Tere Liye' },
-    'BK-004': { title: 'Laut Bercerita', author: 'Leila S. Chudori' },
-    'BK-SOP': { title: 'Pelayanan Sekolah Aman dan Nyaman', author: 'Tim Sarpras Kasihan' }
+    'BK-004': { title: 'Laut Bercerita', author: 'Leila S. Chudori' }
   };
 
   const chosen = bookTitles[select?.value] || bookTitles['BK-001'];
@@ -4006,35 +4488,39 @@ window.selectM3Karya = function(karyaId) {
   const tpl = window.M3_TEMPLATES[normalized] || window.M3_TEMPLATES.resensi;
   window._activeM3Karya = normalized;
 
-  // Update card buttons styling
+  // Update card buttons styling (both mobile and desktop)
   const keys = ['resensi', 'puisi', 'cerpen', 'poster', 'komik', 'artikel', 'infografis', 'lainnya'];
   keys.forEach(k => {
     const btn = document.getElementById(`m3-btn-${k}`);
-    if (btn) {
+    const deskBtn = document.getElementById(`m3-btn-desk-${k}`);
+    [btn, deskBtn].filter(Boolean).forEach(b => {
       if (k === normalized) {
-        btn.classList.add('border-purple-500', 'active', 'ring-2', 'ring-purple-400/50');
-        btn.classList.remove('border-transparent');
+        b.classList.add('border-purple-500', 'active', 'ring-2', 'ring-purple-400/50');
+        b.classList.remove('border-transparent');
       } else {
-        btn.classList.remove('border-purple-500', 'active', 'ring-2', 'ring-purple-400/50');
-        btn.classList.add('border-transparent');
+        b.classList.remove('border-purple-500', 'active', 'ring-2', 'ring-purple-400/50');
+        b.classList.add('border-transparent');
       }
-    }
+    });
   });
 
   // Update template card title
   const titleEl = document.getElementById('m3-template-card-title');
   if (titleEl) titleEl.textContent = tpl.title;
+  const deskTitleEl = document.getElementById('m3-desk-template-card-title');
+  if (deskTitleEl) deskTitleEl.textContent = tpl.title;
 
   // Update template steps list
   const stepsContainer = document.getElementById('m3-template-steps-list');
-  if (stepsContainer && tpl.steps) {
-    stepsContainer.innerHTML = tpl.steps.map((step, idx) => `
-      <div onclick="focusM3Step(${idx})" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-white/70 transition cursor-pointer group">
-        <span class="w-6 h-6 rounded-full bg-[#476788] text-white text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">${idx + 1}</span>
-        <span class="group-hover:text-blue-700 transition">${step}</span>
-      </div>
-    `).join('');
-  }
+  const deskStepsContainer = document.getElementById('m3-desk-template-steps-list');
+  const stepsHtml = tpl.steps ? tpl.steps.map((step, idx) => `
+    <div onclick="focusM3Step(${idx})" class="flex items-center gap-3 p-1.5 sm:p-2 rounded-xl hover:bg-white/80 transition cursor-pointer group">
+      <span class="w-6 h-6 rounded-full bg-[#476788] text-white text-xs font-black flex items-center justify-center shrink-0 shadow-2xs">${idx + 1}</span>
+      <span class="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-blue-700 transition">${step}</span>
+    </div>
+  `).join('') : '';
+  if (stepsContainer) stepsContainer.innerHTML = stepsHtml;
+  if (deskStepsContainer) deskStepsContainer.innerHTML = stepsHtml;
 
   // Update studio title & dropdown
   const studioTitle = document.getElementById('m3-studio-title');
@@ -4065,8 +4551,8 @@ window.focusM3Step = function(stepIndex) {
   const tpl = window.M3_TEMPLATES[window._activeM3Karya] || window.M3_TEMPLATES.resensi;
   const stepText = tpl.steps[stepIndex] || `Langkah ${stepIndex + 1}`;
   
-  // If screen is mobile, open modal
-  if (window.innerWidth < 1024) {
+  // If screen is mobile (< 768px), open mobile editor modal; on laptop/desktop focus directly into the editor
+  if (window.innerWidth < 768) {
     window.openM3MobileEditor();
   }
 
@@ -7149,6 +7635,124 @@ window.switchSekolahSubtab = function(tabName) {
   }
 };
 
+// Sub-Tab Switcher di Dashboard Eksekutif Kepala Sekolah & Admin
+window.switchKepsekTab = function(tabName) {
+  tabName = tabName || 'ringkasan';
+  window._kepsekActiveTab = tabName;
+
+  const tabs = ['ringkasan', 'supervisi', 'karya', 'laporan', 'statistik'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`kepsek-nav-${t}`);
+    const screen = document.getElementById(`kepsek-screen-${t}`);
+    const isActive = (t === tabName);
+
+    if (btn) {
+      if (isActive) {
+        btn.className = 'kepsek-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[#082e54] font-bold bg-sky-50 transition text-xs shadow-2xs';
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = icon.className.replace(/text-slate-\d+/, 'text-[#082e54]');
+      } else {
+        btn.className = 'kepsek-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-50 transition text-xs';
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = icon.className.replace('text-[#082e54]', 'text-slate-400');
+      }
+    }
+
+    if (screen) {
+      if (isActive) {
+        screen.classList.remove('hidden');
+      } else {
+        screen.classList.add('hidden');
+      }
+    }
+  });
+
+  if (tabName === 'ringkasan') {
+    window.updateKepsekDashboardStats();
+  } else if (tabName === 'supervisi') {
+    window.renderSekolahMonitoringTable();
+  } else if (tabName === 'karya') {
+    window.renderSekolahKaryaGrid();
+  } else if (tabName === 'laporan') {
+    window.renderSekolahActivityReport();
+  } else if (tabName === 'statistik') {
+    if (typeof window.renderSekolahRankings === 'function') window.renderSekolahRankings();
+    if (typeof window.initSekolahCharts === 'function') window.initSekolahCharts();
+  }
+
+  const surface = document.getElementById('kepsek-scroll-surface');
+  if (surface) surface.scrollTop = 0;
+};
+
+window.filterSekolahByClass = function(cls) {
+  window.switchKepsekTab('supervisi');
+  const sel = document.getElementById('sekolah-filter-class');
+  if (sel) {
+    sel.value = cls;
+    window.filterSekolahMonitoring();
+  }
+};
+
+window.filterSekolahByStatus = function(status) {
+  window.switchKepsekTab('supervisi');
+  const sel = document.getElementById('sekolah-filter-status');
+  if (sel) {
+    sel.value = status;
+    window.filterSekolahMonitoring();
+  }
+};
+
+window.apresiasiKaryaByKepsek = function(title, author) {
+  const user = window.appState.currentUser;
+  const roleName = user?.role === 'admin' ? 'Administrator' : 'Kepala Sekolah';
+  if (typeof window.showM5Toast === 'function') {
+    window.showM5Toast(`Apresiasi ${roleName} disematkan pada karya "${title}" oleh ${author}! ⭐`);
+  } else {
+    alert(`Apresiasi ${roleName} disematkan pada karya "${title}" oleh ${author}! ⭐`);
+  }
+};
+
+window.updateKepsekDashboardStats = function() {
+  const user = window.appState.currentUser;
+  if (!user) return;
+
+  const nameEl = document.getElementById('kepsek-greeting-name');
+  const subEl = document.getElementById('kepsek-greeting-sub');
+  const badgeEl = document.getElementById('kepsek-role-badge');
+  const nipEl = document.getElementById('kepsek-nip-text');
+  const avatarIcon = document.getElementById('kepsek-header-avatar-icon');
+  const topAdminBtn = document.getElementById('kepsek-top-admin-btn');
+
+  if (user.role === 'admin') {
+    if (nameEl) nameEl.textContent = `Halo, Administrator Sistem! ⚙️`;
+    if (subEl) subEl.textContent = 'Pengelolaan Master Data, Akun & Pengawasan Sistem LENTERA 5M';
+    if (badgeEl) {
+      badgeEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-900 border border-amber-300';
+      badgeEl.innerHTML = '<i class="fa-solid fa-screwdriver-wrench mr-1 text-amber-600"></i> Admin Sistem';
+    }
+    if (nipEl) nipEl.textContent = 'ID Admin: ADM-2026-001';
+    if (avatarIcon) avatarIcon.className = 'fa-solid fa-user-shield';
+    if (topAdminBtn) {
+      topAdminBtn.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> <span class="hidden sm:inline">Kelola User & Data</span>';
+    }
+  } else {
+    const kepsekName = user.name || 'Ibu Erna Retnaningsih, S.Pd., M.Pd.';
+    if (nameEl) nameEl.textContent = `Halo, ${kepsekName}! 🎓`;
+    if (subEl) subEl.textContent = 'Kepala SMP Negeri 2 Kasihan • Supervisi & Pemantauan Program LENTERA 5M';
+    if (badgeEl) {
+      badgeEl.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 border border-emerald-300';
+      badgeEl.innerHTML = '<i class="fa-solid fa-crown mr-1 text-amber-500"></i> Kepala Sekolah';
+    }
+    if (nipEl) nipEl.textContent = 'NIP. 197303261998022001';
+    if (avatarIcon) avatarIcon.className = 'fa-solid fa-user-tie';
+    if (topAdminBtn) {
+      topAdminBtn.innerHTML = '<i class="fa-solid fa-screwdriver-wrench text-amber-400"></i> <span class="hidden sm:inline">Kelola User</span>';
+    }
+  }
+
+  window.updateSekolahMetricCards();
+};
+
 window.renderSekolahDashboard = function() {
   window.updateSekolahMetricCards();
   window.switchSekolahSubtab(window._sekolahActiveSubtab || 'siswa');
@@ -7166,15 +7770,32 @@ window.updateSekolahMetricCards = function() {
   const elJam = document.getElementById('stat-sekolah-total-jam');
   const elSiswaAktif = document.getElementById('stat-sekolah-siswa-aktif');
 
-  if (elBuku) elBuku.textContent = `${Math.max(1428, books.length * 28)} Buku`;
-  if (elKarya) elKarya.textContent = `${Math.max(342, works.length)} Karya`;
-  if (elBooktalk) elBooktalk.textContent = `${Math.max(118, booktalks.length * 12)} Sesi`;
+  const kBooks = document.getElementById('kdash-stat-books');
+  const kWorks = document.getElementById('kdash-stat-works');
+  const kBooktalk = document.getElementById('kdash-stat-booktalk');
+  const kPasif = document.getElementById('kdash-stat-pasif');
+
+  const totalBukuStr = `${Math.max(1428, books.length * 28)}`;
+  const totalKaryaStr = `${Math.max(342, works.length)}`;
+  const totalBooktalkStr = `${Math.max(118, booktalks.length * 12)}`;
+
+  if (elBuku) elBuku.textContent = `${totalBukuStr} Buku`;
+  if (elKarya) elKarya.textContent = `${totalKaryaStr} Karya`;
+  if (elBooktalk) elBooktalk.textContent = `${totalBooktalkStr} Sesi`;
   if (elJam) elJam.textContent = `890 Jam`;
   if (elSiswaAktif) {
     const activeCount = users.filter(u => u.status !== 'pasif').length;
     const totalCount = Math.max(users.length, 1);
     const pct = ((activeCount / totalCount) * 100).toFixed(1);
     elSiswaAktif.textContent = `${pct}%`;
+  }
+
+  if (kBooks) kBooks.textContent = Number(totalBukuStr).toLocaleString('id-ID');
+  if (kWorks) kWorks.textContent = Number(totalKaryaStr).toLocaleString('id-ID');
+  if (kBooktalk) kBooktalk.textContent = Number(totalBooktalkStr).toLocaleString('id-ID');
+  if (kPasif) {
+    const pasifCount = users.filter(u => u.status === 'pasif').length || 4;
+    kPasif.textContent = `${pasifCount}`;
   }
 };
 
@@ -8919,8 +9540,6 @@ window.renderAdminBooksTable = function() {
         linkBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-file-pdf text-red-500"></i> PDF Upload</span>`;
       } else if (b.pdfSourceType === 'link' && b.pdfUrl) {
         linkBadge = `<a href="${b.pdfUrl}" target="_blank" class="text-sky-600 hover:underline flex items-center gap-1 font-semibold text-xs truncate max-w-[170px]"><i class="fa-solid fa-link text-sky-500"></i> Link PDF</a>`;
-      } else if (b.id === 'BK-SOP' || b.category === 'sarpras') {
-        linkBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1 w-fit shadow-2xs"><i class="fa-solid fa-shield-halved text-amber-600"></i> SOP Resmi</span>`;
       } else {
         linkBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 flex items-center gap-1 w-fit"><i class="fa-solid fa-file-lines text-slate-400"></i> Standar</span>`;
       }
@@ -8951,7 +9570,7 @@ window.renderAdminBooksTable = function() {
           ${typeBadge}
         </td>
         <td class="py-3 px-3">
-          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${b.category === 'sarpras' ? 'bg-amber-100 text-amber-900' : (b.category === 'kearifan_lokal' || b.category === 'jogja' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-700')}">
+          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${b.category === 'kearifan_lokal' || b.category === 'jogja' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-700'}">
             ${b.categoryLabel || b.category}
           </span>
         </td>
@@ -9000,7 +9619,7 @@ window.filterAdminBooks = function(cat) {
   if (!window.appState.adminFilters) window.appState.adminFilters = {};
   window.appState.adminFilters.bookCategory = cat;
 
-  const cats = ['semua', 'sarpras', 'fiksi', 'kearifan_lokal', 'sains', 'sejarah'];
+  const cats = ['semua', 'fiksi', 'kearifan_lokal', 'sains', 'sejarah'];
   cats.forEach(c => {
     const btn = document.getElementById(`btn-filter-book-${c}`);
     if (btn) {
@@ -9135,7 +9754,6 @@ window.handleSaveBook = function(e) {
   }
 
   const categoryLabels = {
-    'sarpras': 'SARPRAS & SOP',
     'kearifan_lokal': 'Kearifan Kasihan & Budaya',
     'jogja': 'Kearifan Kasihan & Budaya',
     'fiksi': 'Fiksi & Sastra',
@@ -9315,6 +9933,9 @@ window.openVideoPlayerModal = function(bookId) {
   if (!b) return;
 
   window._activeModalMedia = b;
+  window.appState.activeBook = b;
+  setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
+  window.syncStudentActiveBook();
 
   const modal = document.getElementById('modal-video-player');
   const titleEl = document.getElementById('video-modal-title');
@@ -9338,6 +9959,12 @@ window.openVideoPlayerModal = function(bookId) {
     modal.classList.remove('hidden');
     modal.classList.add('flex');
   }
+
+  if (typeof window.renderPhoneBooksCatalog === 'function') {
+    window.renderPhoneBooksCatalog();
+  }
+
+  showToast('Memutar Video Pembelajaran', `Menonton "${b.title}".`, 'info');
 };
 
 window.closeVideoPlayerModal = function() {
@@ -9356,6 +9983,9 @@ window.openImageViewerModal = function(bookId) {
   if (!b) return;
 
   window._activeModalMedia = b;
+  window.appState.activeBook = b;
+  setStorage(STORAGE_KEYS.ACTIVE_BOOK, b);
+  window.syncStudentActiveBook();
 
   const modal = document.getElementById('modal-image-viewer');
   const titleEl = document.getElementById('image-modal-title');
@@ -9376,6 +10006,12 @@ window.openImageViewerModal = function(bookId) {
     modal.classList.remove('hidden');
     modal.classList.add('flex');
   }
+
+  if (typeof window.renderPhoneBooksCatalog === 'function') {
+    window.renderPhoneBooksCatalog();
+  }
+
+  showToast('Membuka Gambar Edukatif', `Menampilkan "${b.title}".`, 'info');
 };
 
 window.closeImageViewerModal = function() {
@@ -10050,6 +10686,12 @@ function bootstrapApp() {
   if (typeof window.renderM1RecentJournals === 'function') {
     window.renderM1RecentJournals();
   }
+  if (typeof window.syncStudentActiveBook === 'function') {
+    window.syncStudentActiveBook();
+  }
+  if (typeof window.renderPhoneBooksCatalog === 'function') {
+    window.renderPhoneBooksCatalog();
+  }
 
   // If user is already stored, go to their respective role view
   if (window.appState && window.appState.currentUser) {
@@ -10073,18 +10715,13 @@ function bootstrapApp() {
     galeriSearch.addEventListener('input', () => filterGaleriKarya());
   }
 
-  // Responsive dynamic listener for full-screen M1, M4, M5 & Portofolio layouts
+  // Responsive dynamic listener for full-screen M1-M5 & Portofolio layouts
   window.addEventListener('resize', () => {
-    if (window.appState && (window.appState.currentView === 'm1' || window.appState.currentView === 'm4' || window.appState.currentView === 'm5' || window.appState.currentView === 'portofolio')) {
+    if (window.appState && (['m1', 'm2', 'm3', 'm4', 'm5', 'portofolio'].includes(window.appState.currentView))) {
       const mainHeader = document.getElementById('main-header');
       const mobileNav = document.getElementById('mobile-nav');
-      if (window.innerWidth < 768) {
-        if (mainHeader) mainHeader.classList.add('hidden');
-        if (mobileNav) mobileNav.classList.add('hidden');
-      } else {
-        if (mainHeader) mainHeader.classList.remove('hidden');
-        if (mobileNav) mobileNav.classList.add('hidden');
-      }
+      if (mainHeader) mainHeader.classList.remove('hidden');
+      if (mobileNav) mobileNav.classList.add('hidden');
     }
   });
 }
