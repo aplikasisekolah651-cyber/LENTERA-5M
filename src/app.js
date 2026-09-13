@@ -776,6 +776,19 @@ function setStorage(key, val) {
   } catch (e) {
     console.error('Storage error:', e);
   }
+
+  // Automatic Cloud Firestore Real-Time Sync (debounced & safe from recursive loops)
+  if (!window._isApplyingCloudUpdate && typeof window.saveJournalToCloud === 'function') {
+    try {
+      if (key === STORAGE_KEYS.SETTINGS && val && typeof window.saveSettingsToCloud === 'function') {
+        window.saveSettingsToCloud(val);
+      } else if (key === STORAGE_KEYS.CURRENT_USER && val && typeof window.saveUserToCloud === 'function') {
+        window.saveUserToCloud(val);
+      }
+    } catch (err) {
+      console.warn('Background Firestore sync notice:', err);
+    }
+  }
 }
 
 // Global Application State
@@ -1089,6 +1102,9 @@ window.addPoints = function(pointsToAdd, reason) {
     setStorage(STORAGE_KEYS.USERS, window.appState.users);
   }
   setStorage(STORAGE_KEYS.CURRENT_USER, user);
+  if (typeof window.saveUserToCloud === 'function') {
+    window.saveUserToCloud(user);
+  }
 
   // Sync UI
   updateHeaderGamification();
@@ -3956,8 +3972,19 @@ window.saveM2CurrentTab = function() {
 
 window.saveM2FindingsDirectly = function() {
   const m2 = window.appState.m2Data;
+  const user = window.appState.currentUser || { name: 'Siswa SMPN 2 Kasihan', kelas: '8B' };
+
+  if (typeof window.saveFindingToCloud === 'function') {
+    window.saveFindingToCloud({
+      ...m2,
+      studentName: user.name,
+      studentClass: user.kelas || '8B',
+      date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+    });
+  }
+
   window.addPoints(20, `Simpan Lengkap Lembar Temuan M2: ${m2.bookTitle}`);
-  showToast('Temuan Berhasil Disimpan!', `Seluruh 6 komponen analisis "${m2.bookTitle}" berhasil disimpan ke portofoliomu (+20 Poin).`, 'success');
+  showToast('Temuan Berhasil Disimpan!', `Seluruh 6 komponen analisis "${m2.bookTitle}" berhasil disimpan ke database cloud (+20 Poin).`, 'success');
 };
 
 // Preset samples for fast demo
@@ -4809,6 +4836,9 @@ window.publishKarya = function() {
 
   window.appState.works.unshift(newWork);
   setStorage(STORAGE_KEYS.WORKS, window.appState.works);
+  if (typeof window.saveWorkToCloud === 'function') {
+    window.saveWorkToCloud(newWork);
+  }
 
   window.addPoints(50, `Publikasi Karya Digital: ${judul}`);
 
@@ -4857,6 +4887,9 @@ window.handleBookTalkSubmit = function(e) {
 
   window.appState.booktalks.unshift(newBT);
   setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+  if (typeof window.saveBooktalkToCloud === 'function') {
+    window.saveBooktalkToCloud(newBT);
+  }
 
   window.addPoints(75, `Unggah Book Talk: ${judul}`);
   showToast('Book Talk Terkirim!', `Rekaman Book Talk berhasil diunggah (+75 Poin).`, 'success');
@@ -5234,6 +5267,9 @@ window.submitM4VoiceRecording = function(e) {
 
   window.appState.booktalks.unshift(newBT);
   setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+  if (typeof window.saveBooktalkToCloud === 'function') {
+    window.saveBooktalkToCloud(newBT);
+  }
 
   window.addPoints(75, `Book Talk Rekam Suara: ${title}`);
   showToast('Karya M4 Berhasil Disimpan!', `Rekaman suara "${title}" berhasil diunggah (+75 Poin).`, 'success');
@@ -5296,6 +5332,9 @@ window.submitM4VideoUpload = function(e) {
 
   window.appState.booktalks.unshift(newBT);
   setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+  if (typeof window.saveBooktalkToCloud === 'function') {
+    window.saveBooktalkToCloud(newBT);
+  }
 
   window.addPoints(75, `Upload Video M4: ${title}`);
   showToast('Video Berhasil Diunggah!', `Video Book Talk "${title}" berhasil dibagikan (+75 Poin).`, 'success');
@@ -5374,6 +5413,9 @@ window.submitM4PhotoUpload = function(e) {
 
   window.appState.booktalks.unshift(newBT);
   setStorage(STORAGE_KEYS.BOOKTALKS, window.appState.booktalks);
+  if (typeof window.saveBooktalkToCloud === 'function') {
+    window.saveBooktalkToCloud(newBT);
+  }
 
   window.addPoints(50, `Unggah Foto Dokumentasi: ${title}`);
   showToast('Foto Berhasil Disimpan!', `Dokumentasi kegiatan literasi berhasil diunggah (+50 Poin).`, 'success');
@@ -6173,6 +6215,9 @@ window.toggleM5Like = function(workId) {
   window.appState.m5LikedWorkIds = likedIds;
   setStorage('lentera_m5_likes', likedIds);
   setStorage(STORAGE_KEYS.WORKS, works);
+  if (typeof window.updateWorkInCloud === 'function' && w) {
+    window.updateWorkInCloud(w.id, { likes: w.likes });
+  }
 
   window.renderM5Works();
   if (typeof window.renderGaleriKarya === 'function') {
@@ -6357,6 +6402,9 @@ window.submitM5ModalComment = function() {
   w.commentsCount = w.comments.length;
 
   setStorage(STORAGE_KEYS.WORKS, works);
+  if (typeof window.updateWorkInCloud === 'function' && w) {
+    window.updateWorkInCloud(w.id, { comments: w.comments, commentsCount: w.commentsCount });
+  }
 
   if (hasPositive) {
     if (typeof window.addPoints === 'function') {
@@ -9877,6 +9925,9 @@ window.handleSaveBook = function(e) {
   }
 
   setStorage(STORAGE_KEYS.BOOKS, window.appState.books);
+  if (typeof window.saveBookToCloud === 'function') {
+    window.saveBookToCloud(bookPayload);
+  }
   closeBookModal();
   renderAdminBooksTable();
 
@@ -9898,6 +9949,9 @@ window.deleteBook = function(bookId) {
 
   window.appState.books = window.appState.books.filter(b => b.id !== bookId);
   setStorage(STORAGE_KEYS.BOOKS, window.appState.books);
+  if (typeof window.deleteBookFromCloud === 'function') {
+    window.deleteBookFromCloud(bookId);
+  }
   showToast('Bahan Dihapus', 'Bahan literasi telah dihapus dari katalog.', 'info');
   renderAdminBooksTable();
 
@@ -10165,6 +10219,9 @@ window.toggleVerifyJournal = function(journalId) {
 
   j.verified = !j.verified;
   setStorage(STORAGE_KEYS.JOURNALS, window.appState.journals);
+  if (typeof window.saveJournalToCloud === 'function') {
+    window.saveJournalToCloud(j);
+  }
   showToast(
     j.verified ? 'Jurnal Terverifikasi' : 'Status Dicabut',
     `Jurnal membaca ${j.studentName} telah ${j.verified ? 'disetujui' : 'dikembalikan ke menunggu'}.`,
@@ -10185,6 +10242,9 @@ window.verifyAllPendingJournals = function() {
     if (!j.verified) {
       j.verified = true;
       count++;
+      if (typeof window.saveJournalToCloud === 'function') {
+        window.saveJournalToCloud(j);
+      }
     }
   });
   setStorage(STORAGE_KEYS.JOURNALS, window.appState.journals);
@@ -10197,6 +10257,9 @@ window.deleteJournalEntry = function(journalId) {
 
   window.appState.journals = window.appState.journals.filter(j => j.id !== journalId);
   setStorage(STORAGE_KEYS.JOURNALS, window.appState.journals);
+  if (typeof window.deleteJournalFromCloud === 'function') {
+    window.deleteJournalFromCloud(journalId);
+  }
   showToast('Jurnal Dihapus', 'Entri jurnal telah dihapus dari sistem.', 'info');
   window.renderAdminJournalsTable();
 };
@@ -10459,6 +10522,9 @@ window.deleteWork = function(workId) {
 
   window.appState.works = window.appState.works.filter(w => w.id !== workId);
   setStorage(STORAGE_KEYS.WORKS, window.appState.works);
+  if (typeof window.deleteWorkFromCloud === 'function') {
+    window.deleteWorkFromCloud(workId);
+  }
   showToast('Karya Dihapus', 'Karya sastra telah dihapus dari galeri.', 'info');
   renderAdminWorksTable();
   const statWorks = document.getElementById('admin-stat-works');
@@ -10680,6 +10746,37 @@ window.submitPhoneChallenge = function() {
 // ==========================================
 
 function bootstrapApp() {
+  // Initialize Real-time Firestore Cloud Database Synchronization
+  if (typeof window.initRealtimeCloudSync === 'function') {
+    window.initRealtimeCloudSync(window.appState, (entityName) => {
+      // Dynamic real-time re-rendering when data changes in Firestore
+      if (entityName === 'journals') {
+        if (typeof window.renderJournalHistory === 'function') window.renderJournalHistory();
+        if (typeof window.renderM1RecentJournals === 'function') window.renderM1RecentJournals();
+        if (typeof window.renderAdminJournalsTable === 'function') window.renderAdminJournalsTable();
+      } else if (entityName === 'works') {
+        if (typeof window.renderM5Works === 'function') window.renderM5Works();
+        if (typeof window.renderGaleriKarya === 'function') window.renderGaleriKarya();
+        if (typeof window.renderAdminWorksTable === 'function') window.renderAdminWorksTable();
+        if (typeof window.renderSekolahKaryaGrid === 'function') window.renderSekolahKaryaGrid();
+      } else if (entityName === 'booktalks') {
+        if (typeof window.renderM4StudentWorks === 'function') window.renderM4StudentWorks();
+        if (typeof window.renderBooktalkList === 'function') window.renderBooktalkList();
+      } else if (entityName === 'books') {
+        if (typeof window.renderBooks === 'function') window.renderBooks();
+        if (typeof window.renderPhoneBooksCatalog === 'function') window.renderPhoneBooksCatalog();
+        if (typeof window.renderAdminBooksTable === 'function') window.renderAdminBooksTable();
+      } else if (entityName === 'users') {
+        if (typeof window.renderGuruStudentsList === 'function') window.renderGuruStudentsList();
+        if (typeof window.renderSekolahMonitoringTable === 'function') window.renderSekolahMonitoringTable();
+        if (typeof window.renderAdminUsersTable === 'function') window.renderAdminUsersTable();
+        if (typeof window.updateHeaderGamification === 'function') window.updateHeaderGamification();
+      } else if (entityName === 'settings') {
+        if (typeof window.renderAdminSettings === 'function') window.renderAdminSettings();
+      }
+    });
+  }
+
   if (typeof window.populateJournalBookSelect === 'function') {
     window.populateJournalBookSelect();
   }

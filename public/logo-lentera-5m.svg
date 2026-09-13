@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 88" width="360" height="88" fill="none">
+  <defs>
+    <!-- Flame Gradient: Warm yellow into vivid orange -->
+    <linearGradient id="flameGrad" x1="20%" y1="90%" x2="60%" y2="10%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="30%" stop-color="#f97316"/>
+      <stop offset="85%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+    <!-- Inner Flame Highlight -->
+    <linearGradient id="flameInner" x1="30%" y1="100%" x2="40%" y2="0%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <!-- Green leaf / inner page gradient -->
+    <linearGradient id="greenPageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ================= LOGO ICON EMBLEM ================= -->
+  <g transform="translate(6, 4)">
+    <!-- 1. CENTER FLAME / LENTERA TORCH -->
+    <!-- Outer flame silhouette -->
+    <path d="M41 46 C40 44, 27 34, 29 22 C30 15, 36 9, 41 3 C43 11, 49 16, 49 22 C49 28, 56 31, 54 39 C52 45, 44 48, 41 46 Z" 
+          fill="url(#flameGrad)"/>
+    <!-- Inner bright flame tongue -->
+    <path d="M41 43 C40 41, 33 34, 34 26 C35 20, 39 15, 41 10 C42 15, 46 19, 46 25 C46 31, 44 39, 41 43 Z" 
+          fill="url(#flameInner)" opacity="0.95"/>
+
+    <!-- 2. LEFT BOOK COVER & PAGES -->
+    <!-- Left Bottom Thick Dark Blue Spine/Cover -->
+    <path d="M43 80 L12 70 C8 58, 10 44, 13 38 L21 41 C19 46, 17 56, 19 65 L43 73 Z" fill="#0c2340"/>
+    <path d="M44 80 C36 82, 19 75, 10 70 L8 75 C18 80, 37 86, 45 82 Z" fill="#0c2340"/>
+
+    <!-- Left Green Inner Page Stroke (The dynamic green leaf/wing) -->
+    <path d="M42 48 L17 38 C12 47, 9 60, 10 68 L16 70 C15 64, 16 52, 21 45 L42 54 Z" fill="url(#greenPageGrad)"/>
+    <!-- Left White Inner Page Fill -->
+    <path d="M42 53 L22 45 C19 51, 18 60, 19 67 L42 72 Z" fill="#ffffff"/>
+
+    <!-- 3. RIGHT BOOK COVER & PAGES (Navy Blue with Crisp Open Pages) -->
+    <!-- Right Outer Navy Border / Cover Frame -->
+    <path d="M44 48 L76 37 C77 37, 82 46, 82 70 L45 79 Z" fill="#0c2340"/>
+    <!-- Right Page White Surface -->
+    <path d="M46 52 L73 42 C74 49, 75 62, 74 68 L46 76 Z" fill="#ffffff"/>
+    <!-- Right Page Accent Shadow Fold -->
+    <path d="M49 55 L70 46 C71 52, 71 61, 70 66 L49 73 Z" fill="#0c2340" opacity="0.08"/>
+
+    <!-- 4. CENTER SPINE WEDGE -->
+    <path d="M40 73 L44 81 L48 73 Z" fill="#0c2340"/>
+  </g>
+
+  <!-- ================= TYPOGRAPHY ================= -->
+  <g transform="translate(98, 0)">
+    <!-- Line 1: LENTERA (Navy) + 5M (Orange) -->
+    <text x="0" y="38" font-family="'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="34" letter-spacing="-0.5px">
+      <tspan fill="#0c2340">LENTERA </tspan>
+      <tspan fill="#f36c21">5M</tspan>
+    </text>
+
+    <!-- Line 2: Tagline (Literasi untuk Generasi Cerdas dan Berkarya) -->
+    <text x="1" y="57" font-family="'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="12.5" fill="#24334a" letter-spacing="-0.2px">
+      Literasi untuk Generasi Cerdas dan Berkarya
+    </text>
+
+    <!-- Line 3: School Name (SMP Negeri 2 Kasihan) -->
+    <text x="1" y="78" font-family="'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="16" fill="#0c2340" letter-spacing="-0.3px">
+      SMP Negeri 2 Kasihan
+    </text>
+  </g>
+</svg>

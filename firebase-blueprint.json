@@ -12,34 +12,133 @@
         "pageEnd": { "type": "number" },
         "duration": { "type": "number" },
         "summary": { "type": "string" },
+        "date": { "type": "string" },
         "timestamp": { "type": "string" },
         "verified": { "type": "boolean" },
         "stars": { "type": "number" }
       },
       "required": ["studentName", "bookTitle"]
     },
-    "reviews": {
+    "works": {
       "title": "Karya & Resensi",
-      "description": "Resensi, sinopsis, atau cerpen siswa",
+      "description": "Karya tulis siswa, puisi, cerpen, artikel, komik, poster, dan resensi M3/M5",
       "type": "object",
       "properties": {
-        "authorName": { "type": "string" },
-        "authorClass": { "type": "string" },
+        "author": { "type": "string" },
+        "class": { "type": "string" },
         "title": { "type": "string" },
+        "category": { "type": "string" },
         "content": { "type": "string" },
+        "excerpt": { "type": "string" },
         "likes": { "type": "number" },
-        "createdAt": { "type": "string" }
+        "commentsCount": { "type": "number" },
+        "date": { "type": "string" },
+        "status": { "type": "string" }
       },
-      "required": ["authorName", "title"]
+      "required": ["author", "title"]
+    },
+    "booktalks": {
+      "title": "Storytelling & Ulasan Lisan M4",
+      "description": "Rekaman book talk, podcast cerita, dan ulasan lisan siswa",
+      "type": "object",
+      "properties": {
+        "author": { "type": "string" },
+        "class": { "type": "string" },
+        "title": { "type": "string" },
+        "book": { "type": "string" },
+        "duration": { "type": "string" },
+        "type": { "type": "string" },
+        "likes": { "type": "number" },
+        "date": { "type": "string" }
+      },
+      "required": ["author", "title"]
+    },
+    "findings": {
+      "title": "Lembar Temuan M2",
+      "description": "Catatan ide pokok, fakta/opini, kosakata baru, dan analisis bacaan",
+      "type": "object",
+      "properties": {
+        "studentName": { "type": "string" },
+        "studentClass": { "type": "string" },
+        "bookTitle": { "type": "string" },
+        "ide": { "type": "string" },
+        "info": { "type": "string" },
+        "kata": { "type": "string" },
+        "makna": { "type": "string" },
+        "fakta": { "type": "string" },
+        "opini": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "books": {
+      "title": "Perpustakaan & Bahan Bacaan",
+      "description": "Koleksi e-book, infografis, video literasi, dan buku cetak digital",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "author": { "type": "string" },
+        "category": { "type": "string" },
+        "pages": { "type": "number" },
+        "materialType": { "type": "string" },
+        "coverUrl": { "type": "string" }
+      },
+      "required": ["title", "author"]
+    },
+    "users": {
+      "title": "Pengguna & Profil Siswa/Guru",
+      "description": "Profil pengguna, poin literasi, streak membaca, dan lencana",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "role": { "type": "string" },
+        "kelas": { "type": "string" },
+        "points": { "type": "number" },
+        "streak": { "type": "number" },
+        "booksCount": { "type": "number" },
+        "worksCount": { "type": "number" },
+        "level": { "type": "string" }
+      },
+      "required": ["name", "role"]
     },
     "settings": {
       "title": "Pengaturan Sekolah",
-      "description": "Konfigurasi target literasi sekolah",
+      "description": "Konfigurasi target literasi sekolah dan GLS",
       "type": "object",
       "properties": {
         "targetReadingMinutes": { "type": "number" },
         "schoolName": { "type": "string" }
       }
+    }
+  },
+  "firestore": {
+    "/journals/{journalId}": {
+      "schema": "journals",
+      "description": "Koleksi jurnal membaca harian siswa 5M"
+    },
+    "/works/{workId}": {
+      "schema": "works",
+      "description": "Karya tulis dan resensi digital siswa 5M"
+    },
+    "/booktalks/{booktalkId}": {
+      "schema": "booktalks",
+      "description": "Rekaman ulasan lisan dan video storytelling M4"
+    },
+    "/findings/{findingId}": {
+      "schema": "findings",
+      "description": "Lembar temuan ide pokok, kosakata, dan refleksi M2"
+    },
+    "/books/{bookId}": {
+      "schema": "books",
+      "description": "Koleksi buku dan materi bacaan perpustakaan digital"
+    },
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "Profil pengguna, poin, lencana, dan progres literasi"
+    },
+    "/settings/{settingId}": {
+      "schema": "settings",
+      "description": "Pengaturan target literasi dan parameter sekolah"
     }
   }
 }

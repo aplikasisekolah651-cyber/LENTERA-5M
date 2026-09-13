@@ -237,16 +237,39 @@
     <!-- Top Header -->
     <header id="main-header" class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all hidden">
       <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-12 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('beranda')">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-600 to-amber-700 flex items-center justify-center text-white shadow-md font-bold text-lg">
-            <i class="fa-solid fa-feather-pointed"></i>
+        <div id="header-brand-logo" class="flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none transition hover:opacity-90 shrink-0" onclick="navigateTo('beranda')" title="Beranda LENTERA 5M - SMP Negeri 2 Kasihan">
+          <!-- Logo Emblem (Open Book & Torch Flame from Reference Photo) -->
+          <div class="w-10 h-10 sm:w-11 sm:h-11 shrink-0 flex items-center justify-center">
+            <svg viewBox="0 0 80 80" class="w-full h-full drop-shadow-xs" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer Spine / Dark Navy Base -->
+              <path d="M40 56C33 49 18 49 9 55V26C18 20 33 20 40 27C47 20 62 20 71 26V55C62 49 47 49 40 56Z" fill="#0f2b48"/>
+              <!-- Left Green Leaf/Page -->
+              <path d="M40 53C34 47 20 47 11 52V27.5C20 22.5 34 22.5 40 28V53Z" fill="#16a34a"/>
+              <path d="M40 51C34 46 22 46 14 50V29C22 25 34 25 40 30V51Z" fill="#22c55e" opacity="0.45"/>
+              <!-- Right Dark Navy/Deep Blue Page with white inner margin -->
+              <path d="M40 53C46 47 60 47 69 52V27.5C60 22.5 46 22.5 40 28V53Z" fill="#0f2b48"/>
+              <path d="M40 51C46 46 58 46 66 50V29C58 25 46 25 40 30V51Z" fill="#ffffff" opacity="0.95"/>
+              <path d="M40 50C46 46 56 46 64 49V30C56 27 46 27 40 31V50Z" fill="#0f2b48" opacity="0.08"/>
+              <!-- Spine Divider -->
+              <path d="M40 27V55" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <!-- Rising Torch Flame -->
+              <path d="M40 5C40 5 48 12.5 48 19C48 23.5 44.5 26.5 40 26.5C35.5 26.5 32 23.5 32 19C32 12.5 40 5 40 5Z" fill="#f97316"/>
+              <path d="M40 10.5C40 10.5 45 16 45 19.5C45 22 42.8 24 40 24C37.2 24 35 22 35 19.5C35 16 40 10.5 40 10.5Z" fill="#fde047"/>
+            </svg>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h1 class="font-black tracking-tight text-slate-900 text-lg leading-tight">LENTERA <span class="text-sky-600">5M</span></h1>
-              <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded border border-amber-200">SMPN 2 KASIHAN</span>
+
+          <!-- Logo Typography (Exact match to Reference Photo) -->
+          <div class="flex flex-col justify-center leading-tight">
+            <div class="flex items-center gap-1.5 leading-none">
+              <span class="text-base sm:text-lg lg:text-xl font-black text-[#0f2b48] tracking-tight">LENTERA</span>
+              <span class="text-base sm:text-lg lg:text-xl font-black text-[#f97316] tracking-tight">5M</span>
             </div>
-            <p class="text-[11px] text-slate-500 hidden sm:block">Ekosistem Literasi Digital & Kearifan Lokal Bantul</p>
+            <p class="text-[9.5px] sm:text-[10px] text-slate-700 font-medium tracking-tight mt-0.5 hidden sm:block">
+              Literasi untuk Generasi Cerdas dan Berkarya
+            </p>
+            <p class="text-[10px] sm:text-[11px] font-bold text-[#0f2b48] leading-tight">
+              SMP Negeri 2 Kasihan
+            </p>
           </div>
         </div>
 
@@ -308,8 +331,17 @@
           </button>
         </nav>
 
-        <!-- User Profile Pill & Quick Points -->
-        <div class="flex items-center gap-3">
+        <!-- Real-Time Database Indicator & User Profile Pill -->
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <!-- Real-Time Cloud DB Sync Indicator -->
+          <div id="db-sync-badge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 border border-emerald-200 text-emerald-800 transition shadow-xs select-none" title="Database Cloud Firestore: Terhubung Real-Time">
+            <span class="relative flex h-2 w-2">
+              <span id="db-sync-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span id="db-sync-dot" class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span id="db-sync-text" class="tracking-tight">Cloud Real-Time</span>
+          </div>
+
           <div id="user-points-badge" class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-amber-50 to-amber-100 border border-amber-200 px-3 py-1.5 rounded-full">
             <i class="fa-solid fa-fire text-amber-500 text-sm"></i>
             <span id="header-streak" class="font-bold text-xs text-amber-900">3 Hari</span>

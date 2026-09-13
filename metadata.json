@@ -1,7 +1,7 @@
 {
   "name": "LENTERA 5M",
   "description": "Ekosistem literasi digital interaktif berlandaskan alur 5M (Membaca, Menemukan, Menulis, Menceritakan, Mengapresiasi) dengan gamifikasi dan kearifan lokal untuk SMP Negeri 2 Kasihan Yogyakarta.",
-  "requestFramePermissions": ["camera"],
+  "requestFramePermissions": ["camera", "microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
 
