@@ -4772,8 +4772,8 @@
                 <button type="button" onclick="downloadUserTemplateExcel()" class="px-3.5 py-2 rounded-xl text-xs font-bold border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition flex items-center gap-1.5 shadow-2xs" title="Unduh format template Excel (.xlsx)">
                   <i class="fa-solid fa-file-excel text-emerald-600 text-sm"></i> Unduh Template Excel
                 </button>
-                <button type="button" onclick="openImportUserModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-300 bg-sky-50 hover:bg-sky-100 text-sky-800 transition flex items-center gap-1.5 shadow-2xs" title="Impor data siswa & guru dari file Excel/CSV">
-                  <i class="fa-solid fa-file-import text-sky-600 text-sm"></i> Impor Siswa & Guru
+                <button type="button" onclick="openImportUserModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-400 bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white transition flex items-center gap-2 shadow-xs" title="Upload data siswa & username dari berkas Excel/CSV atau tempel teks">
+                  <i class="fa-solid fa-cloud-arrow-up text-amber-300 text-sm"></i> Upload / Impor Siswa
                 </button>
                 <button type="button" onclick="openAddUserModal()" class="px-3.5 py-2 bg-[#082e54] hover:bg-sky-900 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs">
                   <i class="fa-solid fa-user-plus text-amber-400"></i> Tambah Pengguna
@@ -7030,18 +7030,18 @@
     </div>
   </div>
 
-  <!-- ================= MODAL IMPOR PENGGUNA (EXCEL / CSV) ================= -->
-  <div id="modal-import-users" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col">
+  <!-- ================= MODAL IMPOR PENGGUNA (EXCEL / CSV / PASTE) ================= -->
+  <div id="modal-import-users" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 max-h-[94vh] flex flex-col">
       <!-- Modal Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
-            <i class="fa-solid fa-file-excel text-lg"></i>
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200 shrink-0">
+            <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
           </div>
           <div>
-            <h4 class="font-extrabold text-slate-800 text-sm sm:text-base">Impor Data Siswa & Guru (Excel / CSV)</h4>
-            <p class="text-xs text-slate-500">Unggah berkas Excel (.xlsx / .xls) atau CSV untuk menambahkan data pengguna secara massal.</p>
+            <h4 class="font-extrabold text-slate-800 text-sm sm:text-base">Upload / Impor Data Siswa & Username</h4>
+            <p class="text-xs text-slate-500">Unggah berkas Excel, CSV, atau tempel data siswa langsung untuk pembuatan akun massal.</p>
           </div>
         </div>
         <button type="button" onclick="closeImportUserModal()" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition">
@@ -7049,45 +7049,119 @@
         </button>
       </div>
 
+      <!-- Mode Switcher Tabs -->
+      <div class="flex items-center gap-2 pt-3 shrink-0">
+        <button type="button" id="tab-btn-import-file" onclick="switchImportUserTab('file')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#082e54] text-white flex items-center gap-1.5 transition shadow-2xs">
+          <i class="fa-solid fa-file-excel text-emerald-400"></i> Unggah Berkas (Excel / CSV)
+        </button>
+        <button type="button" id="tab-btn-import-paste" onclick="switchImportUserTab('paste')" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-paste text-sky-600"></i> Salin & Tempel (Copy-Paste)
+        </button>
+      </div>
+
       <!-- Modal Body (Scrollable) -->
-      <div class="space-y-4 py-4 overflow-y-auto text-xs flex-1">
-        <!-- Download Template Card -->
-        <div class="p-4 bg-gradient-to-r from-emerald-50/80 to-teal-50/80 border border-emerald-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="space-y-1">
-            <h5 class="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
-              <i class="fa-solid fa-circle-info text-emerald-600"></i> Belum Memiliki Format Berkas?
-            </h5>
-            <p class="text-[11px] text-emerald-800 leading-relaxed">
-              Gunakan template resmi yang telah disesuaikan dengan kolom NISN/NIP, Nama Lengkap, Peran (Siswa/Guru), dan Rombel/Kelas.
+      <div class="space-y-4 py-3 overflow-y-auto text-xs flex-1">
+        <!-- TAB 1: FILE UPLOAD PANE -->
+        <div id="pane-import-file" class="space-y-3">
+          <!-- Download Template Card -->
+          <div class="p-3.5 bg-gradient-to-r from-emerald-50/90 to-teal-50/90 border border-emerald-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div class="space-y-0.5">
+              <h5 class="font-bold text-emerald-950 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-info text-emerald-600"></i> Belum Memiliki Format Berkas?
+              </h5>
+              <p class="text-[11px] text-emerald-800 leading-relaxed">
+                Unduh template resmi kolom: <strong>NISN (Username), Nama Lengkap, Peran, Kelas/Rombel, Sandi</strong>.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="downloadUserTemplateExcel()" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-file-arrow-down"></i> Unduh Excel (.xlsx)
+              </button>
+              <button type="button" onclick="downloadUserTemplateCSV()" class="px-2.5 py-1.5 bg-white hover:bg-emerald-50 text-emerald-800 border border-emerald-300 font-semibold rounded-xl text-xs transition flex items-center gap-1">
+                <i class="fa-solid fa-file-csv"></i> CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Dropzone / File Picker with Drag & Drop -->
+          <div id="dropzone-import-user" 
+               onclick="document.getElementById('input-import-user-file').click()" 
+               ondragover="handleImportDragOver(event)"
+               ondragleave="handleImportDragLeave(event)"
+               ondrop="handleImportDrop(event)"
+               class="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/20 rounded-2xl p-5 text-center cursor-pointer transition relative">
+            <input type="file" id="input-import-user-file" accept=".xlsx, .xls, .csv, .tsv, .txt" class="hidden" onchange="handleUserImportFile(event)" />
+            <div class="w-11 h-11 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center mx-auto text-emerald-600 mb-2">
+              <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+            </div>
+            <p class="font-bold text-slate-800 text-xs sm:text-sm">Klik untuk memilih file Excel atau geser file ke sini</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Mendukung format Microsoft Excel (.xlsx, .xls) dan teks (.csv, .tsv)</p>
+            <div id="import-user-filename-box" class="mt-2 hidden">
+              <span id="import-user-filename" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: COPY-PASTE PANE -->
+        <div id="pane-import-paste" class="space-y-2 hidden">
+          <div class="p-3 bg-sky-50 border border-sky-200 rounded-2xl">
+            <p class="text-sky-900 font-bold text-xs flex items-center gap-1.5">
+              <i class="fa-solid fa-paste text-sky-600"></i> Tempel Langsung dari Excel / Spreadsheet / Catatan
+            </p>
+            <p class="text-[11px] text-sky-800 mt-1 leading-relaxed">
+              Format per baris: <strong>NISN [Tab/Koma] Nama Lengkap [Tab/Koma] Kelas</strong> (atau cukup NISN dan Nama).
             </p>
           </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <button type="button" onclick="downloadUserTemplateExcel()" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-2xs">
-              <i class="fa-solid fa-file-arrow-down"></i> Unduh Excel (.xlsx)
-            </button>
-            <button type="button" onclick="downloadUserTemplateCSV()" class="px-3 py-2 bg-white hover:bg-emerald-50 text-emerald-800 border border-emerald-300 font-semibold rounded-xl text-xs transition flex items-center gap-1.5">
-              <i class="fa-solid fa-file-csv"></i> CSV
+          <div>
+            <textarea id="textarea-import-paste" rows="5" placeholder="Contoh:&#10;0098234101	Aditya Pratama Putra	7A&#10;0098234102	Dewi Sekar Kinanthi	7A&#10;0087123901	Fajar Ramadhan	8B" class="w-full text-xs font-mono p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-hidden focus:border-sky-500 transition leading-relaxed"></textarea>
+          </div>
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[11px] text-slate-400">Tips: Salin langsung blok sel dari Google Sheets atau Excel.</span>
+            <button type="button" onclick="handleUserImportPaste()" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 shadow-2xs">
+              <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Proses Teks Siswa
             </button>
           </div>
         </div>
 
-        <!-- Dropzone / File Picker -->
-        <div id="dropzone-import-user" onclick="document.getElementById('input-import-user-file').click()" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/20 rounded-2xl p-6 text-center cursor-pointer transition relative">
-          <input type="file" id="input-import-user-file" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleUserImportFile(event)" />
-          <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center mx-auto text-emerald-600 mb-2">
-            <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+        <!-- Default Options (Class, Default Password, Default Role) -->
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Kelas Bawaan (Bila Kosong)</label>
+            <select id="import-default-class" class="w-full text-xs bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-semibold text-slate-700 focus:outline-hidden focus:border-sky-500">
+              <option value="7A">Kelas 7A</option>
+              <option value="7B">Kelas 7B</option>
+              <option value="7C">Kelas 7C</option>
+              <option value="7D">Kelas 7D</option>
+              <option value="8A">Kelas 8A</option>
+              <option value="8B" selected>Kelas 8B</option>
+              <option value="8C">Kelas 8C</option>
+              <option value="8D">Kelas 8D</option>
+              <option value="9A">Kelas 9A</option>
+              <option value="9B">Kelas 9B</option>
+              <option value="9C">Kelas 9C</option>
+              <option value="9D">Kelas 9D</option>
+              <option value="Siswa Kasihan">Umum / Siswa Kasihan</option>
+            </select>
           </div>
-          <p class="font-bold text-slate-800 text-xs sm:text-sm">Klik untuk memilih file Excel atau geser file ke sini</p>
-          <p class="text-[11px] text-slate-500 mt-1">Mendukung format Microsoft Excel (.xlsx, .xls) dan CSV (.csv)</p>
-          <p id="import-user-filename" class="text-xs font-bold text-emerald-700 mt-2 hidden"></p>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Sandi Awal Login</label>
+            <input type="text" id="import-default-password" value="lentera123" class="w-full text-xs font-mono bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-semibold text-slate-700 focus:outline-hidden focus:border-sky-500" />
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Peran Bawaan</label>
+            <select id="import-default-role" class="w-full text-xs bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-semibold text-slate-700 focus:outline-hidden focus:border-sky-500">
+              <option value="siswa" selected>Siswa</option>
+              <option value="guru">Guru / Pendidik</option>
+            </select>
+          </div>
         </div>
 
-        <!-- Preview Results Container (Shown after file is parsed) -->
+        <!-- Preview Results Container (Shown after file or text is parsed) -->
         <div id="container-import-user-preview" class="hidden space-y-3">
           <!-- Stats Summary Bar -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div class="p-2.5 bg-slate-100 rounded-xl border border-slate-200 text-center">
-              <span class="text-[10px] text-slate-500 block uppercase font-bold">Total Baris</span>
+              <span class="text-[10px] text-slate-500 block uppercase font-bold">Total Siswa/User</span>
               <span id="stat-import-total" class="font-extrabold text-slate-800 text-sm">0</span>
             </div>
             <div class="p-2.5 bg-sky-50 rounded-xl border border-sky-200 text-center">
@@ -7099,7 +7173,7 @@
               <span id="stat-import-guru" class="font-extrabold text-purple-800 text-sm">0</span>
             </div>
             <div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-center">
-              <span class="text-[10px] text-emerald-700 block uppercase font-bold">Siap Diimpor</span>
+              <span class="text-[10px] text-emerald-700 block uppercase font-bold">Siap Disimpan</span>
               <span id="stat-import-valid" class="font-extrabold text-emerald-800 text-sm">0</span>
             </div>
           </div>
@@ -7108,19 +7182,21 @@
           <div class="border border-slate-200 rounded-xl overflow-hidden">
             <div class="bg-slate-50 px-3 py-2 border-b border-slate-200 flex items-center justify-between">
               <span class="font-bold text-slate-700 text-xs flex items-center gap-1.5">
-                <i class="fa-solid fa-table-list text-slate-500"></i> Pratinjau Data yang Akan Masuk (Maks. 8 baris pertama):
+                <i class="fa-solid fa-table-list text-slate-500"></i> Pratinjau Calon Pengguna (<span id="import-preview-count">0</span> terdeteksi):
               </span>
-              <span id="import-preview-badge" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Validasi OK</span>
+              <span id="import-preview-badge" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                <i class="fa-solid fa-check"></i> Siap Diimpor
+              </span>
             </div>
             <div class="overflow-x-auto max-h-48">
               <table class="w-full text-left text-xs">
                 <thead>
                   <tr class="bg-slate-100/70 border-b border-slate-200 text-slate-500 text-[11px]">
                     <th class="py-2 px-3 font-bold">Peran</th>
-                    <th class="py-2 px-3 font-bold">NISN / NIP / Username</th>
+                    <th class="py-2 px-3 font-bold">NISN / Username</th>
                     <th class="py-2 px-3 font-bold">Nama Lengkap</th>
-                    <th class="py-2 px-3 font-bold">Kelas / Mata Pelajaran</th>
-                    <th class="py-2 px-3 font-bold">Kata Sandi</th>
+                    <th class="py-2 px-3 font-bold">Kelas / Rombel</th>
+                    <th class="py-2 px-3 font-bold">Sandi Awal</th>
                   </tr>
                 </thead>
                 <tbody id="table-import-users-preview" class="divide-y divide-slate-100 text-slate-700">
@@ -7133,14 +7209,19 @@
       </div>
 
       <!-- Modal Footer -->
-      <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2 shrink-0">
-        <button type="button" onclick="closeImportUserModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
-          Batal
-        </button>
-        <button type="button" id="btn-confirm-import-users" onclick="processUserImport()" disabled class="px-5 py-2.5 bg-[#082e54] hover:bg-sky-900 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-xs transition flex items-center gap-2 shadow-xs">
-          <i class="fa-solid fa-cloud-arrow-down text-amber-400"></i>
-          <span>Konfirmasi & Simpan ke Sistem</span>
-        </button>
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 shrink-0">
+        <span id="import-status-text" class="text-[11px] text-slate-500 italic hidden">
+          <i class="fa-solid fa-spinner fa-spin text-sky-600 mr-1"></i> Menyimpan akun ke sistem...
+        </span>
+        <div class="flex items-center justify-end gap-2 ml-auto">
+          <button type="button" onclick="closeImportUserModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition">
+            Batal
+          </button>
+          <button type="button" id="btn-confirm-import-users" onclick="processUserImport()" disabled class="px-4.5 py-2 bg-[#082e54] hover:bg-sky-900 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-xs transition flex items-center gap-2 shadow-xs">
+            <i class="fa-solid fa-cloud-arrow-down text-amber-400"></i>
+            <span id="btn-confirm-import-text">Simpan & Daftarkan Siswa</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

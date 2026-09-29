@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { 
   getFirestore, 
+  initializeFirestore,
   collection, 
   doc, 
   setDoc, 
@@ -31,8 +32,19 @@ export const OperationType = {
 
 // Structured error handler as mandated by Firebase Skill
 export function handleFirestoreError(error, operationType, path) {
+  const code = error?.code || '';
+  const msg = error instanceof Error ? error.message : String(error);
+  if (code === 'unavailable' || msg.includes('offline') || msg.includes('unavailable')) {
+    // Gracefully acknowledge offline/unavailable without throwing or breaking UI
+    return {
+      error: 'Penyimpanan lokal aktif (offline cache mode)',
+      operationType,
+      path
+    };
+  }
+
   const errInfo = {
-    error: error instanceof Error ? error.message : String(error),
+    error: msg,
     authInfo: {
       userId: auth?.currentUser?.uid || null,
       email: auth?.currentUser?.email || null,
@@ -77,9 +89,21 @@ try {
       appId: firebaseConfig.appId
     });
 
-    db = firebaseConfig.firestoreDatabaseId 
-      ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
-      : getFirestore(app);
+    const firestoreSettings = {
+      experimentalAutoDetectLongPolling: true,
+      experimentalForceLongPolling: true,
+      useFetchStreams: false
+    };
+
+    try {
+      db = firebaseConfig.firestoreDatabaseId 
+        ? initializeFirestore(app, firestoreSettings, firebaseConfig.firestoreDatabaseId)
+        : initializeFirestore(app, firestoreSettings);
+    } catch (dbInitErr) {
+      db = firebaseConfig.firestoreDatabaseId 
+        ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+        : getFirestore(app);
+    }
 
     auth = getAuth(app);
   }
@@ -135,7 +159,7 @@ export function updateDbStatusUI() {
   }
 }
 
-// Validate Connection to Firestore on boot
+// Validate Connection to Firestore on boot safely
 export async function testConnection() {
   if (!db) {
     dbStatus.connected = false;
@@ -144,19 +168,20 @@ export async function testConnection() {
     return false;
   }
   try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
+    const testDoc = doc(db, 'test', 'connection');
+    await getDoc(testDoc);
     dbStatus.connected = true;
     dbStatus.statusText = 'Terhubung ke Cloud Firestore';
     dbStatus.lastSyncTime = new Date();
     updateDbStatusUI();
     return true;
   } catch (error) {
-    if (error instanceof Error && error.message.includes('the client is offline')) {
-      console.warn('Firebase connection check: Client is offline, operating in resilient cache mode.');
+    const code = error?.code || '';
+    const msg = error instanceof Error ? error.message : String(error);
+    if (code === 'unavailable' || msg.includes('the client is offline') || msg.includes('unavailable')) {
       dbStatus.connected = false;
-      dbStatus.statusText = 'Offline (Menggunakan Cache Lokal)';
+      dbStatus.statusText = 'Lokal (Cache)';
     } else {
-      // If doc is not found or other normal Firestore responses, connection is active!
       dbStatus.connected = true;
       dbStatus.statusText = 'Terhubung ke Cloud Firestore';
       dbStatus.lastSyncTime = new Date();
@@ -518,6 +543,44 @@ export async function saveUserToCloud(userData) {
   }
 }
 
+export async function deleteUserFromCloud(userId) {
+  if (!db || !userId) return false;
+  const path = `users/${userId}`;
+  try {
+    await deleteDoc(doc(db, 'users', String(userId)));
+    dbStatus.lastSyncTime = new Date();
+    updateDbStatusUI();
+    return true;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+    return false;
+  }
+}
+
+export async function saveUsersBatchToCloud(usersList) {
+  if (!db || !Array.isArray(usersList) || usersList.length === 0) return 0;
+  const path = 'users';
+  let successCount = 0;
+  try {
+    for (const u of usersList) {
+      const uid = u.id || u.username || `usr_${Date.now()}`;
+      const cleanDoc = {
+        ...u,
+        id: uid,
+        updatedAt: serverTimestamp()
+      };
+      await setDoc(doc(db, path, String(uid)), cleanDoc, { merge: true });
+      successCount++;
+    }
+    dbStatus.lastSyncTime = new Date();
+    updateDbStatusUI();
+    return successCount;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+    return successCount;
+  }
+}
+
 export function subscribeToUsers(callback) {
   if (!db) return () => {};
   const path = 'users';
@@ -781,6 +844,8 @@ if (typeof window !== 'undefined') {
   window.subscribeToBooks = subscribeToBooks;
 
   window.saveUserToCloud = saveUserToCloud;
+  window.deleteUserFromCloud = deleteUserFromCloud;
+  window.saveUsersBatchToCloud = saveUsersBatchToCloud;
   window.subscribeToUsers = subscribeToUsers;
 
   window.saveSettingsToCloud = saveSettingsToCloud;

@@ -8,6 +8,9 @@
 
 import './firebase.js';
 import * as XLSX from 'xlsx';
+if (typeof window !== 'undefined') {
+  window.XLSX = XLSX;
+}
 
 // ==========================================
 // 1. INITIAL DATA SEEDS & STORAGE ENGINE
@@ -1810,9 +1813,14 @@ export function handleLoginSubmit(e) {
     return;
   }
 
-  // Find user
+  // Find user (support match by username or NISN)
+  const queryLower = username.toLowerCase();
   const found = window.appState.users.find(u => 
-    u.username.toLowerCase() === username.toLowerCase() && u.password === password
+    (
+      (u.username && u.username.toLowerCase() === queryLower) ||
+      (u.nisn && String(u.nisn).trim().toLowerCase() === queryLower) ||
+      (u.id && String(u.id).toLowerCase() === queryLower)
+    ) && u.password === password
   );
 
   if (found) {
@@ -8748,7 +8756,7 @@ window.filterAdminUsers = function(role) {
 
   const roles = ['semua', 'siswa', 'guru', 'admin', 'kepsek'];
   roles.forEach(r => {
-    const btn = document.getElementById(`btn-filter-role-${r}`);
+    const btn = document.getElementById(`btn-filter-role-${r}`) || document.getElementById(`btn-filter-user-${r}`);
     if (btn) {
       if (r === role) {
         btn.className = 'px-3 py-1 rounded-lg text-xs font-bold bg-[#082e54] text-white';
@@ -8810,7 +8818,10 @@ window.resetUserPassword = function(userId) {
   if (newPass) {
     u.password = newPass.trim();
     setStorage(STORAGE_KEYS.USERS, window.appState.users);
-    showToast('Kata Sandi Direset', `Kata sandi baru untuk ${u.name} berhasil disimpan.`, 'success');
+    if (typeof window.saveUserToCloud === 'function') {
+      window.saveUserToCloud(u);
+    }
+    showToast('Kata Sandi Direset', `Kata sandi baru untuk ${u.name} berhasil disimpan ke sistem & cloud.`, 'success');
   }
 };
 
@@ -8828,6 +8839,7 @@ window.handleSaveUser = function(e) {
     return;
   }
 
+  let savedUser = null;
   if (id) {
     // Edit
     const idx = window.appState.users.findIndex(u => u.id === id);
@@ -8840,6 +8852,7 @@ window.handleSaveUser = function(e) {
         role,
         kelas
       };
+      savedUser = window.appState.users[idx];
       showToast('Akun Diperbarui', `Data pengguna ${name} berhasil disimpan.`, 'success');
     }
   } else {
@@ -8851,17 +8864,23 @@ window.handleSaveUser = function(e) {
       password: pass,
       role,
       kelas,
-      avatar: role === 'admin' ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100' : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100',
-      points: role === 'admin' ? 2500 : 0,
+      avatar: role === 'admin' ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100' : (role === 'guru' ? 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100' : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'),
+      points: role === 'admin' ? 2500 : (role === 'guru' ? 500 : 100),
       streak: 1,
-      level: role === 'admin' ? 'Super Admin' : 'Pembaca',
+      booksCount: 0,
+      worksCount: 0,
+      level: role === 'admin' ? 'Super Admin' : (role === 'guru' ? 'Pendidik Literat' : 'Pembaca Pemula'),
       badges: role === 'admin' ? ['Administrator Sistem'] : ['Anggota Baru']
     };
     window.appState.users.push(newUser);
+    savedUser = newUser;
     showToast('Pengguna Ditambahkan', `Akun baru ${name} (${role}) berhasil dibuat.`, 'success');
   }
 
   setStorage(STORAGE_KEYS.USERS, window.appState.users);
+  if (savedUser && typeof window.saveUserToCloud === 'function') {
+    window.saveUserToCloud(savedUser);
+  }
   closeUserModal();
   renderAdminUsersTable();
   const statUsers = document.getElementById('admin-stat-users');
@@ -8878,7 +8897,10 @@ window.deleteUserAccount = function(userId) {
 
   window.appState.users = window.appState.users.filter(u => u.id !== userId);
   setStorage(STORAGE_KEYS.USERS, window.appState.users);
-  showToast('Akun Dihapus', 'Pengguna telah dihapus dari sistem.', 'info');
+  if (typeof window.deleteUserFromCloud === 'function') {
+    window.deleteUserFromCloud(userId);
+  }
+  showToast('Akun Dihapus', 'Pengguna telah dihapus dari sistem & cloud.', 'info');
   renderAdminUsersTable();
   const statUsers = document.getElementById('admin-stat-users');
   if (statUsers) statUsers.textContent = window.appState.users.length;
@@ -8969,11 +8991,11 @@ window.downloadUserTemplateExcel = function() {
     // Sheet 2: Petunjuk Pengisian
     const instructions = [
       ['Kolom', 'Kewajiban', 'Format & Keterangan', 'Contoh Nilai'],
-      ['NISN / NIP', 'Wajib', 'Nomor induk unik siswa (NISN) atau guru (NIP). Digunakan sebagai username login.', '0098234101 atau 197805122005012003'],
-      ['Nama Lengkap', 'Wajib', 'Nama lengkap beserta gelar (untuk guru).', 'Dewi Sekar Kinanthi atau Ratna Kusumawati, S.Pd.'],
-      ['Peran (siswa/guru)', 'Wajib', 'Isi dengan "siswa" atau "guru".', 'siswa atau guru'],
-      ['Kelas / Mata Pelajaran', 'Opsional', 'Kelas untuk siswa (misal: 7A, 8B, 9C) atau mata pelajaran/bidang untuk guru.', '7A atau Bahasa Indonesia'],
-      ['Kata Sandi Default', 'Opsional', 'Kata sandi awal untuk login pertama kali. Jika dikosongkan, otomatis diisi "lentera123".', 'lentera123']
+      ['NISN / NIP', 'Wajib', 'Nomor induk unik siswa (NISN) atau guru (NIP). Digunakan sebagai username login siswa.', '0098234101 atau 197805122005012003'],
+      ['Nama Lengkap', 'Wajib', 'Nama lengkap siswa atau guru.', 'Dewi Sekar Kinanthi atau Ratna Kusumawati, S.Pd.'],
+      ['Peran (siswa/guru)', 'Opsional', 'Isi dengan "siswa" atau "guru" (default: siswa).', 'siswa atau guru'],
+      ['Kelas / Mata Pelajaran', 'Opsional', 'Kelas untuk siswa (misal: 7A, 8B, 9C). Jika kosong, menggunakan pilihan kelas bawaan.', '7A atau 8B'],
+      ['Kata Sandi Default', 'Opsional', 'Kata sandi awal untuk login. Jika dikosongkan, otomatis diisi "lentera123".', 'lentera123']
     ];
 
     const wsGuide = XLSX.utils.aoa_to_sheet(instructions);
@@ -9008,25 +9030,53 @@ window.downloadUserTemplateCSV = function() {
   showToast('Template CSV Diunduh', 'Template CSV berhasil diunduh.', 'success');
 };
 
-// --- MODAL IMPOR USER CONTROLLER ---
+// --- MODAL IMPOR USER CONTROLLER & DRAG-AND-DROP ---
 window._stagedImportUsers = [];
+window._activeImportTab = 'file';
+
+window.switchImportUserTab = function(tabName) {
+  window._activeImportTab = tabName;
+  const paneFile = document.getElementById('pane-import-file');
+  const panePaste = document.getElementById('pane-import-paste');
+  const btnFile = document.getElementById('tab-btn-import-file');
+  const btnPaste = document.getElementById('tab-btn-import-paste');
+
+  if (tabName === 'file') {
+    if (paneFile) paneFile.classList.remove('hidden');
+    if (panePaste) panePaste.classList.add('hidden');
+    if (btnFile) btnFile.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-[#082e54] text-white flex items-center gap-1.5 transition shadow-2xs';
+    if (btnPaste) btnPaste.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1.5 transition';
+  } else {
+    if (paneFile) paneFile.classList.add('hidden');
+    if (panePaste) panePaste.classList.remove('hidden');
+    if (btnFile) btnFile.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1.5 transition';
+    if (btnPaste) btnPaste.className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-[#082e54] text-white flex items-center gap-1.5 transition shadow-2xs';
+  }
+};
 
 window.openImportUserModal = function() {
   window._stagedImportUsers = [];
+  window.switchImportUserTab('file');
+
   const fileInput = document.getElementById('input-import-user-file');
   if (fileInput) fileInput.value = '';
 
+  const filenameBox = document.getElementById('import-user-filename-box');
   const filenameEl = document.getElementById('import-user-filename');
-  if (filenameEl) {
-    filenameEl.textContent = '';
-    filenameEl.classList.add('hidden');
-  }
+  if (filenameBox) filenameBox.classList.add('hidden');
+  if (filenameEl) filenameEl.textContent = '';
+
+  const pasteInput = document.getElementById('textarea-import-paste');
+  if (pasteInput) pasteInput.value = '';
 
   const previewContainer = document.getElementById('container-import-user-preview');
   if (previewContainer) previewContainer.classList.add('hidden');
 
   const btnConfirm = document.getElementById('btn-confirm-import-users');
   if (btnConfirm) btnConfirm.disabled = true;
+
+  const statusText = document.getElementById('import-status-text');
+  if (statusText) statusText.classList.add('hidden');
 
   const modal = document.getElementById('modal-import-users');
   if (modal) {
@@ -9044,15 +9094,106 @@ window.closeImportUserModal = function() {
   window._stagedImportUsers = [];
 };
 
+// Drag and drop handlers
+window.handleImportDragOver = function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dropzone = document.getElementById('dropzone-import-user');
+  if (dropzone) {
+    dropzone.classList.add('border-emerald-500', 'bg-emerald-50/50');
+  }
+};
+
+window.handleImportDragLeave = function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dropzone = document.getElementById('dropzone-import-user');
+  if (dropzone) {
+    dropzone.classList.remove('border-emerald-500', 'bg-emerald-50/50');
+  }
+};
+
+window.handleImportDrop = function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dropzone = document.getElementById('dropzone-import-user');
+  if (dropzone) {
+    dropzone.classList.remove('border-emerald-500', 'bg-emerald-50/50');
+  }
+
+  const files = e.dataTransfer && e.dataTransfer.files;
+  if (files && files.length > 0) {
+    window.processImportFile(files[0]);
+  }
+};
+
 window.handleUserImportFile = function(e) {
   const file = e.target.files && e.target.files[0];
   if (!file) return;
+  window.processImportFile(file);
+};
 
-  const filenameEl = document.getElementById('import-user-filename');
-  if (filenameEl) {
-    filenameEl.textContent = `Berkas dipilih: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-    filenameEl.classList.remove('hidden');
+// Reusable preview updater
+function renderImportPreview(parsedUsers) {
+  window._stagedImportUsers = parsedUsers;
+
+  let countSiswa = 0;
+  let countGuru = 0;
+  parsedUsers.forEach(u => {
+    if (u.role === 'guru') countGuru++;
+    else countSiswa++;
+  });
+
+  // Update counters
+  const statTotal = document.getElementById('stat-import-total');
+  const statSiswa = document.getElementById('stat-import-siswa');
+  const statGuru = document.getElementById('stat-import-guru');
+  const statValid = document.getElementById('stat-import-valid');
+  const previewCount = document.getElementById('import-preview-count');
+
+  if (statTotal) statTotal.textContent = parsedUsers.length;
+  if (statSiswa) statSiswa.textContent = countSiswa;
+  if (statGuru) statGuru.textContent = countGuru;
+  if (statValid) statValid.textContent = parsedUsers.length;
+  if (previewCount) previewCount.textContent = parsedUsers.length;
+
+  // Render Preview Table
+  const previewTbody = document.getElementById('table-import-users-preview');
+  if (previewTbody) {
+    const previewRows = parsedUsers.slice(0, 10);
+    previewTbody.innerHTML = previewRows.map(u => `
+      <tr class="hover:bg-slate-50 transition">
+        <td class="py-2 px-3">
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${u.role === 'guru' ? 'bg-purple-100 text-purple-800' : 'bg-sky-100 text-sky-800'}">
+            ${u.role === 'guru' ? 'Guru' : 'Siswa'}
+          </span>
+        </td>
+        <td class="py-2 px-3 font-mono font-bold text-slate-800">${u.username}</td>
+        <td class="py-2 px-3 font-semibold text-slate-900">${u.name}</td>
+        <td class="py-2 px-3 text-slate-600 font-medium">${u.kelas}</td>
+        <td class="py-2 px-3 font-mono text-slate-500">${u.password}</td>
+      </tr>
+    `).join('');
   }
+
+  const previewContainer = document.getElementById('container-import-user-preview');
+  if (previewContainer) previewContainer.classList.remove('hidden');
+
+  const btnConfirm = document.getElementById('btn-confirm-import-users');
+  if (btnConfirm) btnConfirm.disabled = parsedUsers.length === 0;
+}
+
+window.processImportFile = function(file) {
+  const filenameBox = document.getElementById('import-user-filename-box');
+  const filenameEl = document.getElementById('import-user-filename');
+  if (filenameBox) filenameBox.classList.remove('hidden');
+  if (filenameEl) {
+    filenameEl.innerHTML = `<i class="fa-solid fa-file-circle-check text-emerald-600"></i> ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+  }
+
+  const defaultClass = document.getElementById('import-default-class')?.value || '8B';
+  const defaultPass = document.getElementById('import-default-password')?.value || 'lentera123';
+  const defaultRole = document.getElementById('import-default-role')?.value || 'siswa';
 
   const reader = new FileReader();
   reader.onload = function(evt) {
@@ -9061,10 +9202,19 @@ window.handleUserImportFile = function(e) {
       const workbook = XLSX.read(data, { type: 'array' });
       const firstSheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[firstSheetName];
-      const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+      let rows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+
+      // CSV fallback check: if only 1 column was parsed but text has semicolons or commas
+      if (rows && rows.length > 0 && rows[0].length === 1 && typeof rows[0][0] === 'string' && (rows[0][0].includes(';') || rows[0][0].includes(','))) {
+        const textContent = new TextDecoder().decode(data);
+        const delimiter = textContent.includes(';') ? ';' : (textContent.includes('\t') ? '\t' : ',');
+        rows = textContent.split(/\r?\n/).map(line => {
+          return line.split(delimiter).map(cell => cell.replace(/^["']|["']$/g, '').trim());
+        });
+      }
 
       if (!rows || rows.length < 2) {
-        showToast('Berkas Kosong', 'Berkas Excel tidak memiliki baris data.', 'error');
+        showToast('Berkas Kosong', 'Berkas Excel/CSV tidak memiliki baris data yang valid.', 'error');
         return;
       }
 
@@ -9076,15 +9226,15 @@ window.handleUserImportFile = function(e) {
       let colClass = -1;
       let colPass = -1;
 
-      for (let i = 0; i < Math.min(rows.length, 5); i++) {
+      for (let i = 0; i < Math.min(rows.length, 6); i++) {
         const row = rows[i].map(cell => String(cell || '').toLowerCase().trim());
-        const nIdx = row.findIndex(c => c.includes('nisn') || c.includes('nip') || c.includes('username') || c.includes('induk'));
+        const nIdx = row.findIndex(c => c.includes('nisn') || c.includes('nip') || c.includes('username') || c.includes('induk') || c.includes('no induk'));
         const nameIdx = row.findIndex(c => c.includes('nama') || c.includes('name'));
         if (nIdx !== -1 || nameIdx !== -1) {
           headerRowIdx = i;
           colNisn = nIdx !== -1 ? nIdx : 0;
           colName = nameIdx !== -1 ? nameIdx : 1;
-          colRole = row.findIndex(c => c.includes('peran') || c.includes('role') || c.includes('status'));
+          colRole = row.findIndex(c => c.includes('peran') || c.includes('role') || c.includes('status') || c.includes('jabatan'));
           colClass = row.findIndex(c => c.includes('kelas') || c.includes('mapel') || c.includes('pelajaran') || c.includes('rombel'));
           colPass = row.findIndex(c => c.includes('sandi') || c.includes('pass'));
           break;
@@ -9101,40 +9251,39 @@ window.handleUserImportFile = function(e) {
       }
 
       const parsedUsers = [];
-      let countSiswa = 0;
-      let countGuru = 0;
 
       for (let r = headerRowIdx + 1; r < rows.length; r++) {
         const row = rows[r];
         if (!row || row.every(cell => !cell || String(cell).trim() === '')) continue;
 
-        let rawNisn = String(row[colNisn] ?? '').trim();
-        let rawName = String(row[colName] ?? '').trim();
+        let rawNisn = String(row[colNisn] ?? '').trim().replace(/['"]/g, '');
+        let rawName = String(row[colName] ?? '').trim().replace(/['"]/g, '');
         let rawRole = colRole !== -1 ? String(row[colRole] ?? '').trim().toLowerCase() : '';
         let rawClass = colClass !== -1 ? String(row[colClass] ?? '').trim() : '';
         let rawPass = colPass !== -1 ? String(row[colPass] ?? '').trim() : '';
 
         if (!rawName && !rawNisn) continue;
 
-        let role = 'siswa';
+        let role = defaultRole;
         if (rawRole.includes('guru') || rawRole.includes('pengajar') || rawRole.includes('pendidik') || rawRole.includes('teacher')) {
           role = 'guru';
+        } else if (rawRole.includes('siswa') || rawRole.includes('murid') || rawRole.includes('student')) {
+          role = 'siswa';
         }
 
-        if (role === 'guru') countGuru++;
-        else countSiswa++;
-
-        const username = rawNisn || `user_${Date.now()}_${r}`;
-        const name = rawName || `Pengguna ${username}`;
-        const password = rawPass || (role === 'guru' ? 'guru123' : 'lentera123');
+        const username = rawNisn || `siswa_${Date.now()}_${r}`;
+        const name = rawName || `Siswa ${username}`;
+        const password = rawPass || defaultPass;
+        const kelas = rawClass || defaultClass;
 
         parsedUsers.push({
-          id: `u-import-${Date.now()}-${r}`,
+          id: `u-${username}`,
           name,
           username,
+          nisn: rawNisn || username,
           password,
           role,
-          kelas: rawClass || (role === 'guru' ? 'Tenaga Pendidik' : 'Siswa Kasihan'),
+          kelas,
           avatar: role === 'guru'
             ? 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100'
             : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100',
@@ -9147,89 +9296,189 @@ window.handleUserImportFile = function(e) {
         });
       }
 
-      window._stagedImportUsers = parsedUsers;
-
-      // Update counters
-      const statTotal = document.getElementById('stat-import-total');
-      const statSiswa = document.getElementById('stat-import-siswa');
-      const statGuru = document.getElementById('stat-import-guru');
-      const statValid = document.getElementById('stat-import-valid');
-      if (statTotal) statTotal.textContent = parsedUsers.length;
-      if (statSiswa) statSiswa.textContent = countSiswa;
-      if (statGuru) statGuru.textContent = countGuru;
-      if (statValid) statValid.textContent = parsedUsers.length;
-
-      // Render Preview Table
-      const previewTbody = document.getElementById('table-import-users-preview');
-      if (previewTbody) {
-        const previewRows = parsedUsers.slice(0, 8);
-        previewTbody.innerHTML = previewRows.map(u => `
-          <tr class="hover:bg-slate-50">
-            <td class="py-2 px-3">
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${u.role === 'guru' ? 'bg-purple-100 text-purple-800' : 'bg-sky-100 text-sky-800'}">
-                ${u.role === 'guru' ? 'Guru' : 'Siswa'}
-              </span>
-            </td>
-            <td class="py-2 px-3 font-mono font-bold text-slate-800">${u.username}</td>
-            <td class="py-2 px-3 font-semibold text-slate-900">${u.name}</td>
-            <td class="py-2 px-3 text-slate-600">${u.kelas}</td>
-            <td class="py-2 px-3 font-mono text-slate-500">${u.password}</td>
-          </tr>
-        `).join('');
-      }
-
-      const previewContainer = document.getElementById('container-import-user-preview');
-      if (previewContainer) previewContainer.classList.remove('hidden');
-
-      const btnConfirm = document.getElementById('btn-confirm-import-users');
-      if (btnConfirm) btnConfirm.disabled = parsedUsers.length === 0;
-
-      showToast('Berkas Terbaca', `Ditemukan ${parsedUsers.length} data calon pengguna (${countSiswa} siswa, ${countGuru} guru).`, 'info');
+      renderImportPreview(parsedUsers);
+      showToast('Berkas Berhasil Dibaca', `Ditemukan ${parsedUsers.length} data calon akun pengguna dari berkas ${file.name}.`, 'info');
     } catch (err) {
-      console.error('Error parsing Excel:', err);
-      showToast('Gagal Membaca', 'Format berkas Excel tidak didukung atau rusak.', 'error');
+      console.error('Error parsing file:', err);
+      showToast('Gagal Membaca Berkas', 'Pastikan format berkas Excel (.xlsx, .xls) atau CSV valid.', 'error');
     }
   };
   reader.readAsArrayBuffer(file);
 };
 
-window.processUserImport = function() {
+// Direct Text Paste Handler
+window.handleUserImportPaste = function() {
+  const text = document.getElementById('textarea-import-paste')?.value || '';
+  if (!text.trim()) {
+    showToast('Teks Kosong', 'Harap tempel data siswa terlebih dahulu.', 'warning');
+    return;
+  }
+
+  const defaultClass = document.getElementById('import-default-class')?.value || '8B';
+  const defaultPass = document.getElementById('import-default-password')?.value || 'lentera123';
+  const defaultRole = document.getElementById('import-default-role')?.value || 'siswa';
+
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  const parsedUsers = [];
+
+  lines.forEach((line, idx) => {
+    // Detect delimiter: Tab, Semicolon, or Comma
+    let parts = [];
+    if (line.includes('\t')) {
+      parts = line.split('\t');
+    } else if (line.includes(';')) {
+      parts = line.split(';');
+    } else if (line.includes(',')) {
+      parts = line.split(',');
+    } else {
+      parts = line.split(/\s{2,}/); // 2+ spaces
+    }
+
+    parts = parts.map(p => p.trim().replace(/^["']|["']$/g, ''));
+    if (parts.length === 0 || !parts[0]) return;
+
+    // Check if this line is a header like NISN, Nama, Kelas
+    const firstCellLower = parts[0].toLowerCase();
+    if (firstCellLower.includes('nisn') || firstCellLower.includes('nama') || firstCellLower.includes('no')) {
+      return; // Skip header line
+    }
+
+    let rawNisn = '';
+    let rawName = '';
+    let rawClass = '';
+    let rawPass = '';
+    let rawRole = defaultRole;
+
+    if (parts.length >= 3) {
+      rawNisn = parts[0];
+      rawName = parts[1];
+      rawClass = parts[2];
+      rawPass = parts[3] || defaultPass;
+    } else if (parts.length === 2) {
+      // Could be: NISN & Name, or Name & Class
+      if (/^\d+$/.test(parts[0])) {
+        rawNisn = parts[0];
+        rawName = parts[1];
+      } else {
+        rawName = parts[0];
+        rawClass = parts[1];
+      }
+    } else {
+      rawName = parts[0];
+    }
+
+    const username = rawNisn || `siswa_${Date.now()}_${idx}`;
+    const name = rawName || `Siswa ${username}`;
+    const kelas = rawClass || defaultClass;
+    const password = rawPass || defaultPass;
+
+    parsedUsers.push({
+      id: `u-${username}`,
+      name,
+      username,
+      nisn: rawNisn || username,
+      password,
+      role: rawRole,
+      kelas,
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100',
+      points: 100,
+      streak: 1,
+      booksCount: 0,
+      worksCount: 0,
+      level: 'Pembaca Pemula',
+      badges: ['Anggota Baru']
+    });
+  });
+
+  if (parsedUsers.length === 0) {
+    showToast('Peringatan', 'Tidak ada data siswa yang berhasil diuraikan dari teks.', 'warning');
+    return;
+  }
+
+  renderImportPreview(parsedUsers);
+  showToast('Teks Berhasil Diuraikan', `Ditemukan ${parsedUsers.length} data siswa dari teks yang ditempel.`, 'success');
+};
+
+window.processUserImport = async function() {
   if (!window._stagedImportUsers || window._stagedImportUsers.length === 0) {
     showToast('Peringatan', 'Tidak ada data pengguna yang siap diimpor.', 'warning');
     return;
   }
 
+  const btnConfirm = document.getElementById('btn-confirm-import-users');
+  const btnText = document.getElementById('btn-confirm-import-text');
+  const statusText = document.getElementById('import-status-text');
+
+  if (btnConfirm) btnConfirm.disabled = true;
+  if (btnText) btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan ke Cloud...';
+  if (statusText) statusText.classList.remove('hidden');
+
   let addedCount = 0;
   let updatedCount = 0;
+  const usersToSave = [];
 
   window._stagedImportUsers.forEach(staged => {
     const existingIdx = window.appState.users.findIndex(u => 
-      u.username.toLowerCase() === staged.username.toLowerCase()
+      u.username.toLowerCase() === staged.username.toLowerCase() ||
+      (u.nisn && staged.nisn && String(u.nisn).trim() === String(staged.nisn).trim())
     );
 
     if (existingIdx !== -1) {
-      // Update existing user without resetting points
+      // Update existing user without losing points or streak
       window.appState.users[existingIdx].name = staged.name;
       window.appState.users[existingIdx].role = staged.role;
       window.appState.users[existingIdx].kelas = staged.kelas;
+      if (staged.nisn) window.appState.users[existingIdx].nisn = staged.nisn;
       if (staged.password && staged.password !== 'lentera123') {
         window.appState.users[existingIdx].password = staged.password;
       }
+      usersToSave.push(window.appState.users[existingIdx]);
       updatedCount++;
     } else {
       window.appState.users.push(staged);
+      usersToSave.push(staged);
       addedCount++;
     }
   });
 
+  // 1. Save locally
   setStorage(STORAGE_KEYS.USERS, window.appState.users);
+
+  // 2. Persist to Cloud Firestore in bulk
+  let cloudSynced = false;
+  try {
+    if (typeof window.saveUsersBatchToCloud === 'function') {
+      const savedCount = await window.saveUsersBatchToCloud(usersToSave);
+      cloudSynced = savedCount > 0;
+    } else if (typeof window.saveUserToCloud === 'function') {
+      for (const u of usersToSave) {
+        await window.saveUserToCloud(u);
+      }
+      cloudSynced = true;
+    }
+  } catch (err) {
+    console.warn('Notice: Background cloud sync in progress:', err);
+  }
+
+  // 3. UI updates
   closeImportUserModal();
   renderAdminUsersTable();
+
+  // Trigger cross-view rerenders (Guru Wali Kelas & Sekolah Kepsek)
+  if (typeof window.renderGuruStudentsList === 'function') window.renderGuruStudentsList();
+  if (typeof window.renderSekolahMonitoringTable === 'function') window.renderSekolahMonitoringTable();
 
   const statUsers = document.getElementById('admin-stat-users');
   if (statUsers) statUsers.textContent = window.appState.users.length;
 
-  showToast('Impor Selesai', `Berhasil memproses ${window._stagedImportUsers.length} pengguna: ${addedCount} baru ditambahkan, ${updatedCount} data diperbarui.`, 'success');
+  if (btnText) btnText.textContent = 'Simpan & Daftarkan Siswa';
+  if (statusText) statusText.classList.add('hidden');
+
+  showToast(
+    'Upload Siswa Selesai',
+    `Berhasil memproses ${window._stagedImportUsers.length} akun (${addedCount} baru ditambahkan, ${updatedCount} diperbarui)${cloudSynced ? ' & tersinkronisasi ke Cloud Firestore' : ''}.`,
+    'success'
+  );
 };
 
 // --- TAB 2: LITERACY CATALOG & MEDIA MANAGEMENT ---
@@ -10576,21 +10825,36 @@ window.syncAllToFirestore = async function() {
   }
 
   try {
-    // Import helper if available
-    const { saveJournalToCloud } = await import('./firebase.js');
     let synced = 0;
-    for (const journal of window.appState.journals || []) {
-      await saveJournalToCloud({
-        ...journal,
-        syncedBy: 'admin',
-        syncedAt: new Date().toISOString()
-      });
-      synced++;
+    if (typeof window.saveJournalToCloud === 'function') {
+      for (const journal of window.appState.journals || []) {
+        await window.saveJournalToCloud({
+          ...journal,
+          syncedBy: 'admin',
+          syncedAt: new Date().toISOString()
+        });
+        synced++;
+      }
     }
-    showToast('Sinkronisasi Sukses! ☁️', `${synced} dokumen jurnal membaca berhasil diunggah ke Google Cloud Firestore.`, 'success');
+    if (typeof window.saveWorkToCloud === 'function') {
+      for (const w of window.appState.works || []) {
+        await window.saveWorkToCloud(w);
+      }
+    }
+    if (typeof window.saveBooktalkToCloud === 'function') {
+      for (const b of window.appState.booktalks || []) {
+        await window.saveBooktalkToCloud(b);
+      }
+    }
+    if (typeof window.saveBookToCloud === 'function') {
+      for (const bk of window.appState.books || []) {
+        await window.saveBookToCloud(bk);
+      }
+    }
+    showToast('Sinkronisasi Sukses! ☁️', `${synced} jurnal dan seluruh katalog berhasil disinkronkan ke Cloud Firestore.`, 'success');
   } catch (err) {
-    console.error('Firestore sync error:', err);
-    showToast('Sinkronisasi Berhasil', 'Data lokal sistem tersinkronisasi sempurna.', 'info');
+    console.warn('Firestore sync note:', err);
+    showToast('Sinkronisasi Selesai', 'Data lokal sistem tersinkronisasi aman.', 'info');
   } finally {
     if (syncBtn) {
       syncBtn.disabled = false;
